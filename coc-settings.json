@@ -1,0 +1,238 @@
+{
+	"coc.preferences.semanticTokensHighlights": false,
+	"coc.preferences.enableFloatHighlight": true,
+	"jedi.executable.command": "jedi-language-server",
+	"coc.preferences.snippetStatusText": "Ⓢ ",
+	"coc.preferences.extensionUpdateCheck": "daily",
+	"coc.preferences.messageLevel": "error",
+	"coc.source.around.firstMatch": false,
+	"coc.source.buffer.firstMatch": false,
+	"coc.source.syntax.firstMatch": false,
+	"suggest.detailMaxLength": 60,
+	"suggest.noselect": true,
+	"suggest.enablePreselect": false,
+	"suggest.triggerAfterInsertEnter": true,
+	"suggest.autoTrigger": "always",
+	"suggest.timeout": 5000,
+	"suggest.enablePreview": true,
+	"suggest.floatEnable": true,
+	"suggest.detailField": "preview",
+	"suggest.snippetIndicator": "",
+	"suggest.triggerCompletionWait": 100,
+	"suggest.echodocSupport": true,
+	"suggest.completionItemKindLabels": {
+		"class": "\uf0e8",
+		"color": "\ue22b",
+		"constant": "\uf8fe",
+		"default": "\uf29c",
+		"enum": "\uf435",
+		"enumMember": "\uf02b",
+		"event": "\ufacd",
+		"field": "\uf93d",
+		"file": "\uf723",
+		"folder": "\uf115",
+		"function": "\u0192",
+		"interface": "\uf417",
+		"keyword": "\uf1de",
+		"method": "\uf6a6",
+		"module": "\uf40d",
+		"operator": "\uf915",
+		"property": "\ue624",
+		"reference": "\ufa46",
+		"snippet": "\ue60b",
+		"struct": "\ufb44",
+		"text": "\ue612",
+		"typeParameter": "\uf728",
+		"unit": "\uf475",
+		"value": "\uf89f",
+		"variable": "\ue71b"
+	},
+	"diagnostic.signOffset": 1,
+	"diagnostic.errorSign": "\uf467",
+	"diagnostic.warningSign": "\uf071",
+	"diagnostic.infoSign": "\uf129",
+	"diagnostic.hintSign": "\uf864",
+	"diagnostic.displayByAle": false,
+	"diagnostic.refreshOnInsertMode": false,
+	"diagnostic.checkCurrentLine": true,
+	"diagnostic.virtualTextPrefix": " ❯❯❯ ",
+	"diagnostic.virtualText": false,
+	"codeLens.enable": true,
+	"list.previewHighlightGroup": "Statement",
+	"list.nextKeymap": "<C-e>",
+	"list.previousKeymap": "<C-c>",
+	"importCost.bundleSizeDecoration": "both",
+	"importCost.typescriptExtensions": ["\\.tsx?$"],
+	"importCost.javascriptExtensions": ["\\.jsx?$"],
+	"importCost.showCalculatingDecoration": true,
+	"importCost.debug": false,
+	"snippets.ultisnips.directories": [
+		"$HOME/.config/nvim/Ultisnips/",
+		"$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/"
+	],
+	"coc.preferences.formatOnSaveFiletypes": [
+		"javascript",
+		"typescript",
+		"html",
+		"css",
+		"json",
+		"java",
+		"python",
+		"vue",
+		"svelte",
+		"c",
+		"cs",
+		"prisma"
+	],
+	"yaml.format.enable": true,
+	"signature.target": "float",
+	"yank.enableCompletion": false,
+	"typescript.suggestionActions.enabled": true,
+	"typescript.format.enabled": true,
+	"jest.watch": false,
+	"explorer.width": 38,
+	"explorer.quitOnOpen": true,
+	"explorer.sources": [
+		{
+			"name": "buffer",
+			"expand": false
+		},
+		{
+			"name": "file",
+			"expand": true
+		}
+	],
+	"explorer.file.column.indent.indentLine": true,
+	"explorer.file.showHiddenFiles": true,
+	"explorer.icon.enableNerdfont": true,
+	"explorer.file.column.git.showIgnored": true,
+	"explorer.keyMappingMode": "none",
+	"explorer.buffer.showHiddenBuffers": false,
+	 "explorer.keyMappings.global": {
+		"i": "nodePrev",        // 向上移动
+		"k": "nodeNext",        // 向下移动
+		"s": "toggleSelection", // 切换节点(node)的选择
+		"<tab>": "actionMenu",  // 指引菜单
+		"gl": "expandRecursive",
+		"gh": "collapseRecursive",
+		"o": ["wait", "expandable?", "expand", "open"],
+		"<cr>": ["wait", "expandable?", "cd", "open"],
+		// "I": "open:vsplit",     // 打开文件或者目录
+		"l": ["wait", "expanded?", "collapse", "expand"],
+		"L": "open:tab",       // 打开文件或者目录
+		"j": "collapse",       // 折叠目录 
+		"h": "gotoParent",     // 到上级目录表
+		"yp": "copyFilepath",  // 复制文件路径
+		"yn": "copyFilename",  // 复制文件名
+		"yy": "copyFile",      // 复制文件
+		"dd": "cutFile",       // 剪切文件
+		"pp": "pasteFile",     // 粘贴文件
+		"dD": "deleteForever", // 永久删除
+		"a": "addFile",        // 添加一个新的文件 (no path)
+		"e": "addFile",        // 添加一个新的文件 (no path)
+		"M": "addDirectory",   // 添加一个新的目录 (path)
+		"rn": "rename",        // 重命名
+		".": "toggleHidden",   // 切换隐藏节点的可见性
+		"zh": "toggleHidden",  // 切换隐藏节点的可见性
+		"R": "refresh",        // 刷新
+		"?": "help",           // 帮助
+		"q": "quit",           // 退出
+		"X": "systemExecute",  // 使用系统应用打开文件或者目录
+		"gd": "listDrive",
+		"f": "search",         // 搜索
+		"F": "searchRecursive", // 按照coc-list 递归搜索
+		"B": "gotoSource:file", // 到文件源头
+		"b": "gotoSource:buffer", // 到缓冲区源头
+		"[[": "sourcePrev",
+		"]]": "sourceNext",
+		"[d": "diagnosticPrev",
+		"]d": "diagnosticNext",
+		"[c": "gitPrev",
+		"]c": "gitNext",
+		"<<": "gitStage",
+		">>": "gitUnstage"
+	},
+	"flutter.outlineWidth": 40,
+	"futter.outlineIconPadding": 0,
+	"flutter.UIPath": true,
+	"flutter.openDevLogSplitCommand": "botright 12split",
+	"flutter.lsp.initialization.onlyAnalyzeProjectsWithOpenFiles": false,
+	"flutter.trace.server": "off",
+	"tslint.autoFixOnSave": false,
+	"python.autoComplete.addBrackets": true,
+	"python.jediEnabled": false,
+	"python.formatting.provider": "yapf",
+	"python.formatting.yapfArgs": [
+		"--style",
+		"{SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1}"
+	],
+	"html.format.enable": true,
+	"javascript.referencesCodeLens.enable": true,
+	"javascript.showUnused": true,
+	"javascript.suggest.names": true,
+	"javascript.suggestionActions.enabled": true,
+	"json.format.enable": true,
+	"eslint.autoFixOnSave": false,
+	"prettier.printWidth": 100,
+	"prettier.disableLanguages": [],
+	"prettier.formatterPriority": 1,
+	"prettier.useTabs": true,
+	"prettier.trailingComma": "all",
+	"prettier.singleQuote": false,
+	"todolist.autoUpload": true,
+	"todolist.promptForReminder": false,
+	"coc-actions.hideCursor": false,
+	"coc-actions.showActionKind": true,
+	"diagnostic-languageserver.filetypes": {
+		"vim": "vint",
+		"email": "languagetool",
+		"markdown": ["write-good", "markdownlint"],
+		"sh": "shellcheck",
+		"elixir": ["mix_credo", "mix_credo_compile"],
+		"eelixir": ["mix_credo", "mix_credo_compile"],
+		"php": ["phpstan", "psalm"]
+	},
+	"diagnostic-languageserver.formatFiletypes": {
+		"elixir": "mix_format",
+		"eelixir": "mix_format"
+	},
+	"languageserver": {
+		"lua": {
+			"command": "lua-lsp",
+			"filetypes": ["lua"]
+		},
+		"swift": {
+			"command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+			"args": [],
+			"filetypes": ["swift"],
+			"initializationOptions": {},
+			"settings": {}
+		},
+		"golang": {
+			"command": "gopls",
+			"rootPatterns": ["go.mod"],
+			"filetypes": ["go"],
+			"initializationOptions": {
+				"gocodeCompletionEnabled": true,
+				"diagnosticsEnabled": true,
+				"lintTool": "golint"
+			}
+		},
+		"bash": {
+			"command": "bash-language-server",
+			"args": ["start"],
+			"filetypes": ["sh"],
+			"ignoredRootPaths": []
+		},
+		"ccls": {
+			"command": "ccls",
+			"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+			"rootPatterns": [".ccls", ".ccls-root", "compile_commands.json", ".git/", ".hg/"],
+			"initializationOptions": {
+				"cache": {
+					"directory": "/tmp/ccls"
+				}
+			}
+		}
+	}
+}
