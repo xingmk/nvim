@@ -336,6 +336,8 @@ Plug 'vim-airline/vim-airline'          " state of nvim
 Plug 'vim-airline/vim-airline-themes'   " themes of airline
 Plug 'bling/vim-bufferline'             " state of bufferline
 
+
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }     " themes of nvim
 Plug 'ayu-theme/ayu-vim'
 Plug 'theniceboy/nvim-deus'
 Plug 'arzg/vim-colors-xcode'
@@ -402,7 +404,7 @@ Plug 'puremourning/vimspector'
 " 实时预览
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 " vim 中个人的 wiki
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
@@ -474,9 +476,9 @@ set termguicolors              " enable true colors support
 "set background=light
 "set background=dark
 
+color deus
 "color dracula
 "color one
-color deus
 "color gruvbox
 "let ayucolor="light"
 "color ayu
@@ -491,6 +493,36 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 hi NonText ctermfg=gray guifg=grey10
 " hi SpecialKey ctermfg=blue guifg=grey70
 
+
+"=== tokyonight
+" Load the colorscheme
+" colorscheme tokyonight
+
+" let g:lightline = {'colorscheme': 'tokyonight'}
+
+" Example config in VimScript
+" Themes : storm  night day
+" 使用的主题
+ " let g:tokyonight_style = "storm"
+" let g:tokyonight_style = "night"
+" let g:tokyonight_style = "day"
+
+" vim.g.tokyonight_style == "night"
+
+" 使用函数斜体
+" let g:tokyonight_italic_functions = 1
+" 使用关键字斜体
+" let g:tokyonight_italic_keywords = 1
+" 使用变量和标识符斜体
+" let g:tokyonight_italic_variables =1
+"像windows一样的侧边栏 NvimTree获得透明背景
+let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+" Change the "hint" color to the "orange" color, and make the "error" color bright red
+" 将“提示”变为橙色 “错误"变成红色
+let g:tokyonight_colors = {
+  \ 'hint': 'orange',
+  \ 'error': '#ff0000'
+\ }
 
 " ===================== Start of Plugin Settings =====================
 
