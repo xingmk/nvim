@@ -1,37 +1,35 @@
-" __  ____   __  _   ___     _____ __  __ 
-"|  \/  \ \ / / | \ | \ \   / /_ _|  \/  |  
-"| |\/| |\ V /  |  \| |\ \ / / | || |\/| |  
-"| |  | | | |   | |\  | \ V /  | || |  | |
-"|_|  |_| |_|   |_| \_|  \_/  |___|_|  |_|
+"   _   ___     _____ __  __ 
+"  | \ | \ \   / /_ _|  \/  |  
+"  |  \| |\ \ / / | || |\/| |  
+"  | |\  | \ V /  | || |  | |
+"  |_| \_|  \_/  |___|_|  |_|
 
 " ===
 " === Auto load for first time uses
 " ===
-"""if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
-"""	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
-"""				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
+	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+let g:nvim_plugins_installation_competed=1
+
+""" if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
 """	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 """endif
 
-""if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
-""	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-""endif
+" Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
+let has_machine_specific_file = 1
+if empty(glob('~/.config/nvim/_machine_specific.vim'))
+	let has_machine_specific_file = 0
+	silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
+endif
+source $HOME/.config/nvim/default_configs/_machine_specific_default.vim
+
 
 " ===
-" === Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
-" ===
-"""let has_machine_specific_file = 1
-"""if empty(glob('~/.config/nvim/_machine_specific.vim'))
-"""	let has_machine_specific_file = 0
-"""	silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
-"""endif
-"""source $HOME/.config/nvim/default_configs/_machine_specific_default.vim
-
-" === Restore Cursor Position
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" ===
-" === System
+" === System Config
 " ===
 " Scanf kinds of files
 filetype on         
@@ -70,67 +68,67 @@ set path+=**
 set grepprg=grep\ -nH\ $*
 " Let mouse have a change by inseart 
 set mouse=a                        " using mouse
-" set mouse-=a                       " forbid mouse
-set cursorcolumn                   "  vertical mouse_line
+set cursorcolumn                   " vertical mouse_line
+set wrap	                       " Prevent auto line split
+set autochdir                      " change the current working directory
+set wildmenu                       " give more chances for commands
+set nocompatible                   " make the plugs smooth running
+set cursorline                     " make a line
+set number                         " set line number 
+set relativenumber                 " set relative number
+set showcmd			               " watch the command
+set laststatus=2                   " to set the status line
+set showmatch	                   " match () 
+set ruler                
+set clipboard+=unnamedplus
 
+" Make the Cursor like windows by inserting
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" Restore Cursor Position
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
+
+
+" ===
+" === Basic Mappings
+" ===
+" Set leader as space
+let mapleader =" "              
+" Prevent incorrect backgroung rendering (to make fixed background)
+let &t_ut=''                   
+" Quit && Save
+nnoremap <LEADER>q :q<CR>
+nnoremap <LEADER>w :w<CR>
+nnoremap <LEADER>wq :wq<CR>
+nnoremap Q :q!<CR>
+nnoremap W :w!<CR>
+nnoremap WQ :wq!<CR>
+" Copy to system clipboard
+vnoremap Y "+y 
+" Adjacent duplicate words
+map <LEADER>dw /\(\<\w\+\>\)\_s*\1
+" Back to screen center 
+imap <C-a> <Esc>zza
+nmap <C-a> zz
+" Replace
+nnoremap <leader>re :s/     
+nnoremap <leader>rea :%s/   
+" Cancle high light
+noremap <leader><CR> :nohlsearch<CR>  
+" Open the vimrc file anytime
+nnoremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
+" Bookmarks 
+noremap bm :SignatureToggle<CR>
+noremap bmr :SignatureRefresh<CR>
 " Auto complete
 inoremap ( ()<LEFT>
 inoremap [ []<LEFT>
 inoremap { {}<LEFT>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
-
-" Auto change directory to current dir
-autocmd BufEnter * silent! lcd %:p:h
-
-
-let mapleader =" "             " Set leader as space 
-let &t_ut=''                   " Prevent incorrect backgroung rendering (to make fixed background)
-set wrap	                   " Prevent auto line split
-set autochdir                  " change the current working directory
-set wildmenu                   " give more chances for commands
-set nocompatible               " make the plugs smooth running
-set cursorline                 " make a line
-set number                     " set line number 
-set relativenumber             " set relative number
-set showcmd			           " watch the command
-set laststatus=2                 " to set the status line
-set showmatch	               " match () 
-set ruler                
-set clipboard+=unnamedplus
-
-" ===
-" === Basic Mappings
-" ===
-" Copy to system clipboard
-vnoremap Y "+y 
-" Adjacent duplicate words
-map <LEADER>dw /\(\<\w\+\>\)\_s*\1
-" Quit && Save
-map Q :q<CR>
-map W :w<CR>
-map WQ :wq<CR>
-" Back to screen center 
-imap <C-a> <Esc>zza
-nmap <C-a> zz
-" replace
-nnoremap <leader>re :s/
-nnoremap <leader>rea :%s/
-" Spelling Check with <space>sc
-map <LEADER>sc :set spell!<CR>
-noremap <C-s> ea<C-x>s
-inoremap <C-s> <Esc>ea<C-x>s
-" Bookmarks 
-noremap bm :SignatureToggle<CR>
-noremap bmr :SignatureRefresh<CR>
-" Cancle high light
-noremap <leader><CR> :nohlsearch<CR>  
-" Open the vimrc file anytime
-noremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
-
 
 " Press ` to change case (instead of ~)
     "map ` ~
@@ -141,6 +139,7 @@ noremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
 "noremap s <nop>
         " Example : let something empty
         " map x <nop>
+
 
 " ===
 " === Cursor Movement
@@ -154,9 +153,7 @@ noremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
 noremap <silent> j h
 noremap <silent> k j
 noremap <silent> i k
-noremap <silent> gu gk
-noremap <silent> ge gj
-" When in insert
+" When in inserting
 inoremap <silent> <C-j> <left>
 inoremap <silent> <C-l> <right>
 inoremap <silent> <C-k> <down>
@@ -166,13 +163,13 @@ inoremap jj <esc>
 noremap <silent> h i
 noremap <silent> H I
 " i/k keys for 5 times k/j (faster navigation)
- noremap <silent> <C-k> 5j
+ noremap <silent> K 5j
+ noremap <silent> I 5k
  noremap <silent> <C-n> 5j
- noremap <silent> <C-i> 5k
  noremap <silent> <C-p> 5k
 " noremap <silent> K 5j
 " noremap <silent> I 5k
-" Ctrl + U or N will move up/down the view port without moving the cursor
+" Ctrl + e or f will move up/down the view port without moving the cursor
 " noremap <C-u> 5<C-y>
 " noremap <C-n> 5<C-e>
 " inoremap <C-u> <Esc>5<C-y>a
@@ -181,27 +178,41 @@ noremap <C-e> 5<C-y>
 noremap <C-f> 5<C-e>
 "inoremap I <Esc>5<C-y>a
 "inoremap K <Esc>5<C-e>a
- "inoremap <silent> <C-i> <Esc>5<C-y>a
- "inoremap <silent> <C-k> <Esc>5<C-e>a
- "inoremap <silent> <C-n> <Esc>5<C-e>a
- "inoremap <silent> <C-p> <Esc>5<C-y>a
- inoremap <silent> <C-e> <Esc>5<C-y>a
- inoremap <silent> <C-f> <Esc>5<C-e>a
+"inoremap <silent> <C-i> <Esc>5<C-y>a
+"inoremap <silent> <C-k> <Esc>5<C-e>a
+"inoremap <silent> <C-n> <Esc>5<C-e>a
+"inoremap <silent> <C-p> <Esc>5<C-y>a
+inoremap <silent> <C-e> <Esc>5<C-y>a
+inoremap <silent> <C-f> <Esc>5<C-e>a
 " Change the world
 "noremap <C-w> 5w
 "noremap <C-b> 5b
 "inoremap <C-w> <Esc>5wa
 "inoremap <C-b> <Esc>5ba
 map <silent> s b
-noremap <silent> <C-w> 5w
-noremap <silent> <C-s> 5b
-inoremap <silent> <C-w> <Esc>5wa
-inoremap <silent> <C-s> <Esc>5ba
+noremap <silent> <C-w> 3w
+noremap <silent> <C-s> 3b
+inoremap <silent> <C-w> <Esc>3wa
+inoremap <silent> <C-s> <Esc>3ba
 " Search
 noremap - N
 noremap = n
 
-source  $HOME/.config/nvim/cursor.vim
+" source  $HOME/.config/nvim/cursor.vim
+                
+
+" ===
+" === Command Mode Cursor Movement
+" ===
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+"cnoremap <M-b> <S-Left>
+"cnoremap <M-w> <S-Right>
+
 
 " ===
 " === Window management
@@ -247,29 +258,44 @@ map tl :+tabnext<CR>
 map tmj :-tabmove<CR>
 map tml :+tabmove<CR> 
 
-" ===
-" === Command Mode Cursor Movement
-" ===
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
-cnoremap <M-b> <S-Left>
-cnoremap <M-w> <S-Right>
 
 " ===
 " === Markdown Settings
 " ===
 " Snippets
 source $HOME/.config/nvim/md-snippets.vim
-" auto spell
+" Auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 
 " ===
-" === Compile function
+" ===  Other useful stuff
 " ===
+" Open a new instance of st with the cwd
+nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
+" Opening a terminal window
+noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
+" Press space twice to jump to the next '       ' and edit it
+noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
+" Spelling Check with <space>sc
+map <LEADER>sc :set spell!<CR>
+noremap <C-c> ea<C-x>s
+inoremap <C-c> <Esc>ea<C-x>s
+" Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
+" Call figlet
+noremap tx :r !figlet 
+" find and replace
+noremap \s :%s//g<left><left>
+" set wrap
+noremap <LEADER>sw :set wrap<CR>
+" press f10 to show hlgroup
+function! SynGroup()
+	let l:s = synID(line('.'), col('.'), 1)
+	echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+map <F10> :call SynGroup()<CR>
+
+" Compile function
 noremap r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
@@ -277,7 +303,7 @@ func! CompileRunGcc()
 		set splitbelow
 		:sp
 		:res -5
-		term gcc -ansi -Wall % -o %< && time ./%<
+		term gcc % -o %< && time ./%<
 	elseif &filetype == 'cpp'
 		set splitbelow
 		exec "!g++ -std=c++11 % -Wall -o %<"
@@ -315,6 +341,11 @@ func! CompileRunGcc()
 		set splitbelow
 		:sp
 		:term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
+	elseif &filetype == 'racket'
+		set splitbelow
+		:sp
+		:res -5
+		term racket %
 	elseif &filetype == 'go'
 		set splitbelow
 		:sp
@@ -327,100 +358,71 @@ endfunc
 " ===
 " === Install Plugins with Vim-Plug
 " ===
-call plug#begin('~/.vim/plugged')
+" call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " === Dressed
-
 " Pretty Dressed-vim
-Plug 'vim-airline/vim-airline'          " state of nvim
+Plug 'theniceboy/eleline.vim',{ 'branch': 'no-scrollbar' }
+" Plug 'vim-airline/vim-airline'          " state of nvim
 Plug 'vim-airline/vim-airline-themes'   " themes of airline
 Plug 'bling/vim-bufferline'             " state of bufferline
+Plug 'mg979/vim-xtabline'               " themes of bufferline
+
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }     " tokyonight themes 
+Plug 'theniceboy/nvim-deus'                            " deus themes
 
 
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }     " themes of nvim
-Plug 'ayu-theme/ayu-vim'
-Plug 'theniceboy/nvim-deus'
-Plug 'arzg/vim-colors-xcode'
+" === Default
 
-" === Config
+" Auto Complete
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Vim Applications
-Plug 'itchyny/calendar.vim'
-
-" Taglist
-Plug 'liuchengxu/vista.vim'
-
-" Debugger
-" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
-
-" Undo Tree
-" Plug 'preservim/nerdtree'
-Plug 'mbbill/undotree'
-
-" File navigation
-"Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-"Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
-Plug 'kevinhwang91/rnvimr'
-Plug 'airblade/vim-rooter'
-Plug 'pechorin/any-jump.vim'
-
-" Auto delete
+" Smart delete
 Plug 'jiangmiao/auto-pairs'
 "Plug 'wellle/tmux-complete.vim'
 
-" Explation
+" Smart Explation
 Plug 'preservim/nerdcommenter'
 
 " Smart visual
-"Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
-" Auto Complete
-"Plug 'Valloric/YouCompleteMe'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'davidhalter/jedi-vim'
-
-"Bookmarks
- " Plug 'kshenoy/vim-signature'
+" Debugger
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'gisphm/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
 
+
+" === Language
+
 " Snippets
 " Plug 'SirVer/ultisnips'
 Plug 'theniceboy/vim-snippets'
 
-" Debugger 
-
-Plug 'puremourning/vimspector'
-
-
-" === Language
-
-" Markdown
-" 实时预览
+" Markdown preview
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
-" vim 中个人的 wiki
+" Markdown wiki
 " Plug 'vimwiki/vimwiki'
 
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
 Plug 'dkarter/bullets.vim'
 
+
 " Go
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
 " Python
-" Plug 'vim-scripts/indentpython.vim'
-" Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
+" Plug 'vim-scripts/indentpython.vim'
+" Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 " Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
 " Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
-Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 
 " Swift
 Plug 'keith/swift.vim'
@@ -450,8 +452,10 @@ Plug 'peitalin/vim-jsx-typescript'
 " Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'pantharshit00/vim-prisma'
 
-"=== Other useful utilities
 
+" === Others
+
+" Other useful utilities
 Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 " Plug 'makerj/vim-pdf'
 "Plug 'xolox/vim-session'
@@ -461,90 +465,100 @@ Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 " Plug 'MarcWeber/vim-addon-mw-utils'
 " Plug 'kana/vim-textobj-user'
 " Plug 'roxma/nvim-yarp'
+" Undo Tree
+" Plug 'preservim/nerdtree'
+Plug 'mbbill/undotree'
 
+" Vim Applications
+Plug 'itchyny/calendar.vim'
+
+" Taglist
+Plug 'liuchengxu/vista.vim'
+
+" File navigation
+"Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+"Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'kevinhwang91/rnvimr'
+Plug 'airblade/vim-rooter'
+Plug 'pechorin/any-jump.vim'
+
+"Bookmarks
+ " Plug 'kshenoy/vim-signature'
+ 
 call plug#end()
 
 " ===
 " === Dress up my vim
 " ===
+" === deus
 " forbid tmux && nvim background 混乱
 if &term =~ '256color'
     set t_ut=
 endif
 
 set termguicolors              " enable true colors support
-"set background=light
-"set background=dark
-
-color deus
-"color dracula
-"color one
-"color gruvbox
-"let ayucolor="light"
-"color ayu
-"color xcodelighthc
-
+silent! color deus
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"let ayucolor="mirage"
-"let g:oceanic_next_terminal_bold = 1
-"let g:oceanic_next_terminal_italic = 1
-"let g:one_allow_italics = 1
 
 hi NonText ctermfg=gray guifg=grey10
 " hi SpecialKey ctermfg=blue guifg=grey70
 
-
-"=== tokyonight
-" Load the colorscheme
+" === tokyonight
+"" Load the colorscheme
 " colorscheme tokyonight
 
 " let g:lightline = {'colorscheme': 'tokyonight'}
 
 " Example config in VimScript
 " Themes : storm  night day
-" 使用的主题
- " let g:tokyonight_style = "storm"
-" let g:tokyonight_style = "night"
-" let g:tokyonight_style = "day"
+"" 使用的主题
+" let g:tokyonight_style = "storm"
+ " let g:tokyonight_style = "night"
+ " let g:tokyonight_style = "day"
 
 " vim.g.tokyonight_style == "night"
 
-" 使用函数斜体
+"" 使用函数斜体
 " let g:tokyonight_italic_functions = 1
-" 使用关键字斜体
+"" 使用关键字斜体
 " let g:tokyonight_italic_keywords = 1
-" 使用变量和标识符斜体
+"" 使用变量和标识符斜体
 " let g:tokyonight_italic_variables =1
-"像windows一样的侧边栏 NvimTree获得透明背景
-let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+"" 像windows一样的侧边栏 NvimTree获得透明背景
+" let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
 " Change the "hint" color to the "orange" color, and make the "error" color bright red
-" 将“提示”变为橙色 “错误"变成红色
-let g:tokyonight_colors = {
-  \ 'hint': 'orange',
-  \ 'error': '#ff0000'
-\ }
+"" 将“提示”变为橙色 “错误"变成红色
+" let g:tokyonight_colors = {
+"   \ 'hint': 'orange',
+"   \ 'error': '#ff0000'
+" \ }
 
 " ===================== Start of Plugin Settings =====================
+" ===
+" === eleline.vim
+" ===
+let g:airline_powerline_fonts = 0
+
 
 " ===
 " === vim-instant-markdown
 " ===
-nnoremap mp :InstantMarkdownPreview<CR>
+nnoremap <LEADER>p :InstantMarkdownPreview<CR>
 
-filetype plugin on
 let g:instant_markdown_slow = 1
 let g:instant_markdown_autostart = 0
-let g:instant_markdown_open_to_the_world = 1
-let g:instant_markdown_allow_unsafe_content = 1
-let g:instant_markdown_allow_external_content = 0
-let g:instant_markdown_mathjax = 1
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
 let g:instant_markdown_mermaid = 1
 let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
-let g:instant_markdown_autoscroll = 0
+let g:instant_markdown_autoscroll = 1
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 1
-" let g:instant_markdown_browser = "firefox --new-window"
-" let g:instant_markdown_browser = "chromium"
 let g:instant_markdown_browser = "firefox"
 
 " ===
@@ -559,43 +573,10 @@ let g:vmt_fence_closing_text = '/TOC'
 " ===
 " === vim-table-mode (markdown)
 " ===
-noremap <LEADER>tm :TableModeToggle<CR>
+noremap <LEADER>m :TableModeToggle<CR>
 "let g:table_mode_disable_mappings = 1
 let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
-" ==
-" == Vim-multiple-cursor (markdown)
-" ==
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_start_word_key      = '<c-k>'
-let g:multi_cursor_select_all_word_key = '<a-k>'
-let g:multi_cursor_start_key           = 'g<c-k>'
-let g:multi_cursor_select_all_key      = 'g<a-k>'
-let g:multi_cursor_next_key            = '<c-k>'
-let g:multi_cursor_prev_key            = '<c-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
-
-let g:vimwiki_list = [{
-  \ 'automatic_nested_syntaxes':1,
-  \ 'path_html': '~/wiki_html',
-  \ 'path': '~/wiki',
-  \ 'template_path': '~/.vim/vimwiki/template/',
-  \ 'syntax': 'markdown',
-  \ 'ext':'.md',
-  \ 'template_default':'markdown',
-  \ 'custom_wiki2html': '~/.vim/vimwiki/wiki2html.sh',
-  \ 'template_ext':'.html'
-\}]
-
-au BufRead,BufNewFile *.md set filetype=vimwiki
-
-let g:taskwiki_sort_orders={"C": "pri-"}
-let g:taskwiki_syntax = 'markdown'
-let g:taskwiki_markdown_syntax='markdown'
-let g:taskwiki_markup_syntax='markdown'
- 
-source ~/.config/nvim/md-snippets.vim
 
 "===
 "=== Coc.nvim
@@ -610,22 +591,14 @@ endif
 au Filetype FILETYPE let b:AutoPairs = {"(": ")"}
 au FileType php      let b:AutoPairs = AutoPairsDefine({'<?' : '?>', '<?php': '?>'})
 
-" TextEdit might fail if hidden is not set.
-" 设置缓冲区 为保存文件时可以打开其他的文件
-set hidden	
-
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-" nvim 响应跟快
+" 使 nvim 响应跟快
 set updatetime=100
 
 " Don't pass messages to |ins-completion-menu|.
 " 补全时少打出一些没有用的东西
 set shortmess+=c
-
-" Recently vim can merge signcolumn and number column into one
-" 行号报错合成一个数列
-" set signcolumn=number
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
