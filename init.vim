@@ -466,7 +466,6 @@ Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 " Plug 'kana/vim-textobj-user'
 " Plug 'roxma/nvim-yarp'
 " Undo Tree
-" Plug 'preservim/nerdtree'
 Plug 'mbbill/undotree'
 
 " Vim Applications
@@ -476,8 +475,6 @@ Plug 'itchyny/calendar.vim'
 Plug 'liuchengxu/vista.vim'
 
 " File navigation
-"Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-"Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
@@ -542,6 +539,45 @@ hi NonText ctermfg=gray guifg=grey10
 " ===
 let g:airline_powerline_fonts = 0
 
+"===
+"=== Ariline 
+"===
+set t_Co=256
+set laststatus=2
+
+" Support powerline fonts
+let g:airline_powerline_fonts = 1  
+let g:airline#extensions#tabline#enabled = 1 
+
+"let g:airline_theme='moloai' 
+"if !exists('g:airline_symbols')
+"let g:airline_symbols = {}
+"endif
+"let g:airline_left_sep = '▶'
+"let g:airline_left_alt_sep = '❯'
+"let g:airline_right_sep = '◀'
+"let g:airline_right_alt_sep = '❮'
+"let g:airline_symbols.linenr = '¶'
+"let g:airline_symbols.branch = '⎇'
+
+" ===
+" === vimspector
+" ===
+let g:vimspector_enable_mappings = 'HUMAN'
+function! s:read_template_into_buffer(template)
+	" has to be a function to avoid the extra space fzf#run insers otherwise
+	execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
+endfunction
+command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+			\   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
+			\   'down': 20,
+			\   'sink': function('<sid>read_template_into_buffer')
+			\ })
+" noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+sign define vimspectorBP text=☛ texthl=Normal
+sign define vimspectorBPDisabled text=☞ texthl=Normal
+sign define vimspectorPC text=❯ texthl=SpellBad
+
 
 " ===
 " === vim-instant-markdown
@@ -583,28 +619,34 @@ let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 "==
 nnoremap tt :CocCommand explorer<CR>
 
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
-endif
+set updatetime=100           " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+                             " delays and poor user experience.
+set shortmess+=c             " Don't pass messages to |ins-completion-menu|.
 
-au Filetype FILETYPE let b:AutoPairs = {"(": ")"}
-au FileType php      let b:AutoPairs = AutoPairsDefine({'<?' : '?>', '<?php': '?>'})
+" 相同函数进行高亮度
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-" 使 nvim 响应跟快
-set updatetime=100
+" 查找代码报错
+nmap <silent> zi <Plug>(coc-diagnostic-prev)
+nmap <silent> zk <Plug>(coc-diagnostic-next)
 
-" Don't pass messages to |ins-completion-menu|.
-" 补全时少打出一些没有用的东西
-set shortmess+=c
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Symbol renaming. (变量重新命名)
+nmap <leader>rn <Plug>(coc-rename)
+
+" Use h to show documentation in preview window.
+nnoremap <silent> <LEADER>h :call <SID>show_documentation()<CR>
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-" 可用tab 补全
-inoremap <silent><expr> <TAB>
+"  启用 TAB 补全
+inoremap <silent><expr> <TAB> 
 	\ pumvisible() ? "\<C-n>" :
 	\ <SID>check_back_space() ? "\<TAB>" :
 	\ coc#refresh()
@@ -614,35 +656,9 @@ function! s:check_back_space() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Use <c-space> to trigger completion.
-" 写入模式下 使用 control+o  调出补全
-inoremap <silent><expr> <c-o> coc#refresh()
-
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-" 查找代码报错
-nmap <silent> cp <Plug>(coc-diagnostic-prev)
-nmap <silent> cn <Plug>(coc-diagnostic-next)
-
-" Symbol renaming.
-" 重命名变量
-nmap <leader>rn <Plug>(coc-rename)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-	
-" Use h to show documentation in preview window.
-" 显示相关文档
-nnoremap <silent> <LEADER>h :call <SID>show_documentation()<CR>
-
+                                
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
-      
     execute 'h '.expand('<cword>')
   elseif (coc#rpc#ready())
     call CocActionAsync('doHover')
@@ -651,17 +667,22 @@ function! s:show_documentation()
   endif
  endfunction
 
-" 相同函数进行高亮度
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for do codeAction of selected region
-" 选中后可给予更多选项
+" Remap for do codeAction of selected region (选中后可给予更多选项)
 function! s:cocActionsOpenFromSelected(type) abort
   execute 'CocCommand actions.open ' . a:type
 endfunction
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>aw  <Plug>(coc-codeaction-selected)
 " nmap <leader>aw  <Plug>(coc-codeaction-selected)w
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+
+au Filetype FILETYPE let b:AutoPairs = {"(": ")"}
+au FileType php      let b:AutoPairs = AutoPairsDefine({'<?' : '?>', '<?php': '?>'})
 
 let g:coc_global_extensions = [
 	\ 'coc-css',
@@ -694,57 +715,30 @@ let g:coc_global_extensions = [
 	\ 'coc-yaml',
 	\ 'coc-yank']
 
-"===
-"=== Ariline 
-"===
-set t_Co=256
-"永远显示状态栏
-set laststatus=2
-
-"支持 powerline 字体
-let g:airline_powerline_fonts = 1  
-let g:airline#extensions#tabline#enabled = 1 
-
-"murmur配色不错
-"let g:airline_theme='moloai' 
-"if !exists('g:airline_symbols')
-"let g:airline_symbols = {}
-"endif
-"let g:airline_left_sep = '▶'
-"let g:airline_left_alt_sep = '❯'
-"let g:airline_right_sep = '◀'
-"let g:airline_right_alt_sep = '❮'
-"let g:airline_symbols.linenr = '¶'
-"let g:airline_symbols.branch = '⎇'
 
 
 "===
-"===NerdCommenter   (Explation) 
+"=== NerdCommenter  (Explation) 
 "===
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
-
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs = 1
-
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
-
 " Set a language to use its alternate delimiters by default
 let g:NERDAltDelims_java = 1
-
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' }}
-
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
-
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
+
 " ===
-" === Leaderf
+" === LeaderF (fuzzy search)
 " ===
 " let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
@@ -767,7 +761,7 @@ let g:Lf_UseMemoryCache = 0
 let g:Lf_UseCache = 0
 
 " ===
-" === Undotree
+" === Undotree (about history)
 " ===
 noremap L :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 1
@@ -777,30 +771,12 @@ let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 function g:Undotree_CustomMap()
-	nmap <buffer> u <plug>UndotreeNextState
-	nmap <buffer> e <plug>UndotreePreviousState
-	nmap <buffer> U 5<plug>UndotreeNextState
-	nmap <buffer> E 5<plug>UndotreePreviousState
+	nmap <buffer> k <plug>UndotreeNextState
+	nmap <buffer> i <plug>UndotreePreviousState
+	nmap <buffer> K 5<plug>UndotreeNextState
+	nmap <buffer> I 5<plug>UndotreePreviousState
 endfunc
 
-"===
-"=== NERDTree
-"===
-"nnoremap  nt  :NERDTree <CR> 
-"nnoremap  nto :NERDTreeToggle<CR>
-"nnoremap  nfi :NERDTreeFind <CR>
-"nnoremap  nfo :NERDTreeFocus <CR> 
-"
-"let NERDTreeMapOpenExpl = ""
-"let NERDTreeMapUpdir = "i"
-"let NERDTreeMapUpdirKeepOpen = "l"
-"let NERDTreeMapOpenSplit = ""
-"let NERDTreeOpenVSplit = ""
-"let NERDTreeMapActivateNode = "a"
-"let NERDTreeMapOpenInTab = "o"
-"let NERDTreeMapPreview = ""
-"let NERDTreeMapCloseDir = "n"
-"let NERDTreeMapChangeRoot = "y"
 
 " ===
 " === vim-bookmarks
@@ -828,21 +804,21 @@ endfunc
 " ===
 " === vim-visual-multi
 " ===
-"let g:VM_theme             = 'iceblue'
-"let g:VM_default_mappings = 0
-"let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
-"let g:VM_maps                       = {}
-"let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-"let g:VM_maps['i']                  = 'k'
-"let g:VM_maps['I']                  = 'K'
-"let g:VM_maps['Find Under']         = '<C-k>'
-"let g:VM_maps['Find Subword Under'] = '<C-k>'
-"let g:VM_maps['Find Next']          = ''
-"let g:VM_maps['Find Prev']          = ''
-"let g:VM_maps['Remove Region']      = 'q'
-"let g:VM_maps['Skip Region']        = '<c-n>'
-"let g:VM_maps["Undo"]               = 'l'
-"let g:VM_maps["Redo"]               = '<C-r>'
+let g:VM_theme             = 'iceblue'
+let g:VM_default_mappings = 0
+let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
+let g:VM_maps                       = {}
+" let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
+let g:VM_maps['i']                  = 'h'
+let g:VM_maps['I']                  = 'H'
+let g:VM_maps['Find Under']         = '<C-h>'
+let g:VM_maps['Find Subword Under'] = '<C-H>'
+let g:VM_maps['Find Next']          = ''
+let g:VM_maps['Find Prev']          = ''
+let g:VM_maps['Remove Region']      = 'q'
+let g:VM_maps['Skip Region']        = '<c-n>'
+let g:VM_maps["Undo"]               = 'l'
+let g:VM_maps["Redo"]               = '<C-r>'
 
 " ===
 " === Bullets.vim
