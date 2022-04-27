@@ -40,7 +40,7 @@ filetype plugin indent on
 syntax on
 syntax enable
 set encoding=utf-8       
-set clipboard=unnamed
+set clipboard+=unnamed              
 set foldmethod=indent              "fold the codes 
 set foldlevel=99
 " Set nobackup
@@ -80,7 +80,7 @@ set showcmd			               " watch the command
 set laststatus=2                   " to set the status line
 set showmatch	                   " match () 
 set ruler                
-set clipboard+=unnamedplus
+set clipboard=unnamedplus          " share the yank with system 
 
 " Make the Cursor like windows by inserting
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -108,6 +108,9 @@ nnoremap W :w!<CR>
 nnoremap WQ :wq!<CR>
 " Copy to system clipboard
 vnoremap Y "+y 
+" noremap yay "ayy
+" noremap yap "ap 
+" noremap yAy "yAy       "added clipboard
 " Adjacent duplicate words
 map <LEADER>dw /\(\<\w\+\>\)\_s*\1
 " Back to screen center 
@@ -394,6 +397,8 @@ Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'gisphm/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
+
+" Yank
 
 
 " === Language
@@ -776,6 +781,31 @@ function g:Undotree_CustomMap()
 	nmap <buffer> K 5<plug>UndotreeNextState
 	nmap <buffer> I 5<plug>UndotreePreviousState
 endfunc
+
+
+" ===
+" === rnvimr
+" ===
+let g:rnvimr_ex_enable = 1
+let g:rnvimr_pick_enable = 1
+let g:rnvimr_draw_border = 0
+" let g:rnvimr_bw_enable = 1
+highlight link RnvimrNormal CursorLine
+nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+let g:rnvimr_action = {
+            \ '<C-t>': 'NvimEdit tabedit',
+            \ '<C-x>': 'NvimEdit split',
+            \ '<C-v>': 'NvimEdit vsplit',
+            \ 'gw': 'JumpNvimCwd',
+            \ 'yw': 'EmitRangerCwd'
+            \ }
+let g:rnvimr_layout = { 'relative': 'editor',
+            \ 'width': &columns,
+            \ 'height': &lines,
+            \ 'col': 0,
+            \ 'row': 0,
+            \ 'style': 'minimal' }
+let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
 
 
 " ===
