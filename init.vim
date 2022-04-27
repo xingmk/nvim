@@ -277,8 +277,6 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 " Opening a terminal window
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
-" Press space twice to jump to the next '       ' and edit it
-noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 " Spelling Check with <space>sc
 map <LEADER>sc :set spell!<CR>
 noremap <C-c> ea<C-x>s
@@ -355,6 +353,8 @@ func! CompileRunGcc()
 		:term go run .
 	endif
 endfunc
+
+source $HOME/.config/nvim/conflict.vim
 
 " let g:plug_url_format='https//git::@hub.fastgit.org/%s.git'
 
@@ -565,6 +565,7 @@ let g:airline#extensions#tabline#enabled = 1
 "let g:airline_symbols.linenr = '¶'
 "let g:airline_symbols.branch = '⎇'
 
+
 " ===
 " === vimspector
 " ===
@@ -743,27 +744,57 @@ let g:NERDToggleCheckAllLines = 1
 
 
 " ===
+" === FZF
+" ===
+
+let g:fzf_preview_window = 'right:40%'
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:delete_buffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
+command! BD call fzf#run(fzf#wrap({
+  \ 'source': s:list_buffers(),
+  \ 'sink*': { lines -> s:delete_buffers(lines) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+\ }))
+
+noremap <c-d> :BD<CR>
+
+let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
+
+
+
+" ===
 " === LeaderF (fuzzy search)
 " ===
 " let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_PreviewCode = 1
-let g:Lf_ShowHidden = 1
-let g:Lf_ShowDevIcons = 1
-let g:Lf_CommandMap = {
-\   '<C-k>': ['<C-i>'],
-\   '<C-j>': ['<C-k>'],
-\   '<C-]>': ['<C-v>'],
-\   '<C-p>': ['<C-n>'],
-\}
-let g:Lf_UseVersionControlTool = 0
-let g:Lf_IgnoreCurrentBufferName = 1
-let g:Lf_WildIgnore = {
-        \ 'dir': ['.git', 'vendor', 'node_modules'],
-        \ 'file': ['__vim_project_root', 'class']
-        \}
-let g:Lf_UseMemoryCache = 0
-let g:Lf_UseCache = 0
+" let g:Lf_PreviewInPopup = 1
+" let g:Lf_PreviewCode = 1
+" let g:Lf_ShowHidden = 1
+" let g:Lf_ShowDevIcons = 1
+" let g:Lf_CommandMap = {
+" \   '<C-k>': ['<C-i>'],
+" \   '<C-j>': ['<C-k>'],
+" \   '<C-]>': ['<C-v>'],
+" \   '<C-p>': ['<C-n>'],
+" \}
+" let g:Lf_UseVersionControlTool = 0
+" let g:Lf_IgnoreCurrentBufferName = 1
+" let g:Lf_WildIgnore = {
+"         \ 'dir': ['.git', 'vendor', 'node_modules'],
+"         \ 'file': ['__vim_project_root', 'class']
+"         \}
+" let g:Lf_UseMemoryCache = 0
+" let g:Lf_UseCache = 0
 
 " ===
 " === Undotree (about history)
