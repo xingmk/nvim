@@ -108,9 +108,9 @@ nnoremap W :w!<CR>
 nnoremap WQ :wq!<CR>
 " Copy to system clipboard
 vnoremap Y "+y 
-" noremap yay "ayy
-" noremap yap "ap 
-" noremap yAy "yAy       "added clipboard
+noremap yay "ayy
+noremap yap "ap 
+noremap yAy "yAy       "added clipboard
 " Adjacent duplicate words
 map <LEADER>dw /\(\<\w\+\>\)\_s*\1
 " Back to screen center 
@@ -358,6 +358,7 @@ source $HOME/.config/nvim/conflict.vim
 
 " let g:plug_url_format='https//git::@hub.fastgit.org/%s.git'
 
+
 " ===
 " === Install Plugins with Vim-Plug
 " ===
@@ -376,49 +377,47 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }     " tokyonight themes
 Plug 'theniceboy/nvim-deus'                            " deus themes
 
 
-" === Default
-
+" === Default system
 " Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Smart delete
-Plug 'jiangmiao/auto-pairs'
-"Plug 'wellle/tmux-complete.vim'
-
-" Smart Explation
-Plug 'preservim/nerdcommenter'
-
-" Smart visual
-" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Debugger
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 
+" Smart Delete, Explation, Visual
+Plug 'jiangmiao/auto-pairs'
+Plug 'preservim/nerdcommenter'
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" File fuzzy search
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+
 " Git
-Plug 'tpope/vim-fugitive'
-Plug 'gisphm/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
+" Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
+Plug 'theniceboy/fzf-gitignore', { 'do': ':UpdateRemotePlugins' }
+Plug 'airblade/vim-gitgutter'
+Plug 'cohama/agit.vim'
+Plug 'kdheepak/lazygit.nvim'
+"Plug 'mhinz/vim-signify'
 
-" Yank
-
-
-" === Language
+" Undo Tree
+Plug 'mbbill/undotree'
 
 " Snippets
 " Plug 'SirVer/ultisnips'
 Plug 'theniceboy/vim-snippets'
 
-" Markdown preview
+
+" === Language
+" Markdown Preview, Wiki
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
-" Markdown wiki
 " Plug 'vimwiki/vimwiki'
 
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
 Plug 'dkarter/bullets.vim'
-
-
-" Go
-Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
 " Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
@@ -429,37 +428,35 @@ Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 " Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
 " Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
 
-" Swift
-Plug 'keith/swift.vim'
-Plug 'arzg/vim-swift'
+" Go
+Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
 " HTML, CSS, JavaScript, Typescript, PHP, JSON, etc.
-Plug 'elzr/vim-json'
-Plug 'neoclide/jsonc.vim'
-Plug 'othree/html5.vim'
-Plug 'alvan/vim-closetag'
-" Plug 'hail2u/vim-css3-syntax' " , { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Plug 'spf13/PIV', { 'for' :['php', 'vim-plug'] }
-" Plug 'pangloss/vim-javascript', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Plug 'jelera/vim-javascript-syntax', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-"Plug 'jaxbot/browserlink.vim'
-Plug 'HerringtonDarkholme/yats.vim'
-" Plug 'posva/vim-vue'
-" Plug 'evanleck/vim-svelte', {'branch': 'main'}
-" Plug 'leafOfTree/vim-svelte-plugin'
-" Plug 'leafgarland/typescript-vim'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'pantharshit00/vim-prisma'
+"Plug 'elzr/vim-json'
+"Plug 'neoclide/jsonc.vim'
+"Plug 'othree/html5.vim'
+"Plug 'alvan/vim-closetag'
+"" Plug 'hail2u/vim-css3-syntax' " , { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
+"" Plug 'spf13/PIV', { 'for' :['php', 'vim-plug'] }
+"" Plug 'pangloss/vim-javascript', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
+"Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
+"" Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
+"" Plug 'jelera/vim-javascript-syntax', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
+""Plug 'jaxbot/browserlink.vim'
+"Plug 'HerringtonDarkholme/yats.vim'
+"" Plug 'posva/vim-vue'
+"" Plug 'evanleck/vim-svelte', {'branch': 'main'}
+"" Plug 'leafOfTree/vim-svelte-plugin'
+"" Plug 'leafgarland/typescript-vim'
+"Plug 'MaxMEllon/vim-jsx-pretty'
+"Plug 'pangloss/vim-javascript'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'peitalin/vim-jsx-typescript'
+"" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+"Plug 'pantharshit00/vim-prisma'
 
 
 " === Others
-
 " Other useful utilities
 Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 " Plug 'makerj/vim-pdf'
@@ -470,26 +467,21 @@ Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 " Plug 'MarcWeber/vim-addon-mw-utils'
 " Plug 'kana/vim-textobj-user'
 " Plug 'roxma/nvim-yarp'
-" Undo Tree
-Plug 'mbbill/undotree'
-
-" Vim Applications
-Plug 'itchyny/calendar.vim'
-
-" Taglist
-Plug 'liuchengxu/vista.vim'
 
 " File navigation
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'kevinhwang91/rnvimr'
 Plug 'airblade/vim-rooter'
 Plug 'pechorin/any-jump.vim'
 
+" Taglist
+Plug 'liuchengxu/vista.vim'
+
 "Bookmarks
- " Plug 'kshenoy/vim-signature'
+" Plug 'kshenoy/vim-signature'
  
+" Vim Applications
+Plug 'itchyny/calendar.vim'
+
 call plug#end()
 
 " ===
@@ -539,10 +531,13 @@ hi NonText ctermfg=gray guifg=grey10
 " \ }
 
 " ===================== Start of Plugin Settings =====================
+
+" ===================== Dressed nvim =====================
 " ===
-" === eleline.vim
+" === Eleline.vim (like airline)
 " ===
 let g:airline_powerline_fonts = 0
+
 
 "===
 "=== Ariline 
@@ -564,62 +559,8 @@ let g:airline#extensions#tabline#enabled = 1
 "let g:airline_right_alt_sep = '❮'
 "let g:airline_symbols.linenr = '¶'
 "let g:airline_symbols.branch = '⎇'
-
-
-" ===
-" === vimspector
-" ===
-let g:vimspector_enable_mappings = 'HUMAN'
-function! s:read_template_into_buffer(template)
-	" has to be a function to avoid the extra space fzf#run insers otherwise
-	execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
-endfunction
-command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
-			\   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
-			\   'down': 20,
-			\   'sink': function('<sid>read_template_into_buffer')
-			\ })
-" noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
-sign define vimspectorBP text=☛ texthl=Normal
-sign define vimspectorBPDisabled text=☞ texthl=Normal
-sign define vimspectorPC text=❯ texthl=SpellBad
-
-
-" ===
-" === vim-instant-markdown
-" ===
-nnoremap <LEADER>p :InstantMarkdownPreview<CR>
-
-let g:instant_markdown_slow = 1
-let g:instant_markdown_autostart = 0
-" let g:instant_markdown_open_to_the_world = 1
-" let g:instant_markdown_allow_unsafe_content = 1
-" let g:instant_markdown_allow_external_content = 0
-" let g:instant_markdown_mathjax = 1
-let g:instant_markdown_mermaid = 1
-let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
-let g:instant_markdown_autoscroll = 1
-let g:instant_markdown_port = 8888
-let g:instant_markdown_python = 1
-let g:instant_markdown_browser = "firefox"
-
-" ===
-" === vim-markdown-toc
-" ===
-"let g:vmt_auto_update_on_save = 0
-"let g:vmt_dont_insert_fence = 1
-let g:vmt_cycle_list_item_markers = 1
-let g:vmt_fence_text = 'TOC'
-let g:vmt_fence_closing_text = '/TOC'
-
-" ===
-" === vim-table-mode (markdown)
-" ===
-noremap <LEADER>m :TableModeToggle<CR>
-"let g:table_mode_disable_mappings = 1
-let g:table_mode_cell_text_object_i_map = 'k<Bar>'
-
-
+ 
+" ===================== Default =====================
 "===
 "=== Coc.nvim
 "==
@@ -721,27 +662,23 @@ let g:coc_global_extensions = [
 	\ 'coc-yaml',
 	\ 'coc-yank']
 
-
-
-"===
-"=== NerdCommenter  (Explation) 
-"===
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' }}
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-let g:NERDToggleCheckAllLines = 1
-
+" ===
+" === vimspector
+" ===
+let g:vimspector_enable_mappings = 'HUMAN'
+function! s:read_template_into_buffer(template)
+	" has to be a function to avoid the extra space fzf#run insers otherwise
+	execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
+endfunction
+command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+			\   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
+			\   'down': 20,
+			\   'sink': function('<sid>read_template_into_buffer')
+			\ })
+" noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+sign define vimspectorBP text=☛ texthl=Normal
+sign define vimspectorBPDisabled text=☞ texthl=Normal
+sign define vimspectorPC text=❯ texthl=SpellBad
 
 " ===
 " === FZF
@@ -795,6 +732,74 @@ let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 "         \}
 " let g:Lf_UseMemoryCache = 0
 " let g:Lf_UseCache = 0
+
+" ===
+" === lazygit.nvim
+" ===
+noremap <c-g> :LazyGit<CR>
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
+let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
+
+" ===================== Language =====================
+" ===
+" === vim-instant-markdown
+" ===
+nnoremap <LEADER>p :InstantMarkdownPreview<CR>
+
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
+let g:instant_markdown_mermaid = 1
+let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+let g:instant_markdown_autoscroll = 1
+let g:instant_markdown_port = 8888
+let g:instant_markdown_python = 1
+let g:instant_markdown_browser = "firefox"
+
+" ===
+" === vim-markdown-toc
+" ===
+"let g:vmt_auto_update_on_save = 0
+"let g:vmt_dont_insert_fence = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
+
+" ===
+" === vim-table-mode (markdown)
+" ===
+noremap <LEADER>m :TableModeToggle<CR>
+"let g:table_mode_disable_mappings = 1
+let g:table_mode_cell_text_object_i_map = 'k<Bar>'
+
+
+
+
+"===
+"=== NerdCommenter  (Explation) 
+"===
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' }}
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDToggleCheckAllLines = 1
+
+
 
 " ===
 " === Undotree (about history)
@@ -949,15 +954,6 @@ let g:go_highlight_types = 1
 let g:go_highlight_variable_assignments = 0
 let g:go_highlight_variable_declarations = 0
 let g:go_doc_keywordprg_enabled = 0
-
-" ===
-" === lazygit.nvim
-" ===
-noremap <c-g> :LazyGit<CR>
-let g:lazygit_floating_window_winblend = 0 " transparency of floating window
-let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
-let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
-let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 
 " ===================== End of Plugin Settings =====================
