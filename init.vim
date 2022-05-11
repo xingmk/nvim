@@ -413,7 +413,7 @@ Plug 'theniceboy/vim-snippets'
 " === Language
 " Markdown Preview, Wiki
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
-" Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'
 
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
