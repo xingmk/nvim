@@ -192,11 +192,11 @@ inoremap <silent> <C-f> <Esc>5<C-e>a
 "noremap <C-b> 5b
 "inoremap <C-w> <Esc>5wa
 "inoremap <C-b> <Esc>5ba
-map <silent> s b
+" map <silent> s b
 noremap <silent> <C-w> 3w
-noremap <silent> <C-s> 3b
+noremap <silent> <C-b> 3b
 inoremap <silent> <C-w> <Esc>3wa
-inoremap <silent> <C-s> <Esc>3ba
+inoremap <silent> <C-b> <Esc>3ba
 " Search
 noremap - N
 noremap = n
@@ -268,7 +268,7 @@ map tml :+tabmove<CR>
 " Snippets
 source $HOME/.config/nvim/md-snippets.vim
 " Auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell
+" autocmd BufRead,BufNewFile *.md setlocal spell
 
 " ===
 " ===  Other useful stuff
@@ -772,7 +772,8 @@ let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
 let g:instant_markdown_autoscroll = 0
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 1
- let g:instant_markdown_browser = "google-chrome-stable"
+" let g:instant_markdown_browser = "google-chrome-stable"
+let g:instant_markdown_browser = "firefox"
 
 " ===
 " === vim-markdown-toc
