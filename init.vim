@@ -423,10 +423,10 @@ Plug 'dkarter/bullets.vim'
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
-" Plug 'vim-scripts/indentpython.vim'
-" Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
-" Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
-" Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
+" Plugkk 'vim-scripts/indentpython.vim'
+Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
+Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
+Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
 
 " Go
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
