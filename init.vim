@@ -274,7 +274,7 @@ source $HOME/.config/nvim/md-snippets.vim
 " ===  Other useful stuff
 " ===
 " Open a new instance of st with the cwd
-nnoremap /t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
+nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 " Opening a terminal window
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
 " Spelling Check with <space>sc
