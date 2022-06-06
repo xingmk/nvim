@@ -772,8 +772,8 @@ let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
 let g:instant_markdown_autoscroll = 0
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 1
-" let g:instant_markdown_browser = "google-chrome-stable"
-let g:instant_markdown_browser = "firefox"
+let g:instant_markdown_browser = "google-chrome-stable"
+" let g:instant_markdown_browser = "firefox"
 
 " ===
 " === vim-markdown-toc
