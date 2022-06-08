@@ -103,6 +103,7 @@ let &t_ut=''
 nnoremap <LEADER>q :q<CR>
 nnoremap <LEADER>w :w<CR>
 nnoremap <LEADER>wq :wq<CR>
+nnoremap <LEADER>r :source ~/.config/nvim/init.vim<CR>
 nnoremap Q :q!<CR>
 nnoremap W :w!<CR>
 nnoremap WQ :wq!<CR>
@@ -368,13 +369,13 @@ call plug#begin('~/.config/nvim/plugged')
 " === Dressed
 " Pretty Dressed-vim
 Plug 'theniceboy/eleline.vim',{ 'branch': 'no-scrollbar' }
-" Plug 'vim-airline/vim-airline'          " state of nvim
-Plug 'vim-airline/vim-airline-themes'   " themes of airline
-Plug 'bling/vim-bufferline'             " state of bufferline
-Plug 'mg979/vim-xtabline'               " themes of bufferline
+"Plug 'vim-airline/vim-airline'                                " state of nvim
+Plug 'vim-airline/vim-airline-themes'                         " themes of airline
+Plug 'bling/vim-bufferline'                                   " state of bufferline
+Plug 'mg979/vim-xtabline'                                     " themes of bufferline
 
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }     " tokyonight themes 
-Plug 'theniceboy/nvim-deus'                            " deus themes
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }            " tokyonight themes 
+Plug 'theniceboy/nvim-deus'                                   " deus themes
 
 
 " === Default system
@@ -382,7 +383,7 @@ Plug 'theniceboy/nvim-deus'                            " deus themes
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Debugger
-Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
+" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Smart Delete, Explation, Visual
 Plug 'jiangmiao/auto-pairs'
@@ -403,7 +404,7 @@ Plug 'kdheepak/lazygit.nvim'
 "Plug 'mhinz/vim-signify'
 
 " Undo Tree
-Plug 'mbbill/undotree'
+" Plug 'mbbill/undotree'
 
 " Snippets
 " Plug 'SirVer/ultisnips'
