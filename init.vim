@@ -29,7 +29,7 @@ source $HOME/.config/nvim/default_configs/_machine_specific_default.vim
 
 
 " ===
-" === System Config
+" === Editor behavior
 " ===
 " Scanf kinds of files
 filetype on         
@@ -79,7 +79,6 @@ set relativenumber                 " set relative number
 set showcmd			               " watch the command
 set laststatus=2                   " to set the status line
 set showmatch	                   " match () 
-set ruler                
 set clipboard=unnamedplus          " share the yank with system 
 
 " Make the Cursor like windows by inserting
@@ -88,8 +87,6 @@ let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Restore Cursor Position
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-" Auto change directory to current dir
-autocmd BufEnter * silent! lcd %:p:h
 
 
 " ===
@@ -103,46 +100,29 @@ let &t_ut=''
 nnoremap <LEADER>q :q<CR>
 nnoremap <LEADER>w :w<CR>
 nnoremap <LEADER>wq :wq<CR>
-nnoremap <LEADER>r :source ~/.config/nvim/init.vim<CR>
 nnoremap Q :q!<CR>
 nnoremap W :w!<CR>
 nnoremap WQ :wq!<CR>
+nnoremap <LEADER>r :source ~/.config/nvim/init.vim<CR>
+nnoremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
 " Copy to system clipboard
 vnoremap Y "+y 
 noremap yay "ayy
 noremap yap "ap 
-noremap yAy "yAy       "added clipboard
+noremap yAy "yAy       
 " Adjacent duplicate words
 map <LEADER>dw /\(\<\w\+\>\)\_s*\1
 " Back to screen center 
 imap <C-a> <Esc>zza
 nmap <C-a> zz
-" Replace
-nnoremap <leader>re :s/     
-nnoremap <leader>rea :%s/   
 " Cancle high light
 noremap <leader><CR> :nohlsearch<CR>  
-" Open the vimrc file anytime
-nnoremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
-" Bookmarks 
-noremap bm :SignatureToggle<CR>
-noremap bmr :SignatureRefresh<CR>
 " Auto complete
 inoremap ( ()<LEFT>
 inoremap [ []<LEFT>
 inoremap { {}<LEFT>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
-
-" Press ` to change case (instead of ~)
-    "map ` ~
-" Others
-    "map <LEADER>u u<Esc>u
-    
-" Disabling the default s key
-"noremap s <nop>
-        " Example : let something empty
-        " map x <nop>
 
 
 " ===
@@ -157,53 +137,34 @@ inoremap ' ''<LEFT>
 noremap <silent> j h
 noremap <silent> k j
 noremap <silent> i k
+noremap <silent> h i
+noremap <silent> H I
 " When in inserting
 inoremap <silent> <C-j> <left>
 inoremap <silent> <C-l> <right>
 inoremap <silent> <C-k> <down>
 inoremap <silent> <C-p> <up>
-inoremap jj <esc>
-" Insert Key
-noremap <silent> h i
-noremap <silent> H I
-" i/k keys for 5 times k/j (faster navigation)
- noremap <silent> K 5j
- noremap <silent> I 5k
- noremap <silent> <C-n> 5j
- noremap <silent> <C-p> 5k
-" noremap <silent> K 5j
-" noremap <silent> I 5k
+inoremap <silent> <c-c> <esc>
 " Ctrl + e or f will move up/down the view port without moving the cursor
-" noremap <C-u> 5<C-y>
-" noremap <C-n> 5<C-e>
-" inoremap <C-u> <Esc>5<C-y>a
-" inoremap <C-n> <Esc>5<C-e>a
 noremap <C-e> 5<C-y>
 noremap <C-f> 5<C-e>
-"inoremap I <Esc>5<C-y>a
-"inoremap K <Esc>5<C-e>a
-"inoremap <silent> <C-i> <Esc>5<C-y>a
-"inoremap <silent> <C-k> <Esc>5<C-e>a
-"inoremap <silent> <C-n> <Esc>5<C-e>a
-"inoremap <silent> <C-p> <Esc>5<C-y>a
 inoremap <silent> <C-e> <Esc>5<C-y>a
 inoremap <silent> <C-f> <Esc>5<C-e>a
+" i/k keys for 5 times k/j (faster navigation)
+noremap <silent> K 5j
+noremap <silent> I 5k
+" J/L key: go to the start/end of the line
+noremap <silent> J 0
+noremap <silent> L $
 " Change the world
-"noremap <C-w> 5w
-"noremap <C-b> 5b
-"inoremap <C-w> <Esc>5wa
-"inoremap <C-b> <Esc>5ba
-" map <silent> s b
-noremap <silent> <C-w> 3w
-noremap <silent> <C-b> 3b
-inoremap <silent> <C-w> <Esc>3wa
-inoremap <silent> <C-b> <Esc>3ba
+noremap <silent> W 3w
+noremap <silent> B 3b
+" Cancle the map of e
+noremap e <nop>
+noremap E e 
 " Search
 noremap - N
 noremap = n
-
-" source  $HOME/.config/nvim/cursor.vim
-                
 
 " ===
 " === Command Mode Cursor Movement
@@ -214,8 +175,6 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
-"cnoremap <M-b> <S-Left>
-"cnoremap <M-w> <S-Right>
 
 
 " ===
@@ -269,7 +228,7 @@ map tml :+tabmove<CR>
 " Snippets
 source $HOME/.config/nvim/md-snippets.vim
 " Auto spell
-" autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.md setlocal spell
 
 " ===
 " ===  Other useful stuff
@@ -280,14 +239,10 @@ nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
 " Spelling Check with <space>sc
 map <LEADER>sc :set spell!<CR>
-noremap <C-c> ea<C-x>s
-inoremap <C-c> <Esc>ea<C-x>s
-" Auto change directory to current dir
-autocmd BufEnter * silent! lcd %:p:h
-" Call figlet
-noremap tx :r !figlet 
 " find and replace
 noremap \s :%s//g<left><left>
+" Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
 " set wrap
 noremap <LEADER>sw :set wrap<CR>
 " press f10 to show hlgroup
@@ -819,7 +774,7 @@ let g:NERDToggleCheckAllLines = 1
 " ===
 " === Undotree (about history)
 " ===
-noremap L :UndotreeToggle<CR>
+" noremap L :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 1
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators = 1
