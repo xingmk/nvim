@@ -59,8 +59,8 @@
 	"diagnostic.virtualText": false,
 	"codeLens.enable": true,
 	"list.previewHighlightGroup": "Statement",
-	"list.nextKeymap": "<C-e>",
-	"list.previousKeymap": "<C-c>",
+	"list.nextKeymap": "<C-s>",
+	"list.previousKeymap": "<C-a>",
 	"importCost.bundleSizeDecoration": "both",
 	"importCost.typescriptExtensions": ["\\.tsx?$"],
 	"importCost.javascriptExtensions": ["\\.jsx?$"],
@@ -108,38 +108,38 @@
 	"explorer.file.column.git.showIgnored": true,
 	"explorer.keyMappingMode": "none",
 	"explorer.buffer.showHiddenBuffers": false,
-	 "explorer.keyMappings.global": {
-		"i": "nodePrev",        // 向上移动
-		"k": "nodeNext",        // 向下移动
+	"explorer.keyMappings.global": {
+		"i": "nodePrev", // 向上移动
+		"k": "nodeNext", // 向下移动
 		"s": "toggleSelection", // 切换节点(node)的选择
-		"<tab>": "actionMenu",  // 指引菜单
+		"<tab>": "actionMenu", // 指引菜单
 		"gl": "expandRecursive",
 		"gh": "collapseRecursive",
 		"o": ["wait", "expandable?", "expand", "open"],
 		"<cr>": ["wait", "expandable?", "cd", "open"],
 		// "I": "open:vsplit",     // 打开文件或者目录
 		"l": ["wait", "expanded?", "collapse", "expand"],
-		"L": "open:tab",       // 打开文件或者目录
-		"j": "collapse",       // 折叠目录 
-		"h": "gotoParent",     // 到上级目录表
-		"yp": "copyFilepath",  // 复制文件路径
-		"yn": "copyFilename",  // 复制文件名
-		"yy": "copyFile",      // 复制文件
-		"dd": "cutFile",       // 剪切文件
-		"pp": "pasteFile",     // 粘贴文件
+		"L": "open:tab", // 打开文件或者目录
+		"j": "collapse", // 折叠目录
+		"h": "gotoParent", // 到上级目录表
+		"yp": "copyFilepath", // 复制文件路径
+		"yn": "copyFilename", // 复制文件名
+		"yy": "copyFile", // 复制文件
+		"dd": "cutFile", // 剪切文件
+		"pp": "pasteFile", // 粘贴文件
 		"dD": "deleteForever", // 永久删除
-		"a": "addFile",        // 添加一个新的文件 (no path)
-		"e": "addFile",        // 添加一个新的文件 (no path)
-		"M": "addDirectory",   // 添加一个新的目录 (path)
-		"rn": "rename",        // 重命名
-		".": "toggleHidden",   // 切换隐藏节点的可见性
-		"zh": "toggleHidden",  // 切换隐藏节点的可见性
-		"R": "refresh",        // 刷新
-		"?": "help",           // 帮助
-		"q": "quit",           // 退出
-		"X": "systemExecute",  // 使用系统应用打开文件或者目录
+		"a": "addFile", // 添加一个新的文件 (no path)
+		"e": "addFile", // 添加一个新的文件 (no path)
+		"M": "addDirectory", // 添加一个新的目录 (path)
+		"rn": "rename", // 重命名
+		".": "toggleHidden", // 切换隐藏节点的可见性
+		"zh": "toggleHidden", // 切换隐藏节点的可见性
+		"R": "refresh", // 刷新
+		"?": "help", // 帮助
+		"q": "quit", // 退出
+		"X": "systemExecute", // 使用系统应用打开文件或者目录
 		"gd": "listDrive",
-		"f": "search",         // 搜索
+		"f": "search", // 搜索
 		"F": "searchRecursive", // 按照coc-list 递归搜索
 		"B": "gotoSource:file", // 到文件源头
 		"b": "gotoSource:buffer", // 到缓冲区源头
