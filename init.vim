@@ -90,42 +90,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 
 " ===
-" === Basic Mappings
-" ===
-" Set leader as space
-let mapleader =" "              
-" Prevent incorrect backgroung rendering (to make fixed background)
-let &t_ut=''                   
-" Quit && Save
-nnoremap <LEADER>q :q<CR>
-nnoremap <LEADER>w :w<CR>
-nnoremap <LEADER>wq :wq<CR>
-nnoremap Q :q!<CR>
-nnoremap W :w!<CR>
-nnoremap WQ :wq!<CR>
-nnoremap <LEADER>r :source ~/.config/nvim/init.vim<CR>
-nnoremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
-" Copy to system clipboard
-vnoremap Y "+y 
-noremap yay "ayy
-noremap yap "ap 
-noremap yAy "yAy       
-" Adjacent duplicate words
-map <LEADER>dw /\(\<\w\+\>\)\_s*\1
-" Back to screen center 
-imap <C-a> <Esc>zza
-nmap <C-a> zz
-" Cancle high light
-noremap <leader><CR> :nohlsearch<CR>  
-" Auto complete
-inoremap ( ()<LEFT>
-inoremap [ []<LEFT>
-inoremap { {}<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-
-
-" ===
 " === Cursor Movement
 " ===
 " New cursor movement
@@ -139,12 +103,25 @@ noremap <silent> k j
 noremap <silent> i k
 noremap <silent> h i
 noremap <silent> H I
+" Quit && Save
+nnoremap <LEADER>q :q<CR>
+nnoremap <LEADER>w :w<CR>
+nnoremap <LEADER>wq :wq<CR>
+nnoremap Q :q!<CR>
+nnoremap W :w!<CR>
+nnoremap WQ :wq!<CR>
 " When in inserting
 inoremap <silent> <C-j> <left>
 inoremap <silent> <C-l> <right>
 inoremap <silent> <C-k> <down>
 inoremap <silent> <C-p> <up>
 inoremap <silent> <c-c> <esc>
+" Command Mode Cursor Movement
+cnoremap <silent> <C-a> <Home>
+cnoremap <silent> <C-e> <End>
+cnoremap <silent> <C-p> <Up>
+cnoremap <silent> <C-n> <Down>
+cnoremap <silent> <C-b> <Left>
 " Ctrl + e or f will move up/down the view port without moving the cursor
 noremap <C-e> 5<C-y>
 noremap <C-f> 5<C-e>
@@ -165,16 +142,9 @@ noremap E e
 " Search
 noremap - N
 noremap = n
-
-" ===
-" === Command Mode Cursor Movement
-" ===
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
+
+
 
 
 " ===
@@ -222,17 +192,18 @@ map tmj :-tabmove<CR>
 map tml :+tabmove<CR> 
 
 
-" ===
-" === Markdown Settings
-" ===
-" Snippets
-source $HOME/.config/nvim/md-snippets.vim
-" Auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell
+
 
 " ===
 " ===  Other useful stuff
 " ===
+" Set leader as space
+let mapleader =" "              
+" Prevent incorrect backgroung rendering (to make fixed background)
+let &t_ut=''                   
+" Open / Reload init.vim
+nnoremap <LEADER>r :source ~/.config/nvim/init.vim<CR>
+nnoremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
 " Open a new instance of st with the cwd
 nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 " Opening a terminal window
@@ -245,6 +216,32 @@ noremap \s :%s//g<left><left>
 autocmd BufEnter * silent! lcd %:p:h
 " set wrap
 noremap <LEADER>sw :set wrap<CR>
+
+" Copy to system clipboard
+vnoremap Y "+y 
+noremap yay "ayy
+noremap yap "ap 
+noremap yAy "yAy       
+" Adjacent duplicate words
+map <LEADER>dw /\(\<\w\+\>\)\_s*\1
+" Back to screen center 
+imap <C-a> <Esc>zza
+nmap <C-a> zz
+" Cancle high light
+noremap <leader><CR> :nohlsearch<CR>  
+" Auto complete
+inoremap ( ()<LEFT>
+inoremap [ []<LEFT>
+inoremap { {}<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+
+" Markdown Settings
+" Snippets
+source $HOME/.config/nvim/md-snippets.vim
+" Auto spell
+autocmd BufRead,BufNewFile *.md setlocal spell
+
 " press f10 to show hlgroup
 function! SynGroup()
 	let l:s = synID(line('.'), col('.'), 1)
@@ -311,8 +308,6 @@ func! CompileRunGcc()
 endfunc
 
 source $HOME/.config/nvim/conflict.vim
-
-" let g:plug_url_format='https//git::@hub.fastgit.org/%s.git'
 
 
 " ===
