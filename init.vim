@@ -141,15 +141,15 @@ noremap <C-e> 5<C-y>
 noremap <C-f> 5<C-e>
 inoremap <silent> <C-e> <Esc>5<C-y>a
 inoremap <silent> <C-f> <Esc>5<C-e>a
+" Change the world
+noremap <silent> <c-w> 3w
+noremap <silent> <c-b> 3b
 " i/k keys for 5 times k/j (faster navigation)
-noremap <silent> K 5j
-noremap <silent> I 5k
+noremap <silent> K 3j
+noremap <silent> I 3k
 " J/L key: go to the start/end of the line
 noremap <silent> J 0
 noremap <silent> L $
-" Change the world
-noremap <silent> W 3w
-noremap <silent> B 3b
 " Cancle the map of e
 noremap e <nop>
 noremap E e 
