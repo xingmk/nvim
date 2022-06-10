@@ -313,19 +313,18 @@ endfunc
 " ===
 " === Install Plugins with Vim-Plug
 " ===
-" call plug#begin('~/.vim/plugged')
 call plug#begin('~/.config/nvim/plugged')
 
 " === Dressed
 " Pretty Dressed-vim
 Plug 'theniceboy/eleline.vim',{ 'branch': 'no-scrollbar' }
-"Plug 'vim-airline/vim-airline'                                " state of nvim
-Plug 'vim-airline/vim-airline-themes'                         " themes of airline
-Plug 'bling/vim-bufferline'                                   " state of bufferline
-Plug 'mg979/vim-xtabline'                                     " themes of bufferline
+Plug 'mg979/vim-xtabline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'                         
+Plug 'bling/vim-bufferline'
 
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }            " tokyonight themes 
-Plug 'theniceboy/nvim-deus'                                   " deus themes
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }            
+Plug 'theniceboy/nvim-deus'                                   
 
 
 " === Default system
@@ -333,17 +332,15 @@ Plug 'theniceboy/nvim-deus'                                   " deus themes
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Debugger
-" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 
-" Smart Delete, Explation, Visual
+" Smart Delete, Explation
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
-" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " File fuzzy search
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 
 " Git
 " Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
@@ -354,10 +351,10 @@ Plug 'kdheepak/lazygit.nvim'
 "Plug 'mhinz/vim-signify'
 
 " Undo Tree
-" Plug 'mbbill/undotree'
+Plug 'mbbill/undotree'
 
 " Snippets
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 Plug 'theniceboy/vim-snippets'
 
 
@@ -374,38 +371,13 @@ Plug 'dkarter/bullets.vim'
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
-" Plugkk 'vim-scripts/indentpython.vim'
-Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
-Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
-Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
 
 " Go
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
-" HTML, CSS, JavaScript, Typescript, PHP, JSON, etc.
-"Plug 'elzr/vim-json'
-"Plug 'neoclide/jsonc.vim'
-"Plug 'othree/html5.vim'
-"Plug 'alvan/vim-closetag'
-"" Plug 'hail2u/vim-css3-syntax' " , { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-"" Plug 'spf13/PIV', { 'for' :['php', 'vim-plug'] }
-"" Plug 'pangloss/vim-javascript', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-"Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-"" Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-"" Plug 'jelera/vim-javascript-syntax', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-""Plug 'jaxbot/browserlink.vim'
-"Plug 'HerringtonDarkholme/yats.vim'
-"" Plug 'posva/vim-vue'
-"" Plug 'evanleck/vim-svelte', {'branch': 'main'}
-"" Plug 'leafOfTree/vim-svelte-plugin'
-"" Plug 'leafgarland/typescript-vim'
-"Plug 'MaxMEllon/vim-jsx-pretty'
-"Plug 'pangloss/vim-javascript'
-"Plug 'leafgarland/typescript-vim'
-"Plug 'peitalin/vim-jsx-typescript'
-"" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-"Plug 'pantharshit00/vim-prisma'
-
+" Swift
+Plug 'keith/swift.vim'
+Plug 'arzg/vim-swift'
 
 " === Others
 " Other useful utilities
