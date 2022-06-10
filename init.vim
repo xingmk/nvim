@@ -31,6 +31,10 @@ source $HOME/.config/nvim/default_configs/_machine_specific_default.vim
 " ===
 " === Editor behavior
 " ===
+" Prevent incorrect backgroung rendering (to make fixed background)
+let &t_ut=''                   
+" Set leader as space
+let mapleader =" "              
 " Scanf kinds of files
 filetype on         
 filetype indent on      
@@ -59,13 +63,11 @@ set smarttab
 set tw=0
 set indentexpr=
 " Search
-set hlsearch                       " high light
+set hlsearch                       
  exec "nohlsearch"  
 set incsearch                      " one inseart,and one search with high light
 set ignorecase		               " ignore capital case
 set smartcase		               " smart capital case
-set path+=**
-set grepprg=grep\ -nH\ $*
 " Let mouse have a change by inseart 
 set mouse=a                        " using mouse
 set cursorcolumn                   " vertical mouse_line
@@ -80,6 +82,17 @@ set showcmd			               " watch the command
 set laststatus=2                   " to set the status line
 set showmatch	                   " match () 
 set clipboard=unnamedplus          " share the yank with system 
+set colorcolumn=100
+set virtualedit=block
+
+silent !mkdir -p $HOME/.config/nvim/tmp/backup
+silent !mkdir -p $HOME/.config/nvim/tmp/undo
+set backupdir=$HOME/.config/nvim/tmp/backup,.
+set directory=$HOME/.config/nvim/tmp/backup,.
+if has('persistent_undo')
+	set undofile
+	set undodir=$HOME/.config/nvim/tmp/undo,.
+endif
 
 " Make the Cursor like windows by inserting
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -122,6 +135,7 @@ cnoremap <silent> <C-e> <End>
 cnoremap <silent> <C-p> <Up>
 cnoremap <silent> <C-n> <Down>
 cnoremap <silent> <C-b> <Left>
+cnoremap <silent> <C-f> <Right>
 " Ctrl + e or f will move up/down the view port without moving the cursor
 noremap <C-e> 5<C-y>
 noremap <C-f> 5<C-e>
@@ -142,9 +156,9 @@ noremap E e
 " Search
 noremap - N
 noremap = n
-cnoremap <C-f> <Right>
-
-
+" Back to screen center 
+imap <C-a> <Esc>zza
+nmap <C-a> zz
 
 
 " ===
@@ -160,9 +174,8 @@ noremap ei  <C-w>k
 noremap ek  <C-w>j       
 noremap ej  <C-w>h       
 noremap el  <C-w>l       
-
-noremap ew  <C-w>w
-noremap er  <C-w>r
+" noremap ew  <C-w>w
+" noremap er  <C-w>r
 " Place the two screens up and down (splitscreen to H)
 " Place the two screens side by side   (splitscreen to V)
 noremap sg <C-w>t<C-w>K        
@@ -192,15 +205,11 @@ map tmj :-tabmove<CR>
 map tml :+tabmove<CR> 
 
 
-
-
 " ===
 " ===  Other useful stuff
 " ===
-" Set leader as space
-let mapleader =" "              
-" Prevent incorrect backgroung rendering (to make fixed background)
-let &t_ut=''                   
+" Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
 " Open / Reload init.vim
 nnoremap <LEADER>r :source ~/.config/nvim/init.vim<CR>
 nnoremap <LEADER>in :e $HOME/.config/nvim/init.vim<CR>
@@ -212,23 +221,14 @@ noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
 map <LEADER>sc :set spell!<CR>
 " find and replace
 noremap \s :%s//g<left><left>
-" Auto change directory to current dir
-autocmd BufEnter * silent! lcd %:p:h
-" set wrap
-noremap <LEADER>sw :set wrap<CR>
-
-" Copy to system clipboard
-vnoremap Y "+y 
-noremap yay "ayy
-noremap yap "ap 
-noremap yAy "yAy       
 " Adjacent duplicate words
 map <LEADER>dw /\(\<\w\+\>\)\_s*\1
-" Back to screen center 
-imap <C-a> <Esc>zza
-nmap <C-a> zz
 " Cancle high light
 noremap <leader><CR> :nohlsearch<CR>  
+" set wrap
+noremap <LEADER>sw :set wrap<CR>
+" Copy to system clipboard
+vnoremap Y "+y 
 " Auto complete
 inoremap ( ()<LEFT>
 inoremap [ []<LEFT>
@@ -236,11 +236,13 @@ inoremap { {}<LEFT>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
 
-" Markdown Settings
+" === Markdown Settings
 " Snippets
 source $HOME/.config/nvim/md-snippets.vim
 " Auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
+" Confilct
+source $HOME/.config/nvim/conflict.vim
 
 " press f10 to show hlgroup
 function! SynGroup()
@@ -306,8 +308,6 @@ func! CompileRunGcc()
 		:term go run .
 	endif
 endfunc
-
-source $HOME/.config/nvim/conflict.vim
 
 
 " ===
@@ -427,16 +427,17 @@ Plug 'pechorin/any-jump.vim'
 " Taglist
 Plug 'liuchengxu/vista.vim'
 
-"Bookmarks
-" Plug 'kshenoy/vim-signature'
- 
 " Vim Applications
 Plug 'itchyny/calendar.vim'
 
 call plug#end()
 
+
+" ===================== Start of Plugin Settings =====================
+
+" ===================== Dressed nvim =====================
 " ===
-" === Dress up my vim
+" ====== Colors
 " ===
 " === deus
 " forbid tmux && nvim background 混乱
@@ -466,11 +467,11 @@ hi NonText ctermfg=gray guifg=grey10
 
 " vim.g.tokyonight_style == "night"
 
-"" 使用函数斜体
+"" 函数斜体
 " let g:tokyonight_italic_functions = 1
-"" 使用关键字斜体
+"" 关键字斜体
 " let g:tokyonight_italic_keywords = 1
-"" 使用变量和标识符斜体
+"" 变量和标识符斜体
 " let g:tokyonight_italic_variables =1
 "" 像windows一样的侧边栏 NvimTree获得透明背景
 " let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
@@ -481,17 +482,13 @@ hi NonText ctermfg=gray guifg=grey10
 "   \ 'error': '#ff0000'
 " \ }
 
-" ===================== Start of Plugin Settings =====================
-
-" ===================== Dressed nvim =====================
 " ===
-" === Eleline.vim (like airline)
+" ====== Eleline.vim (like airline)
 " ===
 let g:airline_powerline_fonts = 0
 
-
 "===
-"=== Ariline 
+"====== Ariline 
 "===
 set t_Co=256
 set laststatus=2
@@ -513,8 +510,8 @@ let g:airline#extensions#tabline#enabled = 1
  
 " ===================== Default =====================
 "===
-"=== Coc.nvim
-"==
+"====== Coc.nvim
+"===
 nnoremap tt :CocCommand explorer<CR>
 
 set updatetime=100           " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -614,7 +611,7 @@ let g:coc_global_extensions = [
 	\ 'coc-yank']
 
 " ===
-" === vimspector
+" ====== Vimspector
 " ===
 let g:vimspector_enable_mappings = 'HUMAN'
 function! s:read_template_into_buffer(template)
@@ -632,7 +629,7 @@ sign define vimspectorBPDisabled text=☞ texthl=Normal
 sign define vimspectorPC text=❯ texthl=SpellBad
 
 " ===
-" === FZF
+" ====== FZF (Faster search)
 " ===
 
 let g:fzf_preview_window = 'right:40%'
@@ -659,94 +656,8 @@ noremap <c-d> :BD<CR>
 
 let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 
-
-
-" ===
-" === LeaderF (fuzzy search)
-" ===
-" let g:Lf_WindowPosition = 'popup'
-" let g:Lf_PreviewInPopup = 1
-" let g:Lf_PreviewCode = 1
-" let g:Lf_ShowHidden = 1
-" let g:Lf_ShowDevIcons = 1
-" let g:Lf_CommandMap = {
-" \   '<C-k>': ['<C-i>'],
-" \   '<C-j>': ['<C-k>'],
-" \   '<C-]>': ['<C-v>'],
-" \   '<C-p>': ['<C-n>'],
-" \}
-" let g:Lf_UseVersionControlTool = 0
-" let g:Lf_IgnoreCurrentBufferName = 1
-" let g:Lf_WildIgnore = {
-"         \ 'dir': ['.git', 'vendor', 'node_modules'],
-"         \ 'file': ['__vim_project_root', 'class']
-"         \}
-" let g:Lf_UseMemoryCache = 0
-" let g:Lf_UseCache = 0
-
-" ===
-" === lazygit.nvim
-" ===
-noremap <c-g> :LazyGit<CR>
-let g:lazygit_floating_window_winblend = 0 " transparency of floating window
-let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
-let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
-let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
-
-" ===================== Language =====================
-" ===
-" === vim-instant-markdown
-" ===
-nnoremap <LEADER>p :InstantMarkdownPreview<CR>
-
-" let g:instant_markdown_slow = 1
-" let g:instant_markdown_autostart = 0
-" " let g:instant_markdown_open_to_the_world = 1
-" " let g:instant_markdown_allow_unsafe_content = 1
-" " let g:instant_markdown_allow_external_content = 0
-" " let g:instant_markdown_mathjax = 1
-" let g:instant_markdown_mermaid = 1
-" let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
-" let g:instant_markdown_autoscroll = 1
-" let g:instant_markdown_port = 8888
-" let g:instant_markdown_python = 1
-" let g:instant_markdown_browser = "firefox"
-
-let g:instant_markdown_slow = 1
-let g:instant_markdown_autostart = 0
-let g:instant_markdown_open_to_the_world = 1
-let g:instant_markdown_allow_unsafe_content = 1
-let g:instant_markdown_allow_external_content = 0
-let g:instant_markdown_mathjax = 1
-let g:instant_markdown_mermaid = 1
-let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
-let g:instant_markdown_autoscroll = 0
-let g:instant_markdown_port = 8888
-let g:instant_markdown_python = 1
-let g:instant_markdown_browser = "google-chrome-stable"
-" let g:instant_markdown_browser = "firefox"
-
-" ===
-" === vim-markdown-toc
-" ===
-"let g:vmt_auto_update_on_save = 0
-"let g:vmt_dont_insert_fence = 1
-let g:vmt_cycle_list_item_markers = 1
-let g:vmt_fence_text = 'TOC'
-let g:vmt_fence_closing_text = '/TOC'
-
-" ===
-" === vim-table-mode (markdown)
-" ===
-noremap <LEADER>m :TableModeToggle<CR>
-"let g:table_mode_disable_mappings = 1
-let g:table_mode_cell_text_object_i_map = 'k<Bar>'
-
-
-
-
 "===
-"=== NerdCommenter  (Explation) 
+"====== NerdCommenter  (Explation) 
 "===
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -764,10 +675,27 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
-
+" ===
+" ====== vim-visual-multi
+" ===
+let g:VM_theme             = 'iceblue'
+let g:VM_default_mappings = 0
+let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
+let g:VM_maps                       = {}
+" let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
+let g:VM_maps['i']                  = 'h'
+let g:VM_maps['I']                  = 'H'
+let g:VM_maps['Find Under']         = '<C-h>'
+let g:VM_maps['Find Subword Under'] = '<C-H>'
+let g:VM_maps['Find Next']          = ''
+let g:VM_maps['Find Prev']          = ''
+let g:VM_maps['Remove Region']      = 'q'
+let g:VM_maps['Skip Region']        = '<c-n>'
+let g:VM_maps["Undo"]               = 'l'
+let g:VM_maps["Redo"]               = '<C-r>'
 
 " ===
-" === Undotree (about history)
+" ====== Undotree (About history)
 " ===
 " noremap L :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 1
@@ -783,9 +711,30 @@ function g:Undotree_CustomMap()
 	nmap <buffer> I 5<plug>UndotreePreviousState
 endfunc
 
+" ===
+" ====== Bullets.vim
+" ===
+" let g:bullets_set_mappings = 0
+let g:bullets_enabled_file_types = [
+			\ 'markdown',
+			\ 'text',
+			\ 'gitcommit',
+			\ 'scratch'
+			\]
+
+
+" ===================== NVIM_APPS =====================
+" ===
+" ====== lazygit.nvim
+" ===
+noremap <c-g> :LazyGit<CR>
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
+let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 " ===
-" === rnvimr
+" ====== rnvimr
 " ===
 let g:rnvimr_ex_enable = 1
 let g:rnvimr_pick_enable = 1
@@ -808,62 +757,8 @@ let g:rnvimr_layout = { 'relative': 'editor',
             \ 'style': 'minimal' }
 let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
 
-
 " ===
-" === vim-bookmarks
-" ===
-" let g:bookmark_no_default_key_mappings = 1
-" nmap mt <Plug>BookmarkToggle
-" nmap ma <Plug>BookmarkAnnotate
-" nmap ml <Plug>BookmarkShowAll
-" nmap mi <Plug>BookmarkNext
-" nmap mn <Plug>BookmarkPrev
-" nmap mC <Plug>BookmarkClear
-" nmap mX <Plug>BookmarkClearAll
-" nmap mu <Plug>BookmarkMoveUp
-" nmap me <Plug>BookmarkMoveDown
-" nmap <Leader>g <Plug>BookmarkMoveToLine
-" let g:bookmark_save_per_working_dir = 1
-" let g:bookmark_auto_save = 1
-" let g:bookmark_highlight_lines = 1
-" let g:bookmark_manage_per_buffer = 1
-" let g:bookmark_save_per_working_dir = 1
-" let g:bookmark_center = 1
-" let g:bookmark_auto_close = 1
-" let g:bookmark_location_list = 1
-
-" ===
-" === vim-visual-multi
-" ===
-let g:VM_theme             = 'iceblue'
-let g:VM_default_mappings = 0
-let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
-let g:VM_maps                       = {}
-" let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-let g:VM_maps['i']                  = 'h'
-let g:VM_maps['I']                  = 'H'
-let g:VM_maps['Find Under']         = '<C-h>'
-let g:VM_maps['Find Subword Under'] = '<C-H>'
-let g:VM_maps['Find Next']          = ''
-let g:VM_maps['Find Prev']          = ''
-let g:VM_maps['Remove Region']      = 'q'
-let g:VM_maps['Skip Region']        = '<c-n>'
-let g:VM_maps["Undo"]               = 'l'
-let g:VM_maps["Redo"]               = '<C-r>'
-
-" ===
-" === Bullets.vim
-" ===
-" let g:bullets_set_mappings = 0
-let g:bullets_enabled_file_types = [
-			\ 'markdown',
-			\ 'text',
-			\ 'gitcommit',
-			\ 'scratch'
-			\]
-
-" ===
-" === vim-calendar
+" ====== vim-calendar
 " ===
 " noremap \c :Calendar -position=here<CR>
 " nnoremap cd :Calendar<CR>
@@ -889,8 +784,43 @@ augroup calendar-mappings
 augroup END
 
 
+" ===================== Language =====================
 " ===
-" === vim-go
+" ====== vim-instant-markdown
+" ===
+nnoremap <LEADER>p :InstantMarkdownPreview<CR>
+
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+let g:instant_markdown_open_to_the_world = 1
+let g:instant_markdown_allow_unsafe_content = 1
+let g:instant_markdown_allow_external_content = 0
+let g:instant_markdown_mathjax = 1
+let g:instant_markdown_mermaid = 1
+let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+let g:instant_markdown_autoscroll = 0
+let g:instant_markdown_port = 8888
+let g:instant_markdown_python = 1
+let g:instant_markdown_browser = "google-chrome-stable"
+" let g:instant_markdown_browser = "firefox"
+
+" ===
+" ====== vim-markdown-toc
+" ===
+"let g:vmt_auto_update_on_save = 0
+"let g:vmt_dont_insert_fence = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_closing_text = '/TOC'
+
+" ===
+" ====== vim-table-mode (markdown)
+" ===
+noremap <LEADER>m :TableModeToggle<CR>
+"let g:table_mode_disable_mappings = 1
+let g:table_mode_cell_text_object_i_map = 'k<Bar>'
+
+" ===
+" ====== vim-go
 " ===
 let g:go_echo_go_info = 0
 let g:go_doc_popup_window = 1
@@ -922,11 +852,9 @@ let g:go_doc_keywordprg_enabled = 0
 
 
 " ===================== End of Plugin Settings =====================
-
 " ===
-" === Terminal Colors
+" ====== Terminal Colors (rnvimr)
 " ===
-
 let g:terminal_color_0  = '#000000'
 let g:terminal_color_1  = '#FF5555'
 let g:terminal_color_2  = '#50FA7B'
@@ -943,16 +871,12 @@ let g:terminal_color_12 = '#CAA9FA'
 let g:terminal_color_13 = '#FF92D0'
 let g:terminal_color_14 = '#9AEDFE'
 
-
 " ===
-" === Necessary Commands to Execute
+" ====== Necessary Commands to Execute
 " ===
 exec "nohlsearch"
 
-
 " Open the _machine_specific.vim file if it has just been created
-"if has_machine_specific_file == 0
-"	exec "e ~/.config/nvim/_machine_specific.vim"
-"endif
-
-
+if has_machine_specific_file == 0
+	exec "e ~/.config/nvim/_machine_specific.vim"
+endif
