@@ -317,7 +317,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 " === Dressed
 " Pretty Dressed-vim
-Plug 'theniceboy/eleline.vim',{ 'branch': 'no-scrollbar' }
 Plug 'mg979/vim-xtabline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'                         
@@ -361,9 +360,6 @@ Plug 'theniceboy/vim-snippets'
 " === Language
 " Markdown Preview, Wiki
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
-Plug 'vimwiki/vimwiki'
-
-Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
 Plug 'dkarter/bullets.vim'
 
@@ -380,16 +376,7 @@ Plug 'keith/swift.vim'
 Plug 'arzg/vim-swift'
 
 " === Others
-" Other useful utilities
 Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
-" Plug 'makerj/vim-pdf'
-"Plug 'xolox/vim-session'
-"Plug 'xolox/vim-misc' " vim-session dep
-
-" Dependencies
-" Plug 'MarcWeber/vim-addon-mw-utils'
-" Plug 'kana/vim-textobj-user'
-" Plug 'roxma/nvim-yarp'
 
 " File navigation
 Plug 'kevinhwang91/rnvimr'
