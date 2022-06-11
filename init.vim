@@ -76,7 +76,7 @@ set autochdir                      " change the current working directory
 set wildmenu                       " give more chances for commands
 set nocompatible                   " make the plugs smooth running
 set cursorline                     " make a line
-set number                         " set line number 
+set number                         " set line number
 set relativenumber                 " set relative number
 set showcmd			               " watch the command
 set laststatus=2                   " to set the status line
