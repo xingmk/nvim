@@ -322,7 +322,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'                         
 Plug 'bling/vim-bufferline'
 
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }            
 Plug 'theniceboy/nvim-deus'                                   
 
 
@@ -411,40 +410,6 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 hi NonText ctermfg=gray guifg=grey10
 " hi SpecialKey ctermfg=blue guifg=grey70
 
-" === tokyonight
-"" Load the colorscheme
-" colorscheme tokyonight
-
-" let g:lightline = {'colorscheme': 'tokyonight'}
-
-" Example config in VimScript
-" Themes : storm  night day
-"" 使用的主题
-" let g:tokyonight_style = "storm"
- " let g:tokyonight_style = "night"
- " let g:tokyonight_style = "day"
-
-" vim.g.tokyonight_style == "night"
-
-"" 函数斜体
-" let g:tokyonight_italic_functions = 1
-"" 关键字斜体
-" let g:tokyonight_italic_keywords = 1
-"" 变量和标识符斜体
-" let g:tokyonight_italic_variables =1
-"" 像windows一样的侧边栏 NvimTree获得透明背景
-" let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
-" Change the "hint" color to the "orange" color, and make the "error" color bright red
-"" 将“提示”变为橙色 “错误"变成红色
-" let g:tokyonight_colors = {
-"   \ 'hint': 'orange',
-"   \ 'error': '#ff0000'
-" \ }
-
-" ===
-" ====== Eleline.vim (like airline)
-" ===
-let g:airline_powerline_fonts = 0
 
 "===
 "====== Ariline 
@@ -456,17 +421,6 @@ set laststatus=2
 let g:airline_powerline_fonts = 1  
 let g:airline#extensions#tabline#enabled = 1 
 
-"let g:airline_theme='moloai' 
-"if !exists('g:airline_symbols')
-"let g:airline_symbols = {}
-"endif
-"let g:airline_left_sep = '▶'
-"let g:airline_left_alt_sep = '❯'
-"let g:airline_right_sep = '◀'
-"let g:airline_right_alt_sep = '❮'
-"let g:airline_symbols.linenr = '¶'
-"let g:airline_symbols.branch = '⎇'
- 
 " ===================== Default =====================
 "===
 "====== Coc.nvim
@@ -634,25 +588,6 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 " ===
-" ====== vim-visual-multi
-" ===
-let g:VM_theme             = 'iceblue'
-let g:VM_default_mappings = 0
-let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
-let g:VM_maps                       = {}
-" let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-let g:VM_maps['i']                  = 'h'
-let g:VM_maps['I']                  = 'H'
-let g:VM_maps['Find Under']         = '<C-h>'
-let g:VM_maps['Find Subword Under'] = '<C-H>'
-let g:VM_maps['Find Next']          = ''
-let g:VM_maps['Find Prev']          = ''
-let g:VM_maps['Remove Region']      = 'q'
-let g:VM_maps['Skip Region']        = '<c-n>'
-let g:VM_maps["Undo"]               = 'l'
-let g:VM_maps["Redo"]               = '<C-r>'
-
-" ===
 " ====== Undotree (About history)
 " ===
 " noremap L :UndotreeToggle<CR>
@@ -769,13 +704,6 @@ let g:instant_markdown_browser = "google-chrome-stable"
 "let g:vmt_dont_insert_fence = 1
 let g:vmt_cycle_list_item_markers = 1
 let g:vmt_fence_closing_text = '/TOC'
-
-" ===
-" ====== vim-table-mode (markdown)
-" ===
-noremap <LEADER>m :TableModeToggle<CR>
-"let g:table_mode_disable_mappings = 1
-let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
 " ===
 " ====== vim-go

@@ -1,1 +1,1 @@
-NVIM
+MY NVIMRC
