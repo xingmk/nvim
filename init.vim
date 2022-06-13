@@ -62,6 +62,9 @@ set scrolloff=5
 set smarttab
 set tw=0
 set indentexpr=
+" Coc
+set updatetime=100           
+set shortmess+=c           
 " Search
 set hlsearch                       
  exec "nohlsearch"  
@@ -153,9 +156,6 @@ noremap <silent> L $
 " Cancle the map of e
 noremap e <nop>
 noremap E e 
-" Search
-noremap - N
-noremap = n
 " Back to screen center 
 imap <C-a> <Esc>zza
 nmap <C-a> zz
@@ -408,7 +408,6 @@ silent! color deus
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 hi NonText ctermfg=gray guifg=grey10
-" hi SpecialKey ctermfg=blue guifg=grey70
 
 
 "===
@@ -426,71 +425,6 @@ let g:airline#extensions#tabline#enabled = 1
 "====== Coc.nvim
 "===
 nnoremap tt :CocCommand explorer<CR>
-
-set updatetime=100           " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-                             " delays and poor user experience.
-set shortmess+=c             " Don't pass messages to |ins-completion-menu|.
-
-" 相同函数进行高亮度
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" 查找代码报错
-nmap <silent> zi <Plug>(coc-diagnostic-prev)
-nmap <silent> zk <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Symbol renaming. (变量重新命名)
-nmap <leader>rn <Plug>(coc-rename)
-
-" Use h to show documentation in preview window.
-nnoremap <silent> <LEADER>h :call <SID>show_documentation()<CR>
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-"  启用 TAB 补全
-inoremap <silent><expr> <TAB> 
-	\ pumvisible() ? "\<C-n>" :
-	\ <SID>check_back_space() ? "\<TAB>" :
-	\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-                                
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
- endfunction
-
-" Remap for do codeAction of selected region (选中后可给予更多选项)
-function! s:cocActionsOpenFromSelected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>aw  <Plug>(coc-codeaction-selected)
-" nmap <leader>aw  <Plug>(coc-codeaction-selected)w
-
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
-endif
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-
-au Filetype FILETYPE let b:AutoPairs = {"(": ")"}
-au FileType php      let b:AutoPairs = AutoPairsDefine({'<?' : '?>', '<?php': '?>'})
 
 let g:coc_global_extensions = [
 	\ 'coc-css',
@@ -514,7 +448,7 @@ let g:coc_global_extensions = [
 	\ 'coc-sourcekit',
 	\ 'coc-stylelint',
 	\ 'coc-syntax',
-	\ 'coc-tailwindcss',
+	\ 'https://github.com/theniceboy/coc-tailwindcss',
 	\ 'coc-tasks',
 	\ 'coc-translator',
 	\ 'coc-tsserver',
@@ -522,6 +456,68 @@ let g:coc_global_extensions = [
 	\ 'coc-vimlsp',
 	\ 'coc-yaml',
 	\ 'coc-yank']
+
+inoremap <silent><expr> <TAB>
+	\ pumvisible() ? "\<C-n>" :
+	\ <SID>check_back_space() ? "\<TAB>" :
+	\ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+function! Show_documentation()
+	call CocActionAsync('highlight')
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
+endfunction
+nnoremap <silent> <LEADER>h :call <SID>show_documentation()<CR>
+
+" Remap for do codeAction of selected region 
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" find wrong code 
+nmap <silent> - <Plug>(coc-diagnostic-prev)
+nmap <silent> = <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Symbol renaming. 
+nmap <leader>rn <Plug>(coc-rename)
+
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>aw  <Plug>(coc-codeaction-selected)
+" nmap <leader>aw  <Plug>(coc-codeaction-selected)w
+
+" coc-snippets
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-e> <Plug>(coc-snippets-select)
+let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_prev = '<c-l>'
+imap <C-e> <Plug>(coc-snippets-expand-jump)
+autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+au Filetype FILETYPE let b:AutoPairs = {"(": ")"}
+au FileType php      let b:AutoPairs = AutoPairsDefine({'<?' : '?>', '<?php': '?>'})
+
 
 " ===
 " ====== Vimspector
