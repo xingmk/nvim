@@ -1,8 +1,9 @@
-"   _   ___     _____ __  __ 
-"  | \ | \ \   / /_ _|  \/  |  
-"  |  \| |\ \ / / | || |\/| |  
-"  | |\  | \ V /  | || |  | |
-"  |_| \_|  \_/  |___|_|  |_|
+"             _
+"  _ ____   _(_)_ __ ___
+" | '_ \ \ / / | '_ ` _ \
+" | | | \ V /| | | | | | |
+" |_| |_|\_/ |_|_| |_| |_|
+" 
 
 " ===
 " === Auto load for first time uses
@@ -13,13 +14,6 @@ if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-let g:nvim_plugins_installation_competed=1
-
-""" if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
-"""	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-"""endif
-
-" Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
 let has_machine_specific_file = 1
 if empty(glob('~/.config/nvim/_machine_specific.vim'))
 	let has_machine_specific_file = 0
@@ -31,9 +25,7 @@ source $HOME/.config/nvim/default_configs/_machine_specific_default.vim
 " ===
 " === Editor behavior
 " ===
-" Prevent incorrect backgroung rendering (to make fixed background)
 let &t_ut=''                   
-" Set leader as space
 let mapleader =" "              
 " Scanf kinds of files
 filetype on         
@@ -45,10 +37,10 @@ syntax on
 syntax enable
 set encoding=utf-8       
 set clipboard+=unnamed              
-set foldmethod=indent              "fold the codes 
+set foldmethod=indent              
 set foldlevel=99
 " Set nobackup
-set writebackup                    " the backup file is immediately deleted after a successful write
+set writebackup                    " The backup file is immediately deleted after a successful write
 set hidden                         " Save in buffers
 set autowrite	
 " Better backspace
@@ -83,7 +75,6 @@ set number                         " set line number
 set relativenumber                 " set relative number
 set showcmd			               " watch the command
 set laststatus=2                   " to set the status line
-set showmatch	                   " match () 
 set clipboard=unnamedplus          " share the yank with system 
 set colorcolumn=100
 set virtualedit=block
@@ -105,10 +96,8 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 
-" ===
-" === Cursor Movement
-" ===
-" New cursor movement
+
+" ==================== New Section ====================
 "     ^
 "     i
 " < j  	l >                
@@ -123,14 +112,9 @@ noremap <silent> H I
 nnoremap <LEADER>q :q<CR>
 nnoremap <LEADER>w :w<CR>
 nnoremap <LEADER>wq :wq<CR>
-nnoremap Q :q!<CR>
-nnoremap W :w!<CR>
-nnoremap WQ :wq!<CR>
 " When in inserting
 inoremap <silent> <C-j> <left>
 inoremap <silent> <C-l> <right>
-inoremap <silent> <C-k> <down>
-inoremap <silent> <C-p> <up>
 inoremap <silent> <c-c> <esc>
 " Command Mode Cursor Movement
 cnoremap <silent> <C-a> <Home>
@@ -145,11 +129,11 @@ noremap <C-f> 5<C-e>
 inoremap <silent> <C-e> <Esc>5<C-y>a
 inoremap <silent> <C-f> <Esc>5<C-e>a
 " Change the world
-noremap <silent> <c-w> 3w
-noremap <silent> <c-b> 3b
+noremap <silent> <c-w> 5w
+noremap <silent> <c-b> 5b
 " i/k keys for 5 times k/j (faster navigation)
-noremap <silent> K 3j
-noremap <silent> I 3k
+noremap <silent> K 5j
+noremap <silent> I 5k
 " J/L key: go to the start/end of the line
 noremap <silent> J 0
 noremap <silent> L $
@@ -448,7 +432,6 @@ let g:coc_global_extensions = [
 	\ 'coc-sourcekit',
 	\ 'coc-stylelint',
 	\ 'coc-syntax',
-	\ 'https://github.com/theniceboy/coc-tailwindcss',
 	\ 'coc-tasks',
 	\ 'coc-translator',
 	\ 'coc-tsserver',
@@ -502,12 +485,6 @@ xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>aw  <Plug>(coc-codeaction-selected)
 " nmap <leader>aw  <Plug>(coc-codeaction-selected)w
 
-" coc-snippets
-imap <C-l> <Plug>(coc-snippets-expand)
-vmap <C-e> <Plug>(coc-snippets-select)
-let g:coc_snippet_next = '<c-j>'
-let g:coc_snippet_prev = '<c-l>'
-imap <C-e> <Plug>(coc-snippets-expand-jump)
 autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 
 if has("autocmd")
