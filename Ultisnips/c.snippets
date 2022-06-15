@@ -1,3 +1,5 @@
+# === Some useful snippets
+
 snippet in "default body" 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,6 +38,7 @@ int max(int x, int y) {
 
 
 endsnippet
+
 snippet Exch "exchange two number" 
 void exch(int *x, int *y) {
 
@@ -66,6 +69,19 @@ int prime_num(int a) {
 	} else {
 	return 1;
 	}
+}
+
+endsnippet
+
+snippet Jieceng "Jieceng's Function" 
+
+int fun(int n) {
+
+	int p = 1;
+	for (int i = 1; i <= n; i++) {
+		p *= i;
+	}
+	return p;
 }
 
 endsnippet

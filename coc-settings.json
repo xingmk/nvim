@@ -109,10 +109,10 @@
 	"explorer.keyMappingMode": "none",
 	"explorer.buffer.showHiddenBuffers": false,
 	"explorer.keyMappings.global": {
-		"i": "nodePrev", // 向上移动
-		"k": "nodeNext", // 向下移动
-		"s": "toggleSelection", // 切换节点(node)的选择
-		"<tab>": "actionMenu", // 指引菜单
+		"i": "nodePrev",
+		"k": "nodeNext",
+		"s": "toggleSelection",
+		"<tab>": "actionMenu",
 		"gl": "expandRecursive",
 		"gh": "collapseRecursive",
 		"o": ["wait", "expandable?", "expand", "open"],
@@ -128,7 +128,7 @@
 		"dd": "cutFile", // 剪切文件
 		"pp": "pasteFile", // 粘贴文件
 		"dD": "deleteForever", // 永久删除
-		"a": "addFile", // 添加一个新的文件 (no path)
+		//	"a": "addFile", // 添加一个新的文件 (no path)
 		"e": "addFile", // 添加一个新的文件 (no path)
 		"M": "addDirectory", // 添加一个新的目录 (path)
 		"rn": "rename", // 重命名
