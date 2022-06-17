@@ -210,6 +210,8 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 " Confilct
 source $HOME/.config/nvim/conflict.vim
 
+au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.markdown set filetype=markdown
 " ========== Compile function ========== 
 noremap r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
@@ -465,7 +467,7 @@ let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
 let g:instant_markdown_autoscroll = 0
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 1
-let g:instant_markdown_browser = "google-chrome-stable"
+let g:instant_markdown_browser = "chromium"
 
 " ==================== vim-markdown-toc ====================
 "let g:vmt_auto_update_on_save = 0
