@@ -285,6 +285,9 @@ Plug 'theniceboy/nvim-deus'
 " Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Debugger
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
+
 " Smart Delete, Explation
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
@@ -296,15 +299,21 @@ Plug 'theniceboy/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" Easy-align
+Plug 'junegunn/vim-easy-align'
+
+" Course visual
+" Plug 'mg979/vim-visual-multi'
+
 " --- Language
-" Markdown-Preview
+" Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-" Markdown-toc
 Plug 'mzlogin/vim-markdown-toc'
-" Markdown-table-mode
 Plug 'dhruvasagar/vim-table-mode'
-" md-img-paste(add picture)
 Plug 'ferrine/md-img-paste.vim', { 'for': ['markdown', 'vim-plug'] }
+
+" Bullets
+Plug 'dkarter/bullets.vim'
 
 " Go
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
@@ -314,10 +323,20 @@ Plug 'keith/swift.vim'
 Plug 'arzg/vim-swift'
 
 " --- vim_application
+" Pay attention 
+Plug 'junegunn/goyo.vim'
+
 " Rnvimr 
 Plug 'kevinhwang91/rnvimr'
+
 " Translate
 Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSearch', '<Plug>DictRSearch', '<Plug>DictRVSearch']}
+
+" sudo
+Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
+
+" calendar.vim
+Plug 'itchyny/calendar.vim'
 
 call plug#end()
 
@@ -334,6 +353,19 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 hi NonText ctermfg=gray guifg=grey10
 
 " ==============================
+"           xtabline
+" ==============================
+let g:xtabline_settings = {}
+let g:xtabline_settings.enable_mappings = 0
+let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
+let g:xtabline_settings.enable_persistance = 0
+let g:xtabline_settings.last_open_first = 1
+" 开关循环标签页模式
+noremap to :XTabCycleMode<CR>
+" 显示当前路径
+noremap \p :echo expand('%:p')<CR>
+
+" ==============================
 "            Airline 
 " ==============================
 set t_Co=256
@@ -346,6 +378,38 @@ let g:airline#extensions#tabline#enabled = 1
 
 " ==============================
 "      Important plugins
+" ==============================
+"             fzf
+" ==============================
+nnoremap <silent> <M-f> :Files<CR>
+nnoremap <silent> <M-b> :Buffers<CR>
+nnoremap <silent> <M-h> :History<CR>
+
+" let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
+let g:fzf_layout = { 'down': '40%' }
+let g:fzf_preview_window = 'right:40%'
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:delete_buffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
+
+" ==============================
+"       vim-easy-align 
+" ==============================
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
 " ==============================
 "    Coc.vim (auto-complete)
 " ==============================
@@ -424,7 +488,6 @@ nmap <silent> gr <Plug>(coc-references)
 " Symbol renaming. 
 nmap <leader>rn <Plug>(coc-rename)
 
-
 " ==============================
 "   NerdCommenter (Explation)
 " ==============================
@@ -445,31 +508,51 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 " ==============================
-"             fzf
+"         vimspector 
 " ==============================
-nnoremap <silent> <M-f> :Files<CR>
-nnoremap <silent> <M-b> :Buffers<CR>
-nnoremap <silent> <M-h> :History<CR>
-
-" let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
-let g:fzf_layout = { 'down': '40%' }
-let g:fzf_preview_window = 'right:40%'
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-function! s:list_buffers()
-  redir => list
-  silent ls
-  redir END
-  return split(list, "\n")
+let g:vimspector_enable_mappings = 'HUMAN'
+function! s:read_template_into_buffer(template)
+	" has to be a function to avoid the extra space fzf#run insers otherwise
+	execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
 endfunction
-
-function! s:delete_buffers(lines)
-  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
-endfunction
-
+command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+			\   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
+			\   'down': 20,
+			\   'sink': function('<sid>read_template_into_buffer')
+			\ })
+" noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+sign define vimspectorBP text=☛ texthl=Normal
+sign define vimspectorBPDisabled text=☞ texthl=Normal
+sign define vimspectorPC text=🔶 texthl=SpellBad
 
 " ==============================
-"           NVIM_APPS  
+"        vim-visual-multi 
+" ==============================
+"let g:VM_theme             = 'iceblue'
+"let g:VM_default_mappings = 0
+" let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
+" let g:VM_maps                       = {}
+" let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
+" let g:VM_maps['i']                  = 'k'
+" let g:VM_maps['I']                  = 'K'
+" let g:VM_maps['Find Under']         = '<C-k>'
+" let g:VM_maps['Find Subword Under'] = '<C-k>'
+" let g:VM_maps['Find Next']          = ''
+" let g:VM_maps['Find Prev']          = ''
+" let g:VM_maps['Remove Region']      = 'q'
+" let g:VM_maps['Skip Region']        = '<c-n>'
+" let g:VM_maps["Undo"]               = 'l'
+" let g:VM_maps["Redo"]               = '<C-r>'
+
+
+" ==============================
+"           Nvim-apps  
+" ==============================
+"          suda.vim 
+" ==============================
+cnoreabbrev sudowrite w suda://%
+cnoreabbrev sw w suda://%
+
 " ==============================
 "            rnvimr 
 " ==============================
@@ -522,9 +605,45 @@ vmap <silent> <LEADER>r <Plug>DictRVSearch
 " 输入需要翻译的单词
 noremap <M-w> :DictW 
 
+" ==============================
+"            goyo
+" ==============================
+map <LEADER>gy :Goyo<CR>
+
+" ==============================
+"        vim-calendar 
+" ==============================
+noremap \c :Calendar -position=here<CR>
+noremap \\ :Calendar -view=clock -position=here<CR>
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+augroup calendar-mappings
+	autocmd!
+	" diamond cursor
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <c-i> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <c-j> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> H <Plug>(calendar_start_insert_head)
+	" unmap <C-n>, <C-p> for other plugins
+	autocmd FileType calendar nunmap <buffer> <C-n>
+	autocmd FileType calendar nunmap <buffer> <C-p>
+augroup END
+
 
 " ==============================
 "           Language 
+" ==============================
+"         md-img-paste
+" ==============================
+autocmd FileType markdown nmap <buffer><silent> <M-p> :call mdip#MarkdownClipboardImage()<CR>
+let g:mdip_imgdir = 'images'
+
 " ==============================
 "      Markdown-preview.vim 
 " ==============================
@@ -572,10 +691,15 @@ inoreabbrev <expr> __
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 " ==============================
-"         md-img-paste
+"         Bullets.vim 
 " ==============================
-autocmd FileType markdown nmap <buffer><silent> <M-p> :call mdip#MarkdownClipboardImage()<CR>
-let g:mdip_imgdir = 'images'
+" let g:bullets_set_mappings = 0
+let g:bullets_enabled_file_types = [
+			\ 'markdown',
+			\ 'text',
+			\ 'gitcommit',
+			\ 'scratch'
+			\]
 
 " ==============================
 "    Markdown-default.config   
