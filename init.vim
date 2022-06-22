@@ -1,11 +1,13 @@
-"             _
-"  _ ____   _(_)_ __ ___
-" | '_ \ \ / / | '_ ` _ \
-" | | | \ V /| | | | | | |
-" |_| |_|\_/ |_|_| |_| |_|
+"                 _
+"      _ ____   _(_)_ __ ___
+"     | '_ \ \ / / | '_ ` _ \
+"     | | | \ V /| | | | | | |
+"     |_| |_|\_/ |_|_| |_| |_|
 
 
-" ==================== Auto load for first time uses ====================
+" ==============================
+"  Auto load for first time uses 
+" ==============================
 if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
 	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -13,7 +15,9 @@ if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
 endif
 
 
-" ==================== Editor behavior ====================
+" ==============================
+"       Editor behavior 
+" ==============================
 let &t_ut=''                   
 let mapleader =" "              
 " Scanf kinds of files
@@ -66,25 +70,10 @@ set showcmd			               " watch the command
 set laststatus=2                   " to set the status line
 set clipboard=unnamedplus          " share the yank with system 
 
-" Make backup
-silent !mkdir -p $HOME/.config/nvim/tmp/backup
-silent !mkdir -p $HOME/.config/nvim/tmp/undo
-set backupdir=$HOME/.config/nvim/tmp/backup,.
-set directory=$HOME/.config/nvim/tmp/backup,.
-if has('persistent_undo')
-	set undofile
-	set undodir=$HOME/.config/nvim/tmp/undo,.
-endif
 
-" Make the Cursor like windows by inserting
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-" Restore Cursor Position
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-
-" ==================== New Section ====================
+" ==============================
+"       Course behavior 
+" ==============================
 "     ^
 "     i
 " < j  	l >                
@@ -109,15 +98,19 @@ noremap <C-f> 5<C-e>
 inoremap <silent> <C-e> <Esc>5<C-y>a
 inoremap <silent> <C-f> <Esc>5<C-e>a
 " Change the world
+noremap <silent> a b
 noremap <silent> W 5w
-noremap <silent> B 5b
+noremap <silent> A 5b
+noremap <silent> E 5e
 " i/k keys for 5 times k/j (faster navigation)
 noremap <silent> K 5j
 noremap <silent> I 5k
 " J/L key: go to the start/end of the line
 noremap <silent> J 0
 noremap <silent> L $
-" ========== Command Mode Cursor Movement ========== 
+" ==============================
+"  Command Mode Cursor Movement 
+" ==============================
 cnoremap <silent> <C-a> <Home>
 cnoremap <silent> <C-e> <End>
 cnoremap <silent> <C-p> <Up>
@@ -126,17 +119,19 @@ cnoremap <silent> <C-b> <Left>
 cnoremap <silent> <C-f> <Right>
 
 
-" ==================== Window management ====================
+" ==============================
+"       Window management 
+" ==============================
 " Split the screens to up (horizontal), down (horizonta), left (vertical), right (vertical)
 map sj :set splitright<CR>:vsplit<CR>                     
 map sl :set nosplitright<CR>:vsplit<CR>:set splitright<CR> 
 map sk :set splitbelow<CR>:split<CR>                       
 map si :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>  
 " Use <space> + new arrow keys for moving the cursor around windows
-noremap ai  <C-w>k       
-noremap ak  <C-w>j       
-noremap aj  <C-w>h       
-noremap al  <C-w>l       
+noremap <M-I> <C-w>k       
+noremap <M-K> <C-w>j       
+noremap <M-J> <C-w>h       
+noremap <M-L> <C-w>l       
 " Place the two screens up and down (splitscreen to H)
 " Place the two screens side by side   (splitscreen to V)
 noremap sh <C-w>t<C-w>K        
@@ -150,26 +145,30 @@ map <down>  :res +5<CR>
 map <left>  :vertical resize-5<CR>      
 map <right> :vertical resize+5<CR>      
 
-" ==================== Tab management Buffers ====================
+" ==============================
+"    Tab management Buffers 
+" ==============================
 " Create a new tab with tu
-map tn :tabe<CR>       
+map <C-n> :tabe<CR>       
 " Close a tab with t
 " Close all the tab with twa
-map tw :tabc<CR>      
-map taw :tabo<CR>    
+map <C-w> :tabc<CR>      
+" map <C-w>a :tabo<CR>
 " Move around tabs with tn and ti
-map tj :-tabnext<CR>    
-map tl :+tabnext<CR>  
+map <M-j> :-tabnext<CR>    
+map <M-l> :+tabnext<CR>  
 " Move the tabs with tmj and tml
-map tmj :-tabmove<CR>
-map tml :+tabmove<CR> 
+map <C-m>j :-tabmove<CR>
+map <C-m>l :+tabmove<CR> 
 
 
-" ==================== Other useful stuff ====================
+" ==============================
+"      Other useful stuff 
+" ==============================
 " Auto change directory to current dir
 autocmd BufEnter * silent! lcd %:p:h
-" Open / Reload init.vim
-nnoremap <LEADER>r :source ~/.config/nvim/init.vim<CR>
+" Reload init.vim
+nnoremap <LEADER>s :source ~/.config/nvim/init.vim<CR>
 " Open a new instance of st with the cwd
 nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 " Opening a terminal window
@@ -192,16 +191,25 @@ inoremap [ []<LEFT>
 inoremap { {}<LEFT>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
+" Restore Cursor Position
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" Make the Cursor like windows by inserting
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" Make backup
+silent !mkdir -p $HOME/.config/nvim/tmp/backup
+silent !mkdir -p $HOME/.config/nvim/tmp/undo
+set backupdir=$HOME/.config/nvim/tmp/backup,.
+set directory=$HOME/.config/nvim/tmp/backup,.
+if has('persistent_undo')
+	set undofile
+	set undodir=$HOME/.config/nvim/tmp/undo,.
+endif
 
-" ========== Markdown Settings ========== 
-" Snippets
-source $HOME/.config/nvim/plugin/md-snippets.vim
-" Confilct
-source $HOME/.config/nvim/plugin/conflict.vim
-
-au BufRead,BufNewFile *.md set filetype=markdown
-au BufRead,BufNewFile *.markdown set filetype=markdown
-" ========== Compile function ========== 
+" ==============================
+"       Compile function 
+" ==============================
 noremap r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
@@ -260,10 +268,12 @@ func! CompileRunGcc()
 endfunc
 
 
-" ==================== Install Plugins with Vim-Plug ====================
+" ==============================
+"         Vim-Plugins
+" ==============================
 call plug#begin('~/.config/nvim/plugged')
 
-" === Dressed
+" --- Dress neovim
 " Pretty Dressed-vim
 Plug 'mg979/vim-xtabline'
 Plug 'vim-airline/vim-airline'
@@ -271,7 +281,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
 Plug 'theniceboy/nvim-deus'                                   
 
-" === Useful Plugins
+" --- Important Plugins
 " Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -282,34 +292,45 @@ Plug 'preservim/nerdcommenter'
 " Snippets
 Plug 'theniceboy/vim-snippets'
 
-" === Language
-" Markdown Preview
-Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
-Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
+" --- Language
+" Markdown-Preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+" Markdown-table-mode
+Plug 'dhruvasagar/vim-table-mode'
+" md-img-paste
+Plug 'ferrine/md-img-paste.vim', { 'for': ['markdown', 'vim-plug'] }
 
-" Go
-Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
-" Swift
-Plug 'keith/swift.vim'
-Plug 'arzg/vim-swift'
+" " Go
+" Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
+"
+" " Swift
+" Plug 'keith/swift.vim'
+" Plug 'arzg/vim-swift'
 
-" === vim_application
+" --- vim_application
+" Rnvimr 
 Plug 'kevinhwang91/rnvimr'
+" Translate
+Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSearch', '<Plug>DictRSearch', '<Plug>DictRVSearch']}
 
 call plug#end()
 
 
-" ===================== Start of Plugin Settings =====================
-"
-" ===================== Deus =====================
+" ==============================
+"          Dress neovim 
+" ==============================
+"             Deus 
+" ==============================
 set termguicolors              " enable true colors support
 silent! color deus
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 hi NonText ctermfg=gray guifg=grey10
 
-" ==================== Airline ====================
+" ==============================
+"            Airline 
+" ==============================
 set t_Co=256
 set laststatus=2
 
@@ -318,9 +339,11 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1 
 
 
-" ===================== Useful Plugins =====================
-"
-" ==================== Coc.nvim ====================
+" ==============================
+"      Important plugins
+" ==============================
+"    Coc.vim (auto-complete)
+" ==============================
 let g:coc_global_extensions = [
 	\ 'coc-css',
 	\ 'coc-diagnostic',
@@ -398,8 +421,9 @@ nmap <leader>rn <Plug>(coc-rename)
 
 let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 
-
-" ==================== NerdCommenter (Explation) ====================
+" ==============================
+"   NerdCommenter (Explation)
+" ==============================
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
@@ -417,13 +441,17 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 
-" ===================== NVIM_APPS =====================
-" ==================== rnvimr ====================
+" ==============================
+"           NVIM_APPS  
+" ==============================
+"            rnvimr 
+" ==============================
+nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+
 let g:rnvimr_ex_enable = 1
 let g:rnvimr_pick_enable = 1
 let g:rnvimr_draw_border = 0
 highlight link RnvimrNormal CursorLine
-nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
 let g:rnvimr_action = {
             \ '<C-t>': 'NvimEdit tabedit',
             \ '<C-x>': 'NvimEdit split',
@@ -438,65 +466,7 @@ let g:rnvimr_layout = { 'relative': 'editor',
             \ 'row': 0,
             \ 'style': 'minimal' }
 let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
-
-
-" ===================== Language =====================
-"
-" ==================== vim-instant-markdown ====================
-nnoremap <LEADER>p :InstantMarkdownPreview<CR>
-
-let g:instant_markdown_slow = 1
-let g:instant_markdown_autostart = 0
-let g:instant_markdown_open_to_the_world = 1
-let g:instant_markdown_allow_unsafe_content = 1
-let g:instant_markdown_allow_external_content = 0
-let g:instant_markdown_mathjax = 1
-let g:instant_markdown_mermaid = 1
-let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
-let g:instant_markdown_autoscroll = 0
-let g:instant_markdown_port = 8888
-let g:instant_markdown_python = 1
-let g:instant_markdown_browser = "firefox"
-
-" ==================== vim-markdown-toc ====================
-"let g:vmt_auto_update_on_save = 0
-"let g:vmt_dont_insert_fence = 1
-let g:vmt_cycle_list_item_markers = 1
-let g:vmt_fence_closing_text = '/TOC'
-
-" ==================== vim.go ====================
-let g:go_echo_go_info = 0
-let g:go_doc_popup_window = 1
-let g:go_def_mapping_enabled = 0
-let g:go_template_autocreate = 0
-let g:go_textobj_enabled = 0
-let g:go_auto_type_info = 1
-let g:go_def_mapping_enabled = 0
-let g:go_highlight_array_whitespace_error = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_chan_whitespace_error = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_format_strings = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_function_parameters = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_space_tab_error = 1
-let g:go_highlight_string_spellcheck = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_trailing_whitespace_error = 1
-let g:go_highlight_types = 1
-let g:go_highlight_variable_assignments = 0
-let g:go_highlight_variable_declarations = 0
-let g:go_doc_keywordprg_enabled = 0
-
-
-" ===================== End of Plugin Settings =====================
-" 
-" ==================== New Section ====================
+" --- colors
 let g:terminal_color_0  = '#000000'
 let g:terminal_color_1  = '#FF5555'
 let g:terminal_color_2  = '#50FA7B'
@@ -512,3 +482,66 @@ let g:terminal_color_11 = '#F4F99D'
 let g:terminal_color_12 = '#CAA9FA'
 let g:terminal_color_13 = '#FF92D0'
 let g:terminal_color_14 = '#9AEDFE'
+
+
+" ==============================
+"           Language 
+" ==============================
+"      Markdown-preview.vim 
+" ==============================
+" 预览快捷键
+nnoremap <silent> <LEADER>p :MarkdownPreview<CR>
+" 自动启动(默认为0，改为1为开启自动启动)
+let g:mkdp_auto_start = 0
+" 自动刷新(默认为0,改为1为开启自动刷新)
+let g:mkdp_refresh_slow = 1
+" 预览浏览器
+let g:mkdp_browser = 'firefox'
+
+" ==============================
+"            dict
+" ==============================
+" 翻译光标下的单词并在dict窗口显示
+nmap <silent> <LEADER>t <Plug>DictWSearch
+vmap <silent> <LEADER>t <Plug>DictWVSearch
+" 翻译光标下的单词并替换翻译结果
+nmap <silent> <LEADER>r <Plug>DictRSearch
+vmap <silent> <LEADER>r <Plug>DictRVSearch
+" 输入需要翻译的单词
+noremap <M-w> :DictW 
+
+" ==============================
+"       vim-table-mode
+" ==============================
+"Rev.动表格模板
+noremap <silent> <M-m> :TableModeToggle<CR>
+" 表格模板重新对 
+noremap <silent> <M-r> :TableModeRealign<CR>
+
+function! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+          \ <SID>isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+          \ <SID>isAtStartOfLine('__') ?
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+" ==============================
+"         md-img-paste
+" ==============================
+autocmd FileType markdown nmap <buffer><silent> <C-p> :call mdip#MarkdownClipboardImage()<CR>
+let g:mdip_imgdir = 'images'
+
+" ==============================
+"    Markdown-default.config   
+" ==============================
+" --- Snippets
+autocmd FileType md source $HOME/.config/nvim/plugin/md-snippets.vim
+" --- Confilct
+source $HOME/.config/nvim/plugin/conflict.vim
