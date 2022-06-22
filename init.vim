@@ -1,8 +1,8 @@
-"                 _
-"      _ ____   _(_)_ __ ___
-"     | '_ \ \ / / | '_ ` _ \
-"     | | | \ V /| | | | | | |
-"     |_| |_|\_/ |_|_| |_| |_|
+"               _
+"    _ ____   _(_)_ __ ___
+"   | '_ \ \ / / | '_ ` _ \
+"   | | | \ V /| | | | | | |
+"   |_| |_|\_/ |_|_| |_| |_|
 
 
 " ==============================
@@ -99,9 +99,9 @@ inoremap <silent> <C-e> <Esc>5<C-y>a
 inoremap <silent> <C-f> <Esc>5<C-e>a
 " Change the world
 noremap <silent> a b
-noremap <silent> W 5w
-noremap <silent> A 5b
-noremap <silent> E 5e
+noremap <silent> W 3w
+noremap <silent> B 3b
+noremap <silent> E 3e
 " i/k keys for 5 times k/j (faster navigation)
 noremap <silent> K 5j
 noremap <silent> I 5k
@@ -148,18 +148,18 @@ map <right> :vertical resize+5<CR>
 " ==============================
 "    Tab management Buffers 
 " ==============================
-" Create a new tab with tu
+" Create a new tab with <C-n>
 map <C-n> :tabe<CR>       
 " Close a tab with t
-" Close all the tab with twa
+" Close all the tab with <C-w>
 map <C-w> :tabc<CR>      
 " map <C-w>a :tabo<CR>
-" Move around tabs with tn and ti
-map <M-j> :-tabnext<CR>    
-map <M-l> :+tabnext<CR>  
-" Move the tabs with tmj and tml
-map <C-m>j :-tabmove<CR>
-map <C-m>l :+tabmove<CR> 
+" Move around tabs with <M-j> and <M-l>
+map <C-s> :-tabnext<CR>    
+map <C-d> :+tabnext<CR>  
+" Move the tabs with <C-m>j and <C-m>l
+map tmj :-tabmove<CR>
+map tml :+tabmove<CR> 
 
 
 " ==============================
@@ -292,21 +292,26 @@ Plug 'preservim/nerdcommenter'
 " Snippets
 Plug 'theniceboy/vim-snippets'
 
+" Fzf.vim
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " --- Language
 " Markdown-Preview
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+" Markdown-toc
+Plug 'mzlogin/vim-markdown-toc'
 " Markdown-table-mode
 Plug 'dhruvasagar/vim-table-mode'
-" md-img-paste
+" md-img-paste(add picture)
 Plug 'ferrine/md-img-paste.vim', { 'for': ['markdown', 'vim-plug'] }
 
+" Go
+Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
-" " Go
-" Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
-"
-" " Swift
-" Plug 'keith/swift.vim'
-" Plug 'arzg/vim-swift'
+" Swift
+Plug 'keith/swift.vim'
+Plug 'arzg/vim-swift'
 
 " --- vim_application
 " Rnvimr 
@@ -419,7 +424,6 @@ nmap <silent> gr <Plug>(coc-references)
 " Symbol renaming. 
 nmap <leader>rn <Plug>(coc-rename)
 
-let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 
 " ==============================
 "   NerdCommenter (Explation)
@@ -440,6 +444,29 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
+" ==============================
+"             fzf
+" ==============================
+nnoremap <silent> <M-f> :Files<CR>
+nnoremap <silent> <M-b> :Buffers<CR>
+nnoremap <silent> <M-h> :History<CR>
+
+" let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
+let g:fzf_layout = { 'down': '40%' }
+let g:fzf_preview_window = 'right:40%'
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:delete_buffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
 
 " ==============================
 "           NVIM_APPS  
@@ -453,8 +480,8 @@ let g:rnvimr_pick_enable = 1
 let g:rnvimr_draw_border = 0
 highlight link RnvimrNormal CursorLine
 let g:rnvimr_action = {
-            \ '<C-t>': 'NvimEdit tabedit',
-            \ '<C-x>': 'NvimEdit split',
+            \ '<C-n>': 'NvimEdit tabedit',
+            \ '<C-g>': 'NvimEdit split',
             \ '<C-v>': 'NvimEdit vsplit',
             \ 'gw': 'JumpNvimCwd',
             \ 'yw': 'EmitRangerCwd'
@@ -483,6 +510,18 @@ let g:terminal_color_12 = '#CAA9FA'
 let g:terminal_color_13 = '#FF92D0'
 let g:terminal_color_14 = '#9AEDFE'
 
+" ==============================
+"            dict
+" ==============================
+" 翻译光标下的单词并在dict窗口显示
+nmap <silent> <LEADER>t <Plug>DictWSearch
+vmap <silent> <LEADER>t <Plug>DictWVSearch
+" 翻译光标下的单词并替换翻译结果
+nmap <silent> <LEADER>r <Plug>DictRSearch
+vmap <silent> <LEADER>r <Plug>DictRVSearch
+" 输入需要翻译的单词
+noremap <M-w> :DictW 
+
 
 " ==============================
 "           Language 
@@ -499,24 +538,24 @@ let g:mkdp_refresh_slow = 1
 let g:mkdp_browser = 'firefox'
 
 " ==============================
-"            dict
+"       vim-markdown-toc 
 " ==============================
-" 翻译光标下的单词并在dict窗口显示
-nmap <silent> <LEADER>t <Plug>DictWSearch
-vmap <silent> <LEADER>t <Plug>DictWVSearch
-" 翻译光标下的单词并替换翻译结果
-nmap <silent> <LEADER>r <Plug>DictRSearch
-vmap <silent> <LEADER>r <Plug>DictRVSearch
-" 输入需要翻译的单词
-noremap <M-w> :DictW 
+noremap <silent> <LEADER>tg :GenTocGFM
+noremap <silent> <LEADER>tk :GenTocMarked
+
+"let g:vmt_auto_update_on_save = 0
+"let g:vmt_dont_insert_fence = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
 
 " ==============================
-"       vim-table-mode
+"        vim-table-mode
 " ==============================
-"Rev.动表格模板
-noremap <silent> <M-m> :TableModeToggle<CR>
+" 启动表格模板
+noremap <silent> <LEADER>mt :TableModeToggle<CR>
 " 表格模板重新对 
-noremap <silent> <M-r> :TableModeRealign<CR>
+noremap <silent> <LEADER>mr :TableModeRealign<CR>
 
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -535,7 +574,7 @@ inoreabbrev <expr> __
 " ==============================
 "         md-img-paste
 " ==============================
-autocmd FileType markdown nmap <buffer><silent> <C-p> :call mdip#MarkdownClipboardImage()<CR>
+autocmd FileType markdown nmap <buffer><silent> <M-p> :call mdip#MarkdownClipboardImage()<CR>
 let g:mdip_imgdir = 'images'
 
 " ==============================

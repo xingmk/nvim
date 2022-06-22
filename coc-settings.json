@@ -111,44 +111,42 @@
 	"explorer.keyMappings.global": {
 		"i": "nodePrev",
 		"k": "nodeNext",
-		"s": "toggleSelection",
-		"<tab>": "actionMenu",
-		"gl": "expandRecursive",
-		"gh": "collapseRecursive",
+		"h": "gotoParent",
+		"j": "collapse",
+		"l": ["wait", "expanded?", "collapse", "expand"],
 		"o": ["wait", "expandable?", "expand", "open"],
 		"<cr>": ["wait", "expandable?", "cd", "open"],
-		// "I": "open:vsplit",     // 打开文件或者目录
-		"l": ["wait", "expanded?", "collapse", "expand"],
-		"L": "open:tab", // 打开文件或者目录
-		"j": "collapse", // 折叠目录
-		"h": "gotoParent", // 到上级目录表
-		"yp": "copyFilepath", // 复制文件路径
-		"yn": "copyFilename", // 复制文件名
-		"yy": "copyFile", // 复制文件
-		"dd": "cutFile", // 剪切文件
-		"pp": "pasteFile", // 粘贴文件
-		"dD": "deleteForever", // 永久删除
-		//	"a": "addFile", // 添加一个新的文件 (no path)
-		"e": "addFile", // 添加一个新的文件 (no path)
-		"M": "addDirectory", // 添加一个新的目录 (path)
-		"rn": "rename", // 重命名
-		".": "toggleHidden", // 切换隐藏节点的可见性
-		"zh": "toggleHidden", // 切换隐藏节点的可见性
-		"R": "refresh", // 刷新
-		"?": "help", // 帮助
-		"q": "quit", // 退出
-		"X": "systemExecute", // 使用系统应用打开文件或者目录
+		"f": "search",
+		"F": "searchRecursive",
+		"L": "open:tab",
+		"H": "open:vsplit",
+		"s": "toggleSelection",
+		"<tab>": "actionMenu",
+		"e": "addFile",
+		"M": "addDirectory",
+		"rn": "rename",
+		"yn": "copyFilename",
+		"yp": "copyFilepath",
+		"yy": "copyFile",
+		"dd": "cutFile",
+		"pp": "pasteFile",
+		"dD": "deleteForever",
+		".": "toggleHidden",
+		"zh": "toggleHidden",
+		"gl": "expandRecursive",
+		"gh": "collapseRecursive",
 		"gd": "listDrive",
-		"f": "search", // 搜索
-		"F": "searchRecursive", // 按照coc-list 递归搜索
-		"B": "gotoSource:file", // 到文件源头
-		"b": "gotoSource:buffer", // 到缓冲区源头
+		"R": "refresh",
+		"?": "help",
+		"q": "quit",
+		"b": "gotoSource:buffer",
+		"B": "gotoSource:file",
 		"[[": "sourcePrev",
 		"]]": "sourceNext",
 		"[d": "diagnosticPrev",
 		"]d": "diagnosticNext",
-		"[c": "gitPrev",
-		"]c": "gitNext",
+		"[g": "gitPrev",
+		"]g": "gitNext",
 		"<<": "gitStage",
 		">>": "gitUnstage"
 	},
