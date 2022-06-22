@@ -4,24 +4,15 @@
 " | | | \ V /| | | | | | |
 " |_| |_|\_/ |_|_| |_| |_|
 
-" ===
-" === Auto load for first time uses
-" ===
+
+" ==================== Auto load for first time uses ====================
 if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
 	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-let has_machine_specific_file = 1
-if empty(glob('~/.config/nvim/_machine_specific.vim'))
-	let has_machine_specific_file = 0
-	silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
-endif
-source $HOME/.config/nvim/default_configs/_machine_specific_default.vim
 
-
-" 
 " ==================== Editor behavior ====================
 let &t_ut=''                   
 let mapleader =" "              
@@ -204,11 +195,9 @@ inoremap ' ''<LEFT>
 
 " ========== Markdown Settings ========== 
 " Snippets
-source $HOME/.config/nvim/md-snippets.vim
-" Auto spell
-" autocmd BufRead,BufNewFile *.md setlocal spell
+source $HOME/.config/nvim/plugin/md-snippets.vim
 " Confilct
-source $HOME/.config/nvim/conflict.vim
+source $HOME/.config/nvim/plugin/conflict.vim
 
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.markdown set filetype=markdown
@@ -523,11 +512,3 @@ let g:terminal_color_11 = '#F4F99D'
 let g:terminal_color_12 = '#CAA9FA'
 let g:terminal_color_13 = '#FF92D0'
 let g:terminal_color_14 = '#9AEDFE'
-
-" ==================== Necessary Commands to Execute ====================
-exec "nohlsearch"
-
-" Open the _machine_specific.vim file if it has just been created
-if has_machine_specific_file == 0
-	exec "e ~/.config/nvim/_machine_specific.vim"
-endif
