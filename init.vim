@@ -206,7 +206,7 @@ inoremap ' ''<LEFT>
 " Snippets
 source $HOME/.config/nvim/md-snippets.vim
 " Auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell
+" autocmd BufRead,BufNewFile *.md setlocal spell
 " Confilct
 source $HOME/.config/nvim/conflict.vim
 
@@ -467,7 +467,7 @@ let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
 let g:instant_markdown_autoscroll = 0
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 1
-let g:instant_markdown_browser = "chromium"
+let g:instant_markdown_browser = "firefox"
 
 " ==================== vim-markdown-toc ====================
 "let g:vmt_auto_update_on_save = 0
