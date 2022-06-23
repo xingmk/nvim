@@ -1,6 +1,8 @@
 "autocmd Filetype markdown map <leader>w yiWi[<esc>Ea](<esc>pa)
 autocmd Filetype markdown inoremap <buffer> ,e <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 autocmd Filetype markdown inoremap <buffer> ,z <Esc>/<++><CR>:nohlsearch<CR>"_c5l<CR>
+autocmd Filetype markdown noremap <buffer> ,e <Esc>/<++><CR>:nohlsearch<CR>"_c4l
+autocmd Filetype markdown noremap <buffer> ,z <Esc>/<++><CR>:nohlsearch<CR>"_c5l<CR>
 " Title 
 autocmd Filetype markdown inoremap <buffer> ,1 #<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA

@@ -711,7 +711,7 @@ let g:vmt_fence_closing_text = '/TOC'
 "        vim-table-mode
 " ==============================
 " 启动表格模板
-noremap <silent> <LEADER>mt :TableModeToggle<CR>
+noremap <silent> <LEADER>tm :TableModeToggle<CR>
 " 表格模板重新对
 noremap <silent> <LEADER>mr :TableModeRealign<CR>
 
@@ -747,3 +747,5 @@ let g:bullets_enabled_file_types = [
 autocmd FileType md source $HOME/.config/nvim/plugin/md-snippets.vim
 " --- Confilct
 source $HOME/.config/nvim/plugin/conflict.vim
+" --- start markdown spell
+" autocmd BufRead,BufNewFile *.md setlocal spell
