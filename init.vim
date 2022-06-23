@@ -1,4 +1,4 @@
-"               _
+
 "    _ ____   _(_)_ __ ___
 "   | '_ \ \ / / | '_ ` _ \
 "   | | | \ V /| | | | | | |
@@ -276,6 +276,7 @@ call plug#begin('~/.config/nvim/plugged')
 " --- Dress neovim
 " Pretty Dressed-vim
 Plug 'mg979/vim-xtabline'
+Plug 'jreybert/vimagit'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
@@ -389,7 +390,7 @@ set laststatus=2
 " Support powerline fonts
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-
+let g:magit_git_cmd="git"
 
 " ==============================
 "      Important plugins
@@ -397,8 +398,7 @@ let g:airline#extensions#tabline#enabled = 1
 "      Auto-format.vim
 " ==============================
 noremap \f :Autoformat<CR>
-
-au BufWrite * :Autoformat
+" au BufWrite * :Autoformat
 
 " ==============================
 " GitGutter
