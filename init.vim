@@ -222,7 +222,7 @@ func! CompileRunGcc()
         set splitbelow
         exec "!g++ -std=c++11 % -Wall -o %<"
         :sp
-        :res -15
+        :res -5
         :term ./%<
     elseif &filetype == 'cs'
         set splitbelow
@@ -276,7 +276,7 @@ call plug#begin('~/.config/nvim/plugged')
 " --- Dress neovim
 " Pretty Dressed-vim
 Plug 'mg979/vim-xtabline'
-Plug 'jreybert/vimagit'
+ Plug 'jreybert/vimagit'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
