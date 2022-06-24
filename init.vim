@@ -1,4 +1,4 @@
-
+"               _
 "    _ ____   _(_)_ __ ___
 "   | '_ \ \ / / | '_ ` _ \
 "   | | | \ V /| | | | | | |
@@ -99,9 +99,9 @@ inoremap <silent> <C-e> <Esc>5<C-y>a
 inoremap <silent> <C-f> <Esc>5<C-e>a
 " Change the world
 noremap <silent> a b
-noremap <silent> W 3w
-noremap <silent> B 3b
-noremap <silent> E 3e
+noremap <silent> <M-w> 3w
+noremap <silent> <M-a> 3b
+noremap <silent> <M-e> 3e
 " i/k keys for 5 times k/j (faster navigation)
 noremap <silent> K 5j
 noremap <silent> I 5k
@@ -128,10 +128,10 @@ map sl :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
 map sk :set splitbelow<CR>:split<CR>
 map si :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 " Use <space> + new arrow keys for moving the cursor around windows
-noremap <M-I> <C-w>k
-noremap <M-K> <C-w>j
-noremap <M-J> <C-w>h
-noremap <M-L> <C-w>l
+noremap <M-i> <C-w>k
+noremap <M-k> <C-w>j
+noremap <M-j> <C-w>h
+noremap <M-l> <C-w>l
 " Place the two screens up and down (splitscreen to H)
 " Place the two screens side by side   (splitscreen to V)
 noremap sh <C-w>t<C-w>K
@@ -149,7 +149,7 @@ map <right> :vertical resize+5<CR>
 "    Tab management Buffers
 " ==============================
 " Create a new tab with <C-n>
-map <C-n> :tabe<CR>
+map <C-t> :tabe<CR>
 " Close a tab with t
 " Close all the tab with <C-w>
 map <C-w> :tabc<CR>
@@ -158,8 +158,10 @@ map <C-w> :tabc<CR>
 map <C-s> :-tabnext<CR>
 map <C-d> :+tabnext<CR>
 " Move the tabs with <C-m>j and <C-m>l
-map tmj :-tabmove<CR>
-map tml :+tabmove<CR>
+" map tmj :-tabmove<CR>
+" map tml :+tabmove<CR>
+map <LEADER>tj :-tabmove<CR>
+map <LEADER>tl :+tabmove<CR>
 
 
 " ==============================
@@ -377,7 +379,7 @@ let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
 let g:xtabline_settings.enable_persistance = 0
 let g:xtabline_settings.last_open_first = 1
 " 开关循环标签页模式
-noremap to :XTabCycleMode<CR>
+" noremap to :XTabCycleMode<CR>
 " 显示当前路径
 noremap \p :echo expand('%:p')<CR>
 
@@ -414,7 +416,7 @@ let g:gitgutter_sign_removed = '▏'
 let g:gitgutter_sign_removed_first_line = '▔'
 let g:gitgutter_sign_modified_removed = '▒'
 nnoremap <LEADER>gf :GitGutterFold<CR>
-nnoremap H :GitGutterPreviewHunk<CR>
+nnoremap <LEADER>gh :GitGutterPreviewHunk<CR>
 nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
 nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 
@@ -602,7 +604,7 @@ let g:rnvimr_pick_enable = 1
 let g:rnvimr_draw_border = 0
 highlight link RnvimrNormal CursorLine
 let g:rnvimr_action = {
-            \ '<C-n>': 'NvimEdit tabedit',
+            \ '<C-t>': 'NvimEdit tabedit',
             \ '<C-g>': 'NvimEdit split',
             \ '<C-v>': 'NvimEdit vsplit',
             \ 'gw': 'JumpNvimCwd',
@@ -642,7 +644,7 @@ vmap <silent> <LEADER>t <Plug>DictWVSearch
 nmap <silent> <LEADER>r <Plug>DictRSearch
 vmap <silent> <LEADER>r <Plug>DictRVSearch
 " 输入需要翻译的单词
-noremap <M-w> :DictW
+noremap <M-d> :DictW
 
 " ==============================
 "            goyo
