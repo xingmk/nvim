@@ -128,10 +128,10 @@ map sl :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
 map sk :set splitbelow<CR>:split<CR>
 map si :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 " Use <space> + new arrow keys for moving the cursor around windows
-noremap <M-i> <C-w>k
-noremap <M-k> <C-w>j
-noremap <M-j> <C-w>h
-noremap <M-l> <C-w>l
+noremap <M-I> <C-w>k
+noremap <M-K> <C-w>j
+noremap <M-J> <C-w>h
+noremap <M-L> <C-w>l
 " Place the two screens up and down (splitscreen to H)
 " Place the two screens side by side   (splitscreen to V)
 noremap sh <C-w>t<C-w>K
@@ -649,7 +649,7 @@ noremap <M-d> :DictW
 " ==============================
 "            goyo
 " ==============================
-map <LEADER>gy :Goyo<CR>
+map <M-g> :Goyo<CR>
 
 " ==============================
 "        vim-calendar
@@ -713,9 +713,9 @@ let g:vmt_fence_closing_text = '/TOC'
 "        vim-table-mode
 " ==============================
 " 启动表格模板
-noremap <silent> <LEADER>tm :TableModeToggle<CR>
+noremap <silent> <M-m> :TableModeToggle<CR>
 " 表格模板重新对
-noremap <silent> <LEADER>mr :TableModeRealign<CR>
+noremap <silent> <M-r> :TableModeRealign<CR>
 
 function! s:isAtStartOfLine(mapping)
     let text_before_cursor = getline('.')[0 : col('.')-1]
