@@ -128,10 +128,10 @@ map sl :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
 map sk :set splitbelow<CR>:split<CR>
 map si :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 " Use <space> + new arrow keys for moving the cursor around windows
-noremap <M-I> <C-w>k
-noremap <M-K> <C-w>j
-noremap <M-J> <C-w>h
-noremap <M-L> <C-w>l
+noremap zi <C-w>k
+noremap zk <C-w>j
+noremap zj <C-w>h
+noremap zl <C-w>l
 " Place the two screens up and down (splitscreen to H)
 " Place the two screens side by side   (splitscreen to V)
 noremap sh <C-w>t<C-w>K
