@@ -1,12 +1,12 @@
 # === Some useful snippets
 
-snippet in "default body" 
+snippet in "default body"
 #include <stdio.h>
 #include <stdlib.h>
 
 int main(int argc, char *argv[])
 {
-	${0} 
+	${0}
 
 	return 0;
 }
@@ -27,19 +27,16 @@ endsnippet
 
 # === Function config ===
 
-snippet Max "find the max one" 
-
+snippet Max "find the max one"
 int max(int x, int y) {
 	int t;
 	t = x > y ? x : y;
 
 	return t;
 }
-
-
 endsnippet
 
-snippet Exch "exchange two number" 
+snippet Exch "exchange two number"
 void exch(int *x, int *y) {
 
 	int t;
@@ -47,34 +44,35 @@ void exch(int *x, int *y) {
 	*x = *y;
 	*y = t;
 }
-
 endsnippet
 
-snippet Prime "adjust Prime_num" 
-
+snippet Prime "adjust Prime_num"
 int prime_num(int a) {
 
 	int flag;
 	for (int i = 2; i < a / 2; i++) {
 
-	if (a % i == 0) {
-	flag = 0;
-	break;
-} else {
-	flag = 1;
-}
-	}
-	if (flag == 0) {
-	return 0;
-	} else {
-	return 1;
+		if (a % i == 0) {
+			return = 0;
+			break;
+		} else {
+			return = 1;
+		}
 	}
 }
-
 endsnippet
 
-snippet Jieceng "Jieceng's Function" 
+snippet Leap "adjust Leap year"
+int leapyear(int x){
+	if( (x % 4 == 0 && x % 100 != 0) || x % 400 == 0 ){
+		return 1;
+	} else{
+		return 0;
+	}
+}
+endsnippet
 
+snippet Jieceng "Jieceng's Function"
 int fun(int n) {
 
 	int p = 1;
@@ -83,5 +81,4 @@ int fun(int n) {
 	}
 	return p;
 }
-
 endsnippet
