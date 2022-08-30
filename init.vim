@@ -108,6 +108,8 @@ noremap <silent> I 5k
 " J/L key: go to the start/end of the line
 noremap <silent> J 0
 noremap <silent> L $
+
+
 " ==============================
 "  Command Mode Cursor Movement
 " ==============================
@@ -277,38 +279,45 @@ call plug#begin('~/.config/nvim/plugged')
 
 " --- Dress neovim
 " Pretty Dressed-vim
+Plug 'bling/vim-bufferline'
 Plug 'mg979/vim-xtabline'
 Plug 'jreybert/vimagit'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'bling/vim-bufferline'
+
+" Some themes
 Plug 'theniceboy/nvim-deus'
+Plug 'arcticicestudio/nord-vim'
+Plug 'mhartington/oceanic-next'
+
+" Visually displaying indent levels
+Plug 'nathanaelkane/vim-indent-guides'
+
+" Vim's matchparen for HTML tags
+Plug 'gregsexton/matchtag'
 
 " General Highlighter
-" Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'RRethy/vim-illuminate'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'skammer/vim-css-color'
+
 
 " --- Important Plugins
-"  Auto foramte
-Plug 'vim-autoformat/vim-autoformat'
-
-" Git
-Plug 'airblade/vim-gitgutter'
-" Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
-" Plug 'theniceboy/fzf-gitignore', { 'do': ':UpdateRemotePlugins' }
-"Plug 'mhinz/vim-signify'
-" Plug 'cohama/agit.vim'
-" Plug 'kdheepak/lazygit.nvim'
-
-" Auto Complete
+" Complete, Debugger, Bullets (live fresh), 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Debugger
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
+Plug 'dkarter/bullets.vim'
 
-" Smart Delete, Explation
+" Smart Delete, Explation, Foramte
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
+Plug 'vim-autoformat/vim-autoformat'
+
+" Nvim Syntastic
+Plug 'scrooloose/syntastic'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Snippets
 Plug 'theniceboy/vim-snippets'
@@ -320,25 +329,35 @@ Plug 'junegunn/fzf.vim'
 " Easy-align
 Plug 'junegunn/vim-easy-align'
 
-" Course visual
-" Plug 'mg979/vim-visual-multi'
 
 " --- Language
+" Language pack for vim
+Plug 'sheerun/vim-polyglot'
 " Markdown
+Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'ferrine/md-img-paste.vim', { 'for': ['markdown', 'vim-plug'] }
 
-" Bullets (live fresh)
-Plug 'dkarter/bullets.vim'
+" HTML,CSS,Javascript
+Plug 'othree/html5.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'pangloss/vim-javascript'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'vim-scripts/jsbeautify'
 
-" Go
+" C, Python, Go, Rust, Swift
+Plug 'vim-scripts/c.vim'
+Plug 'hdima/python-syntax'
+Plug 'google/yapf'
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
-
-" Swift
+Plug 'rust-lang/rust.vim'
 Plug 'keith/swift.vim'
 Plug 'arzg/vim-swift'
+
 
 " --- vim_application
 " Pay attention
@@ -365,10 +384,48 @@ call plug#end()
 "             Deus
 " ==============================
 set termguicolors              " enable true colors support
-silent! color deus
+" silent! color deus
+" let g:airline_theme='deus'
+
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 hi NonText ctermfg=gray guifg=grey10
+
+
+" ==============================
+"        OceanicNext
+" ==============================
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+" Choose themes for nvim
+colorscheme OceanicNext
+" colorscheme deus
+" colorscheme nord
+
+let g:airline_theme='oceanicnext'
+" Support st
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
+
+
+" ==============================
+"   Instant guide 
+" ==============================
+" Have indent guides enabled by default 
+"let g:indent_guides_enable_on_vim_startup = 1
+
+
+" ==============================
+"       Vim-cpp-highlight 
+" ==============================
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_experimental_template_highlight = 1
 
 " ==============================
 "           xtabline
@@ -389,9 +446,12 @@ noremap \p :echo expand('%:p')<CR>
 set t_Co=256
 set laststatus=2
 
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'default'
 " Support powerline fonts
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
 let g:magit_git_cmd="git"
 
 " ==============================
@@ -401,6 +461,20 @@ let g:magit_git_cmd="git"
 " ==============================
 noremap \f :Autoformat<CR>
 " au BufWrite * :Autoformat
+
+
+" ==============================
+" Syntastic 
+" ==============================
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 
 " ==============================
 " GitGutter
@@ -602,6 +676,18 @@ cnoreabbrev sudowrite w suda://%
 cnoreabbrev sw w suda://%
 
 " ==============================
+"         Bullets.vim
+" ==============================
+" let g:bullets_set_mappings = 0
+let g:bullets_enabled_file_types = [
+            \ 'markdown',
+            \ 'text',
+            \ 'gitcommit',
+            \ 'scratch'
+            \]
+
+
+" ==============================
 "            rnvimr
 " ==============================
 nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
@@ -692,6 +778,55 @@ augroup END
 autocmd FileType markdown nmap <buffer><silent> <M-p> :call mdip#MarkdownClipboardImage()<CR>
 let g:mdip_imgdir = 'images'
 
+
+" ==============================
+"           HTML 
+" ==============================
+let g:html5_event_handler_attributes_complete = 0
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_microdata_attributes_complete = 0
+let g:html5_aria_attributes_complete = 0
+
+" ==============================
+"           Javascript 
+" ==============================
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+
+" ==============================
+"         Javascript-beat 
+" ==============================
+" Use it by " <LEADER>ff "
+
+" ==============================
+"       Javascript-lib 
+" ==============================
+let g:used_javascript_libs = 'underscore,backbone'
+autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 0
+
+
+" ==============================
+"         Markdown.Vim 
+" ==============================
+" Prohibit folding 
+" let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_folding_disabled = 1
+" Set folding level
+let g:vim_markdown_folding_level = 6
+" Open Syntax concealing
+set conceallevel=2
+" Prohibit code block
+let g:vim_markdown_conceal_code_blocks = 0
+" Math
+let g:vim_markdown_math = 1
+let g:vim_markdown_strikethrough = 1
+" Fenced code block languages
+let g:vim_markdown_fenced_languages = ['csharp=cs', 'nvim=vim', 'bash=sh', 'c++=cpp']
+
 " ==============================
 "      Markdown-preview.vim
 " ==============================
@@ -737,17 +872,6 @@ inoreabbrev <expr> <bar><bar>
 inoreabbrev <expr> __
             \ <SID>isAtStartOfLine('__') ?
             \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-" ==============================
-"         Bullets.vim
-" ==============================
-" let g:bullets_set_mappings = 0
-let g:bullets_enabled_file_types = [
-            \ 'markdown',
-            \ 'text',
-            \ 'gitcommit',
-            \ 'scratch'
-            \]
 
 " ==============================
 "    Markdown-default.config
