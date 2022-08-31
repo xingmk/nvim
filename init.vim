@@ -109,7 +109,6 @@ noremap <silent> I 5k
 noremap <silent> J 0
 noremap <silent> L $
 
-
 " ==============================
 "  Command Mode Cursor Movement
 " ==============================
@@ -279,30 +278,30 @@ call plug#begin('~/.config/nvim/plugged')
 
 " --- Dress neovim
 " Pretty Dressed-vim
-Plug 'bling/vim-bufferline'
 Plug 'mg979/vim-xtabline'
+Plug 'bling/vim-bufferline'
 Plug 'jreybert/vimagit'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Some themes
 Plug 'theniceboy/nvim-deus'
-Plug 'arcticicestudio/nord-vim'
-Plug 'mhartington/oceanic-next'
+" Plug 'arcticicestudio/nord-vim'
+" Plug 'mhartington/oceanic-next'
 
 " Visually displaying indent levels
 Plug 'nathanaelkane/vim-indent-guides'
 
-" Vim's matchparen for HTML tags
+" " Vim's matchparen for HTML tags
 Plug 'gregsexton/matchtag'
 
-" General Highlighter
+" " General Highlighter
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'skammer/vim-css-color'
 
 
 " --- Important Plugins
-" Complete, Debugger, Bullets (live fresh), 
+" Complete, Debugger, Bullets (live fresh),
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 Plug 'dkarter/bullets.vim'
@@ -311,9 +310,6 @@ Plug 'dkarter/bullets.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'vim-autoformat/vim-autoformat'
-
-" Nvim Syntastic
-Plug 'scrooloose/syntastic'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -331,8 +327,6 @@ Plug 'junegunn/vim-easy-align'
 
 
 " --- Language
-" Language pack for vim
-Plug 'sheerun/vim-polyglot'
 " Markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
@@ -340,29 +334,15 @@ Plug 'mzlogin/vim-markdown-toc'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'ferrine/md-img-paste.vim', { 'for': ['markdown', 'vim-plug'] }
 
-" HTML,CSS,Javascript
-Plug 'othree/html5.vim'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'vim-scripts/jsbeautify'
 
-" C, Python, Go, Rust, Swift
-Plug 'vim-scripts/c.vim'
-Plug 'hdima/python-syntax'
-Plug 'google/yapf'
-Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
-Plug 'rust-lang/rust.vim'
+" Go, Rust, Swift
+" Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
+" Plug 'rust-lang/rust.vim'
 Plug 'keith/swift.vim'
 Plug 'arzg/vim-swift'
 
 
 " --- vim_application
-" Pay attention
-Plug 'junegunn/goyo.vim'
-
 " Rnvimr
 Plug 'kevinhwang91/rnvimr'
 
@@ -371,9 +351,6 @@ Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSear
 
 " sudo
 Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
-
-" calendar.vim
-Plug 'itchyny/calendar.vim'
 
 call plug#end()
 
@@ -384,42 +361,29 @@ call plug#end()
 "             Deus
 " ==============================
 set termguicolors              " enable true colors support
-" silent! color deus
-" let g:airline_theme='deus'
+silent! color deus
+let g:airline_theme='deus'
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 hi NonText ctermfg=gray guifg=grey10
 
-
 " ==============================
 "        OceanicNext
 " ==============================
 if (has("termguicolors"))
- set termguicolors
+    set termguicolors
 endif
 
-" Choose themes for nvim
-colorscheme OceanicNext
-" colorscheme deus
-" colorscheme nord
+" colorscheme OceanicNext
 
-let g:airline_theme='oceanicnext'
+" let g:airline_theme='oceanicnext'
 " Support st
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
-
+" let g:oceanic_next_terminal_bold = 1
+" let g:oceanic_next_terminal_italic = 1
 
 " ==============================
-"   Instant guide 
-" ==============================
-" Have indent guides enabled by default 
-"let g:indent_guides_enable_on_vim_startup = 1
-
-
-" ==============================
-"       Vim-cpp-highlight 
+"       Vim-cpp-highlight
 " ==============================
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
@@ -435,10 +399,6 @@ let g:xtabline_settings.enable_mappings = 0
 let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
 let g:xtabline_settings.enable_persistance = 0
 let g:xtabline_settings.last_open_first = 1
-" 开关循环标签页模式
-" noremap to :XTabCycleMode<CR>
-" 显示当前路径
-noremap \p :echo expand('%:p')<CR>
 
 " ==============================
 "            Airline
@@ -454,30 +414,16 @@ let g:airline#extensions#tabline#formatter = 'default'
 let g:airline_powerline_fonts = 1
 let g:magit_git_cmd="git"
 
+
 " ==============================
 "      Important plugins
 " ==============================
 "      Auto-format.vim
 " ==============================
 noremap \f :Autoformat<CR>
-" au BufWrite * :Autoformat
-
 
 " ==============================
-" Syntastic 
-" ==============================
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-
-" ==============================
-" GitGutter
+"         GitGutter
 " ==============================
 " let g:gitgutter_signs = 0
 let g:gitgutter_sign_allow_clobber = 0
@@ -562,21 +508,21 @@ nnoremap tt :CocCommand explorer<CR>
 
 " Start use TAB
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1):
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
+            \ coc#pum#visible() ? coc#pum#next(1):
+            \ CheckBackspace() ? "\<Tab>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-    hi CocSearch ctermfg=12 guifg=#18A3FF
-    hi CocMenuSel ctermbg=109 guibg=#13354A
+hi CocSearch ctermfg=12 guifg=#18A3FF
+hi CocMenuSel ctermbg=109 guibg=#13354A
 
 " Start Enter
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Start use document_help
@@ -648,35 +594,7 @@ sign define vimspectorBPDisabled text=☞ texthl=Normal
 sign define vimspectorPC text=🔶 texthl=SpellBad
 
 " ==============================
-"        vim-visual-multi
-" ==============================
-"let g:VM_theme             = 'iceblue'
-"let g:VM_default_mappings = 0
-" let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
-" let g:VM_maps                       = {}
-" let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-" let g:VM_maps['i']                  = 'k'
-" let g:VM_maps['I']                  = 'K'
-" let g:VM_maps['Find Under']         = '<C-k>'
-" let g:VM_maps['Find Subword Under'] = '<C-k>'
-" let g:VM_maps['Find Next']          = ''
-" let g:VM_maps['Find Prev']          = ''
-" let g:VM_maps['Remove Region']      = 'q'
-" let g:VM_maps['Skip Region']        = '<c-n>'
-" let g:VM_maps["Undo"]               = 'l'
-" let g:VM_maps["Redo"]               = '<C-r>'
-
-
-" ==============================
-"           Nvim-apps
-" ==============================
-"          suda.vim
-" ==============================
-cnoreabbrev sudowrite w suda://%
-cnoreabbrev sw w suda://%
-
-" ==============================
-"         Bullets.vim
+"    Bullets.vim(live fresh)
 " ==============================
 " let g:bullets_set_mappings = 0
 let g:bullets_enabled_file_types = [
@@ -686,6 +604,14 @@ let g:bullets_enabled_file_types = [
             \ 'scratch'
             \]
 
+
+" ==============================
+"           Nvim-apps
+" ==============================
+"          suda.vim
+" ==============================
+cnoreabbrev sudowrite w suda://%
+cnoreabbrev sw w suda://%
 
 " ==============================
 "            rnvimr
@@ -739,80 +665,13 @@ vmap <silent> <LEADER>r <Plug>DictRVSearch
 " 输入需要翻译的单词
 noremap <M-d> :DictW
 
-" ==============================
-"            goyo
-" ==============================
-map <M-g> :Goyo<CR>
-
-" ==============================
-"        vim-calendar
-" ==============================
-noremap \c :Calendar -position=here<CR>
-noremap \\ :Calendar -view=clock -position=here<CR>
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-augroup calendar-mappings
-    autocmd!
-    " diamond cursor
-    autocmd FileType calendar nmap <buffer> i <Plug>(calendar_up)
-    autocmd FileType calendar nmap <buffer> l <Plug>(calendar_left)
-    autocmd FileType calendar nmap <buffer> k <Plug>(calendar_down)
-    autocmd FileType calendar nmap <buffer> j <Plug>(calendar_right)
-    autocmd FileType calendar nmap <buffer> <c-i> <Plug>(calendar_move_up)
-    autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_left)
-    autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_down)
-    autocmd FileType calendar nmap <buffer> <c-j> <Plug>(calendar_move_right)
-    autocmd FileType calendar nmap <buffer> h <Plug>(calendar_start_insert)
-    autocmd FileType calendar nmap <buffer> H <Plug>(calendar_start_insert_head)
-    " unmap <C-n>, <C-p> for other plugins
-    autocmd FileType calendar nunmap <buffer> <C-n>
-    autocmd FileType calendar nunmap <buffer> <C-p>
-augroup END
-
 
 " ==============================
 "           Language
 " ==============================
-"         md-img-paste
+"         Markdown.Vim
 " ==============================
-autocmd FileType markdown nmap <buffer><silent> <M-p> :call mdip#MarkdownClipboardImage()<CR>
-let g:mdip_imgdir = 'images'
-
-
-" ==============================
-"           HTML 
-" ==============================
-let g:html5_event_handler_attributes_complete = 0
-let g:html5_rdfa_attributes_complete = 0
-let g:html5_microdata_attributes_complete = 0
-let g:html5_aria_attributes_complete = 0
-
-" ==============================
-"           Javascript 
-" ==============================
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_ngdoc = 1
-
-" ==============================
-"         Javascript-beat 
-" ==============================
-" Use it by " <LEADER>ff "
-
-" ==============================
-"       Javascript-lib 
-" ==============================
-let g:used_javascript_libs = 'underscore,backbone'
-autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
-autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
-autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 1
-autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
-autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 0
-
-
-" ==============================
-"         Markdown.Vim 
-" ==============================
-" Prohibit folding 
+" Prohibit folding
 " let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_folding_disabled = 1
 " Set folding level
@@ -830,14 +689,14 @@ let g:vim_markdown_fenced_languages = ['csharp=cs', 'nvim=vim', 'bash=sh', 'c++=
 " ==============================
 "      Markdown-preview.vim
 " ==============================
-" 预览快捷键
+" Preview shortcuts
 nnoremap <silent> <LEADER>p :MarkdownPreview<CR>
-" 自动启动(默认为0，改为1为开启自动启动)
+" Start automatically (the default is 0 to 1 to open automatically start)
 let g:mkdp_auto_start = 0
-" 自动刷新(默认为0,改为1为开启自动刷新)
+" Refresh automatically (the default is 0 to 1 to open automatically refresh)
 let g:mkdp_refresh_slow = 1
-" 预览浏览器
-let g:mkdp_browser = 'chromium'
+" Preview browser
+let g:mkdp_browser = 'google-chrome-stable'
 
 " ==============================
 "       vim-markdown-toc
@@ -854,9 +713,9 @@ let g:vmt_fence_closing_text = '/TOC'
 " ==============================
 "        vim-table-mode
 " ==============================
-" 启动表格模板
+"Start the form template
 noremap <silent> <M-m> :TableModeToggle<CR>
-" 表格模板重新对
+" Form template for again
 noremap <silent> <M-r> :TableModeRealign<CR>
 
 function! s:isAtStartOfLine(mapping)
@@ -881,4 +740,4 @@ autocmd FileType md source $HOME/.config/nvim/plugin/md-snippets.vim
 " --- Confilct
 source $HOME/.config/nvim/plugin/conflict.vim
 " --- start markdown spell
-" autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.md setlocal spell
