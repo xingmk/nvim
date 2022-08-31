@@ -286,18 +286,9 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Some themes
 Plug 'theniceboy/nvim-deus'
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'mhartington/oceanic-next'
-
-" Visually displaying indent levels
-Plug 'nathanaelkane/vim-indent-guides'
 
 " " Vim's matchparen for HTML tags
 Plug 'gregsexton/matchtag'
-
-" " General Highlighter
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'skammer/vim-css-color'
 
 
 " --- Important Plugins
@@ -322,9 +313,6 @@ Plug 'theniceboy/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Easy-align
-Plug 'junegunn/vim-easy-align'
-
 
 " --- Language
 " Markdown
@@ -332,7 +320,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'ferrine/md-img-paste.vim', { 'for': ['markdown', 'vim-plug'] }
 
 
 " Go, Rust, Swift
@@ -367,29 +354,6 @@ let g:airline_theme='deus'
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 hi NonText ctermfg=gray guifg=grey10
-
-" ==============================
-"        OceanicNext
-" ==============================
-if (has("termguicolors"))
-    set termguicolors
-endif
-
-" colorscheme OceanicNext
-
-" let g:airline_theme='oceanicnext'
-" Support st
-" let g:oceanic_next_terminal_bold = 1
-" let g:oceanic_next_terminal_italic = 1
-
-" ==============================
-"       Vim-cpp-highlight
-" ==============================
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_posix_standard = 1
-let g:cpp_experimental_template_highlight = 1
 
 " ==============================
 "           xtabline
@@ -462,14 +426,6 @@ endfunction
 function! s:delete_buffers(lines)
     execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
-
-" ==============================
-"       vim-easy-align
-" ==============================
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
 
 " ==============================
 "    Coc.nvim (auto-complete)
