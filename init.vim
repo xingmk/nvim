@@ -210,6 +210,9 @@ if has('persistent_undo')
     set undodir=$HOME/.config/nvim/tmp/undo,.
 endif
 
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+
 " ==============================
 "       Compile function
 " ==============================
@@ -318,8 +321,8 @@ Plug 'junegunn/fzf.vim'
 " Markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-Plug 'mzlogin/vim-markdown-toc'
-Plug 'dhruvasagar/vim-table-mode'
+" Plug 'mzlogin/vim-markdown-toc'
+" Plug 'dhruvasagar/vim-table-mode'
 
 
 " Go, Rust, Swift
@@ -652,7 +655,7 @@ let g:mkdp_auto_start = 0
 " Refresh automatically (the default is 0 to 1 to open automatically refresh)
 let g:mkdp_refresh_slow = 1
 " Preview browser
-let g:mkdp_browser = 'google-chrome-stable'
+let g:mkdp_browser = 'chromium'
 
 " ==============================
 "       vim-markdown-toc
