@@ -284,6 +284,8 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'mg979/vim-xtabline'
 Plug 'bling/vim-bufferline'
 Plug 'jreybert/vimagit'
+
+" Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -328,8 +330,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 " Go, Rust, Swift
 " Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 " Plug 'rust-lang/rust.vim'
-Plug 'keith/swift.vim'
-Plug 'arzg/vim-swift'
+" Plug 'keith/swift.vim'
+" Plug 'arzg/vim-swift'
 
 
 " --- vim_application
@@ -655,7 +657,7 @@ let g:mkdp_auto_start = 0
 " Refresh automatically (the default is 0 to 1 to open automatically refresh)
 let g:mkdp_refresh_slow = 1
 " Preview browser
-let g:mkdp_browser = 'chromium'
+let g:mkdp_browser = 'google-chrome-stable'
 
 " ==============================
 "       vim-markdown-toc
