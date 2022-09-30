@@ -28,7 +28,7 @@ endsnippet
 # === Function config ===
 
 snippet Max "find the max one"
-int max(int x, int y) {
+int Max(int x, int y) {
 	int t;
 	t = x > y ? x : y;
 
@@ -37,7 +37,7 @@ int max(int x, int y) {
 endsnippet
 
 snippet Exch "exchange two number"
-void exch(int *x, int *y) {
+void Exch(int *x, int *y) {
 
 	int t;
 	t = *x;
@@ -47,7 +47,7 @@ void exch(int *x, int *y) {
 endsnippet
 
 snippet Prime "adjust Prime_num"
-int prime_num(int a) {
+int PrimeNum(int a) {
 
 	int flag = 0;
 	for (int i = 2; i < a / 2; i++) {
@@ -59,13 +59,13 @@ int prime_num(int a) {
 			flag = 1;
 		}
 	}
-	return flag;	
+	return flag;
 }
 endsnippet
 
 snippet Leap "adjust Leap year"
-int leapyear(int x){
-	if( (x % 4 == 0 && x % 100 != 0) || x % 400 == 0 ){
+int LeapYear(int y){
+	if( (y % 4 == 0 && y % 100 != 0) || y % 400 == 0 ){
 		return 1;
 	} else{
 		return 0;
@@ -74,7 +74,7 @@ int leapyear(int x){
 endsnippet
 
 snippet Jieceng "Jieceng's Function"
-int factorial(int n) {
+int Factorial(int n) {
 
 	int p = 1;
 	for (int i = 1; i <= n; i++) {
@@ -84,8 +84,8 @@ int factorial(int n) {
 }
 endsnippet
 
-snippet Maopao "Maopao pai xu" 
-void bubble(int *arr, int len){
+snippet Maopao "Maopao pai xu"
+void Bubble(int *arr, int len){
 
 	for (int i=0; i<len-1; i++){
 		for (int j=0; j<len-1-i; j++){
