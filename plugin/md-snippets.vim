@@ -16,9 +16,9 @@ autocmd Filetype markdown inoremap <buffer> ,6 ######<Space><Enter><++><Esc>kA
 " Italic
 autocmd Filetype markdown inoremap <buffer> ,x ** <++><Esc>F*i
 " Bold
-autocmd Filetype markdown inoremap <buffer> ,w **** <++><Esc>F*hi
+autocmd Filetype markdown inoremap <buffer> ,s **** <++><Esc>F*hi
 " Bold && Italic
-autocmd Filetype markdown inoremap <buffer> ,s ****** <++><Esc>F*hhi
+autocmd Filetype markdown inoremap <buffer> ,w ****** <++><Esc>F*hhi
 " Underline
 autocmd FileType markdown inoremap <buffer> ,d ~~~~ <++><Esc>F~hi
 " Delete Line
