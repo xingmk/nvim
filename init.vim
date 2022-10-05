@@ -701,4 +701,4 @@ autocmd FileType md source $HOME/.config/nvim/plugin/md-snippets.vim
 " --- Confilct
 source $HOME/.config/nvim/plugin/conflict.vim
 " --- start markdown spell
-autocmd BufRead,BufNewFile *.md setlocal spell
+" autocmd BufRead,BufNewFile *.md setlocal spell
