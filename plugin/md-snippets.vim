@@ -1,8 +1,8 @@
 "autocmd Filetype markdown map <leader>w yiWi[<esc>Ea](<esc>pa)
 autocmd Filetype markdown noremap  <buffer> ,e <Esc>/<++><CR>:nohlsearch<CR>"_c4l
-autocmd Filetype markdown noremap  <buffer> ,z <Esc>/<++><CR>:nohlsearch<CR>"_c5l<CR>
+autocmd Filetype markdown noremap  <buffer> ,q <Esc>/<++><CR>:nohlsearch<CR>"_c5l<CR>
 autocmd Filetype markdown inoremap <buffer> ,e <Esc>/<++><CR>:nohlsearch<CR>"_c4l
-autocmd Filetype markdown inoremap <buffer> ,z <Esc>/<++><CR>:nohlsearch<CR>"_c5l<CR>
+autocmd Filetype markdown inoremap <buffer> ,q <Esc>/<++><CR>:nohlsearch<CR>"_c5l<CR>
 " Title 
 autocmd Filetype markdown inoremap <buffer> ,1 #<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA
@@ -10,10 +10,7 @@ autocmd Filetype markdown inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,5 #####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,6 ######<Space><Enter><++><Esc>kA
-" Identify the title
-" autocmd Filetype markdown inoremap <buffer> ,xxx --------<Enter>
-" autocmd Filetype markdown inoremap <buffer> ,xxx ========<Enter>
-" Italic
+" Italic 
 autocmd Filetype markdown inoremap <buffer> ,x ** <++><Esc>F*i
 " Bold
 autocmd Filetype markdown inoremap <buffer> ,s **** <++><Esc>F*hi
@@ -28,7 +25,7 @@ autocmd Filetype markdown inoremap <buffer> ,f ---
 " Tasks
 autocmd Filetype markdown inoremap <buffer> ,r - [] 
 " Code wrapping
-autocmd Filetype markdown inoremap <buffer> ,m `` <++><Esc>F`i
+autocmd Filetype markdown inoremap <buffer> ,z `` <++><Esc>F`i
 " Code block
 autocmd Filetype markdown inoremap <buffer> ,c ```<Enter><++><Enter>```<Enter><Enter><++><Esc>4kA
 " Picture
