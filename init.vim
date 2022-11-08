@@ -3,8 +3,6 @@
 "   | '_ \ \ / / | '_ ` _  \
 "   | | | \ V /| | | | | | |
 "   |_| |_|\_/ |_|_| |_| |_|
-
-
 " ==============================
 "  Auto load for first time uses
 " ==============================
@@ -13,7 +11,6 @@ if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 
 " ==============================
 "       Editor behavior
@@ -56,9 +53,7 @@ exec "nohlsearch"
 set incsearch                      " one inseart,and one search with high light
 set ignorecase                     " ignore capital case
 set smartcase                      " smart capital case
-" Let mouse have a change by inseart
-" set mouse=a                        " using mouse
-" set cursorcolumn                   " vertical mouse_line
+set cursorcolumn                   " vertical mouse_line
 set wrap                           " Prevent auto line split
 set autochdir                      " change the current working directory
 set wildmenu                       " give more chances for commands
@@ -69,7 +64,6 @@ set relativenumber                 " set relative number
 set showcmd                        " watch the command
 set laststatus=2                   " to set the status line
 set clipboard=unnamedplus          " share the yank with system
-
 
 " ==============================
 "       Course behavior
@@ -85,11 +79,11 @@ noremap <silent> i k
 noremap <silent> h i
 noremap <silent> H I
 " Quit && Save
+nnoremap Q :q!<CR>
+nnoremap W :w!<CR>
 nnoremap <LEADER>q :q<CR>
 nnoremap <LEADER>w :w<CR>
 nnoremap <LEADER>wq :wq<CR>
-nnoremap Q :q!<CR>
-nnoremap W :w!<CR>
 " When in inserting
 inoremap <silent> <C-j> <left>
 inoremap <silent> <C-l> <right>
@@ -114,13 +108,12 @@ noremap <silent> L $
 " ==============================
 "  Command Mode Cursor Movement
 " ==============================
-" cnoremap <silent> <C-a> <Home>
-" cnoremap <silent> <C-e> <End>
-" cnoremap <silent> <C-p> <Up>
-" cnoremap <silent> <C-n> <Down>
-" cnoremap <silent> <C-b> <Left>
-" cnoremap <silent> <C-f> <Right>
-
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
 
 " ==============================
 "       Window management
@@ -130,18 +123,18 @@ map sj :set splitright<CR>:vsplit<CR>
 map sl :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
 map sk :set splitbelow<CR>:split<CR>
 map si :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+" Place the two screens up and down (splitscreen to H)
+" Place the two screens side by side   (splitscreen to V)
+noremap sh <C-w>t<C-w>H
+noremap sv <C-w>t<C-w>K
 " Use <space> + new arrow keys for moving the cursor around windows
 noremap zi <C-w>k
 noremap zk <C-w>j
 noremap zj <C-w>h
 noremap zl <C-w>l
-" Place the two screens up and down (splitscreen to H)
-" Place the two screens side by side   (splitscreen to V)
-noremap sv <C-w>t<C-w>K
-noremap sg <C-w>t<C-w>H
 " Rotate screens   (move splitscreen to H ,move splitscreen to V)
+noremap <LEADER>sh <C-w>b<C-w>H
 noremap <LEADER>sv <C-w>b<C-w>K
-noremap <LEADER>sg <C-w>b<C-w>H
 " Resize splits with arrow keys
 map <up>    :res -5<CR>
 map <down>  :res +5<CR>
@@ -164,7 +157,6 @@ map <C-d> :+tabnext<CR>
 map <LEADER>tj :-tabmove<CR>
 map <LEADER>tl :+tabmove<CR>
 
-
 " ==============================
 "      Other useful stuff
 " ==============================
@@ -175,34 +167,26 @@ nnoremap <LEADER>so :source ~/.config/nvim/init.vim<CR>
 " Open a new instance of st with the cwd
 nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 " Opening a terminal window
-noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
-" Spelling Check with <space>sc
-map <LEADER>sc :set spell!<CR>
+noremap <LEADER>\ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
 " find and replace
 noremap \s :%s//g<left><left>
-" Adjacent duplicate words
-" map <LEADER>dw /\(\<\w\+\>\)\_s*\1
+" Spelling Check with <space>sc
+map <LEADER>sc :set spell!<CR>
 " Cancle high light
 noremap <leader><CR> :nohlsearch<CR>
 " set wrap
 noremap <LEADER>sw :set wrap<CR>
 " Copy to system clipboard
 vnoremap Y "+y
-" Auto complete
-inoremap ( ()<LEFT>
-inoremap [ []<LEFT>
-inoremap { {}<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+" Coc.nvim
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
 " Restore Cursor Position
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Make the Cursor like windows by inserting
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-" Coc.nvim
-let g:loaded_ruby_provider = 0
-let g:loaded_perl_provider = 0
 " Make backup
 silent !mkdir -p $HOME/.config/nvim/tmp/backup
 silent !mkdir -p $HOME/.config/nvim/tmp/undo
@@ -212,7 +196,6 @@ if has('persistent_undo')
     set undofile
     set undodir=$HOME/.config/nvim/tmp/undo,.
 endif
-
 
 " ==============================
 "       Compile function
@@ -225,7 +208,6 @@ func! CompileRunGcc()
         :sp
         :res -5
         term gcc % -o %< -lm && time ./%<
-        " term gcc % -o %< && ./%<
     elseif &filetype == 'cpp'
         set splitbelow
         exec "!g++ -std=c++11 % -Wall -o %<"
@@ -243,6 +225,10 @@ func! CompileRunGcc()
         :sp
         :res -5
         term javac % && time java %<
+    elseif &filetype == 'javascript'
+        set splitbelow
+        :sp
+        :term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
     elseif &filetype == 'python'
         set splitbelow
         :sp
@@ -253,28 +239,23 @@ func! CompileRunGcc()
         exec "MarkdownPreview"
     elseif &filetype == 'html'
         silent! exec "!".g:mkdp_browser." % &"
-        " elseif &filetype == 'tex'
-        "     silent! exec "VimtexStop"
-        "     silent! exec "VimtexCompile"
-        " elseif &filetype == 'dart'
-        "     exec "CocCommand flutter.run -d ".g:flutter_default_device." ".g:flutter_run_args
-        "     silent! exec "CocCommand flutter.dev.openDevLog"
-    elseif &filetype == 'javascript'
+    elseif &filetype == 'tex'
+        silent! exec "VimtexStop"
+        silent! exec "VimtexCompile"
+    elseif &filetype == 'dart'
+        exec "CocCommand flutter.run -d ".g:flutter_default_device." ".g:flutter_run_args
+        silent! exec "CocCommand flutter.dev.openDevLog"
+    elseif &filetype == 'racket'
         set splitbelow
         :sp
-        :term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
-        " elseif &filetype == 'racket'
-        "     set splitbelow
-        "     :sp
-        "     :res -5
-        "     term racket %
+        :res -5
+        term racket %
     elseif &filetype == 'go'
         set splitbelow
         :sp
         :term go run .
     endif
 endfunc
-
 
 " ==============================
 "         Vim-Plugins
@@ -292,18 +273,10 @@ Plug 'vim-airline/vim-airline-themes'
 " Some themes
 Plug 'theniceboy/nvim-deus'
 
-" Vim's matchparen for HTML tags
-Plug 'gregsexton/matchtag'
-
-
 " --- Important Plugins
-" Complete, Debugger, Bullets (live fresh),
+" Complete, Bullets(live fresh), Explation, Foramte
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 Plug 'dkarter/bullets.vim'
-
-" Smart Delete, Explation, Foramte
-Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'vim-autoformat/vim-autoformat'
 
@@ -318,44 +291,35 @@ Plug 'theniceboy/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-
 " --- Language
 " Markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-Plug 'mzlogin/vim-markdown-toc'
-Plug 'dhruvasagar/vim-table-mode'
-
-
-" Go, Rust, Swift
-" Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
-" Plug 'rust-lang/rust.vim'
-" Plug 'keith/swift.vim'
-" Plug 'arzg/vim-swift'
-
+" Plug 'mzlogin/vim-markdown-toc'
+" Plug 'dhruvasagar/vim-table-mode'
 
 " --- vim_application
 " Rnvimr
-" Plug 'kevinhwang91/rnvimr'
+Plug 'kevinhwang91/rnvimr'
+
+" sudo
+Plug 'lambdalisue/suda.vim' 
 
 " Translate
 Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSearch', '<Plug>DictRSearch', '<Plug>DictRVSearch']}
 
-" sudo
-Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 
 call plug#end()
-
 
 " ==============================
 "          Dress neovim
 " ==============================
 "             Deus
 " ==============================
-set termguicolors              " enable true colors support
+set termguicolors              
 silent! color deus
-let g:airline_theme='deus'
 
+let g:airline_theme='deus'
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 hi NonText ctermfg=gray guifg=grey10
@@ -412,11 +376,10 @@ nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 " ==============================
 "             fzf
 " ==============================
-nnoremap <silent> <M-f> :Files<CR>
-nnoremap <silent> <M-b> :Buffers<CR>
-nnoremap <silent> <M-h> :History<CR>
+nnoremap <silent> zf :Files<CR>
+nnoremap <silent> zb :Buffers<CR>
+nnoremap <silent> zh :History<CR>
 
-" let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 let g:fzf_layout = { 'down': '40%' }
 let g:fzf_preview_window = 'right:40%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -438,7 +401,6 @@ endfunction
 let g:coc_global_extensions = [
             \ 'coc-css',
             \ 'coc-diagnostic',
-            \ 'coc-docker',
             \ 'coc-eslint',
             \ 'coc-explorer',
             \ 'coc-flutter-tools',
@@ -537,24 +499,6 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 " ==============================
-"         vimspector
-" ==============================
-let g:vimspector_enable_mappings = 'HUMAN'
-function! s:read_template_into_buffer(template)
-    " has to be a function to avoid the extra space fzf#run insers otherwise
-    execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
-endfunction
-command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
-            \   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
-            \   'down': 20,
-            \   'sink': function('<sid>read_template_into_buffer')
-            \ })
-" noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
-sign define vimspectorBP text=☛ texthl=Normal
-sign define vimspectorBPDisabled text=☞ texthl=Normal
-sign define vimspectorPC text=🔶 texthl=SpellBad
-
-" ==============================
 "    Bullets.vim(live fresh)
 " ==============================
 " let g:bullets_set_mappings = 0
@@ -564,7 +508,6 @@ let g:bullets_enabled_file_types = [
             \ 'gitcommit',
             \ 'scratch'
             \]
-
 
 " ==============================
 "           Nvim-apps
@@ -577,55 +520,54 @@ cnoreabbrev sw w suda://%
 " ==============================
 "            rnvimr
 " ==============================
-" nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
-"
-" let g:rnvimr_ex_enable = 1
-" let g:rnvimr_pick_enable = 1
-" let g:rnvimr_draw_border = 0
-" highlight link RnvimrNormal CursorLine
-" let g:rnvimr_action = {
-"             \ '<C-t>': 'NvimEdit tabedit',
-"             \ '<C-g>': 'NvimEdit split',
-"             \ '<C-v>': 'NvimEdit vsplit',
-"             \ 'gw': 'JumpNvimCwd',
-"             \ 'yw': 'EmitRangerCwd'
-"             \ }
-" let g:rnvimr_layout = { 'relative': 'editor',
-"             \ 'width': &columns,
-"             \ 'height': &lines,
-"             \ 'col': 0,
-"             \ 'row': 0,
-"             \ 'style': 'minimal' }
-" let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
-" " --- colors
-" let g:terminal_color_0  = '#000000'
-" let g:terminal_color_1  = '#FF5555'
-" let g:terminal_color_2  = '#50FA7B'
-" let g:terminal_color_3  = '#F1FA8C'
-" let g:terminal_color_4  = '#BD93F9'
-" let g:terminal_color_5  = '#FF79C6'
-" let g:terminal_color_6  = '#8BE9FD'
-" let g:terminal_color_7  = '#BFBFBF'
-" let g:terminal_color_8  = '#4D4D4D'
-" let g:terminal_color_9  = '#FF6E67'
-" let g:terminal_color_10 = '#5AF78E'
-" let g:terminal_color_11 = '#F4F99D'
-" let g:terminal_color_12 = '#CAA9FA'
-" let g:terminal_color_13 = '#FF92D0'
-" let g:terminal_color_14 = '#9AEDFE'
+nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+
+let g:rnvimr_ex_enable = 1
+let g:rnvimr_pick_enable = 1
+let g:rnvimr_draw_border = 0
+highlight link RnvimrNormal CursorLine
+let g:rnvimr_action = {
+            \ '<C-t>': 'NvimEdit tabedit',
+            \ '<C-g>': 'NvimEdit split',
+            \ '<C-v>': 'NvimEdit vsplit',
+            \ 'gw': 'JumpNvimCwd',
+            \ 'yw': 'EmitRangerCwd'
+            \ }
+let g:rnvimr_layout = { 'relative': 'editor',
+            \ 'width': &columns,
+            \ 'height': &lines,
+            \ 'col': 0,
+            \ 'row': 0,
+            \ 'style': 'minimal' }
+let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
+" --- colors
+let g:terminal_color_0  = '#000000'
+let g:terminal_color_1  = '#FF5555'
+let g:terminal_color_2  = '#50FA7B'
+let g:terminal_color_3  = '#F1FA8C'
+let g:terminal_color_4  = '#BD93F9'
+let g:terminal_color_5  = '#FF79C6'
+let g:terminal_color_6  = '#8BE9FD'
+let g:terminal_color_7  = '#BFBFBF'
+let g:terminal_color_8  = '#4D4D4D'
+let g:terminal_color_9  = '#FF6E67'
+let g:terminal_color_10 = '#5AF78E'
+let g:terminal_color_11 = '#F4F99D'
+let g:terminal_color_12 = '#CAA9FA'
+let g:terminal_color_13 = '#FF92D0'
+let g:terminal_color_14 = '#9AEDFE'
 
 " ==============================
 "            dict
 " ==============================
-" 翻译光标下的单词并在dict窗口显示
+" Translate the word under the cursor and the dict window display
 nmap <silent> <LEADER>t <Plug>DictWSearch
 vmap <silent> <LEADER>t <Plug>DictWVSearch
-" 翻译光标下的单词并替换翻译结果
+" Translation word under the cursor and replace the result
 nmap <silent> <LEADER>r <Plug>DictRSearch
 vmap <silent> <LEADER>r <Plug>DictRVSearch
-" 输入需要翻译的单词
+" Enter the words need to be translated
 noremap <M-d> :DictW
-
 
 " ==============================
 "           Language
@@ -650,8 +592,6 @@ let g:vim_markdown_fenced_languages = ['csharp=cs', 'nvim=vim', 'bash=sh', 'c++=
 " ==============================
 "      Markdown-preview.vim
 " ==============================
-" Preview shortcuts
-" nnoremap <silent> <LEADER>p :MarkdownPreview<CR>
 " Start automatically (the default is 0 to 1 to open automatically start)
 let g:mkdp_auto_start = 0
 " Refresh automatically (the default is 0 to 1 to open automatically refresh)
@@ -665,8 +605,6 @@ let g:mkdp_browser = 'google-chrome-stable'
 noremap <silent> <LEADER>tg :GenTocGFM<CR>
 noremap <silent> <LEADER>tk :GenTocMarked<CR>
 
-"let g:vmt_auto_update_on_save = 0
-"let g:vmt_dont_insert_fence = 1
 let g:vmt_cycle_list_item_markers = 1
 let g:vmt_fence_text = 'TOC'
 let g:vmt_fence_closing_text = '/TOC'
@@ -700,5 +638,3 @@ inoreabbrev <expr> __
 autocmd FileType md source $HOME/.config/nvim/plugin/md-snippets.vim
 " --- Confilct
 source $HOME/.config/nvim/plugin/conflict.vim
-" --- start markdown spell
-" autocmd BufRead,BufNewFile *.md setlocal spell
