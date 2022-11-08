@@ -295,8 +295,8 @@ Plug 'junegunn/fzf.vim'
 " Markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-" Plug 'mzlogin/vim-markdown-toc'
-" Plug 'dhruvasagar/vim-table-mode'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'dhruvasagar/vim-table-mode'
 
 " --- vim_application
 " Rnvimr
