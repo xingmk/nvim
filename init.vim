@@ -1,20 +1,10 @@
-"               _
-"    _ ____   _(_)_ __ ____
-"   | '_ \ \ / / | '_ ` _  \
-"   | | | \ V /| | | | | | |
-"   |_| |_|\_/ |_|_| |_| |_|
-" ==============================
-"  Auto load for first time uses
-" ==============================
-if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
-    silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+"                         _
+"   _ ___  ___  _____   _(_)_ __ ____
+"  | '_  \/ _ \/ _ \ \ / / | '_ ` _  \
+"  | | | |  __/ (_) \ V /| | | | | | |
+"  |_| |_|\___|\___/ \_/ |_|_| |_| |_|
 
-" ==============================
-"       Editor behavior
-" ==============================
+" === Editor behavior
 let &t_ut=''
 let mapleader =" "
 " Scanf kinds of files
@@ -65,14 +55,7 @@ set showcmd                        " watch the command
 set laststatus=2                   " to set the status line
 set clipboard=unnamedplus          " share the yank with system
 
-" ==============================
-"       Course behavior
-" ==============================
-"     ^
-"     i
-" < j   l >
-"     k
-"     v
+" === Course behavior
 noremap <silent> j h
 noremap <silent> k j
 noremap <silent> i k
@@ -84,10 +67,10 @@ nnoremap W :w!<CR>
 nnoremap <LEADER>q :q<CR>
 nnoremap <LEADER>w :w<CR>
 nnoremap <LEADER>wq :wq<CR>
-" When in inserting
+" Inserting behavior
+inoremap <silent> <C-c> <esc>
 inoremap <silent> <C-j> <left>
 inoremap <silent> <C-l> <right>
-" inoremap <silent> <c-c> <esc>
 " Ctrl + e or f will move up/down the view port without moving the cursor
 noremap <C-e> 5<C-y>
 noremap <C-f> 5<C-e>
@@ -105,9 +88,7 @@ noremap <silent> I 5k
 noremap <silent> J 0
 noremap <silent> L $
 
-" ==============================
-"  Command Mode Cursor Movement
-" ==============================
+" === Command Mode Cursor Movement
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-p> <Up>
@@ -115,9 +96,7 @@ cnoremap <C-n> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 
-" ==============================
-"       Window management
-" ==============================
+" === Window management
 " Split the screens to up (horizontal), down (horizonta), left (vertical), right (vertical)
 map sj :set splitright<CR>:vsplit<CR>
 map sl :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
@@ -127,12 +106,12 @@ map si :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 " Place the two screens side by side   (splitscreen to V)
 noremap sh <C-w>t<C-w>H
 noremap sv <C-w>t<C-w>K
-" Use <space> + new arrow keys for moving the cursor around windows
+" Use z + j/k/l/i for moving the cursor around windows
 noremap zi <C-w>k
 noremap zk <C-w>j
 noremap zj <C-w>h
 noremap zl <C-w>l
-" Rotate screens   (move splitscreen to H ,move splitscreen to V)
+" Rotate screens (move splitscreen to H ,move splitscreen to V)
 noremap <LEADER>sh <C-w>b<C-w>H
 noremap <LEADER>sv <C-w>b<C-w>K
 " Resize splits with arrow keys
@@ -141,27 +120,33 @@ map <down>  :res +5<CR>
 map <left>  :vertical resize-5<CR>
 map <right> :vertical resize+5<CR>
 
-" ==============================
-"    Tab management Buffers
-" ==============================
-" Create a new tab with <C-n>
+" === Tab management Buffers
+" Create a new tab 
 map <C-t> :tabe<CR>
-" Close a tab with t
-" Close all the tab with <C-w>
+" Close the tab 
 map <C-w> :tabc<CR>
-" map <C-w>a :tabo<CR>
-" Move around tabs with <M-j> and <M-l>
+" Move around tabs 
 map <C-s> :-tabnext<CR>
 map <C-d> :+tabnext<CR>
-" Move the tabs with <C-m>j and <C-m>l
+" Move the tabs  
 map <LEADER>tj :-tabmove<CR>
 map <LEADER>tl :+tabmove<CR>
 
-" ==============================
-"      Other useful stuff
-" ==============================
-" Auto change directory to current dir
-autocmd BufEnter * silent! lcd %:p:h
+" === Other useful stuff
+" If not have vim.plug, it will auto download
+if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+" Copy to system clipboard
+vnoremap Y "+y
+vnoremap P "+p
+vnoremap D "+d 
+" set wrap
+noremap <LEADER>sw :set wrap<CR>
+" Cancle high light
+noremap <leader><CR> :nohlsearch<CR>
 " Reload init.vim
 nnoremap <LEADER>so :source ~/.config/nvim/init.vim<CR>
 " Open a new instance of st with the cwd
@@ -172,34 +157,19 @@ noremap <LEADER>\ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
 noremap \s :%s//g<left><left>
 " Spelling Check with <space>sc
 map <LEADER>sc :set spell!<CR>
-" Cancle high light
-noremap <leader><CR> :nohlsearch<CR>
-" set wrap
-noremap <LEADER>sw :set wrap<CR>
-" Copy to system clipboard
-vnoremap Y "+y
-" Coc.nvim
+" CheckHealth needed
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
+" Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
 " Restore Cursor Position
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Make the Cursor like windows by inserting
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-" Make backup
-silent !mkdir -p $HOME/.config/nvim/tmp/backup
-silent !mkdir -p $HOME/.config/nvim/tmp/undo
-set backupdir=$HOME/.config/nvim/tmp/backup,.
-set directory=$HOME/.config/nvim/tmp/backup,.
-if has('persistent_undo')
-    set undofile
-    set undodir=$HOME/.config/nvim/tmp/undo,.
-endif
 
-" ==============================
-"       Compile function
-" ==============================
+" === Compile function
 noremap r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w"
@@ -257,13 +227,10 @@ func! CompileRunGcc()
     endif
 endfunc
 
-" ==============================
-"         Vim-Plugins
-" ==============================
+" === Vim-Plugins
 call plug#begin('~/.config/nvim/plugged')
 
-" --- Dress neovim
-" Pretty Dressed-vim
+" --- Display 
 Plug 'jreybert/vimagit'
 Plug 'mg979/vim-xtabline'
 Plug 'bling/vim-bufferline'
@@ -273,16 +240,12 @@ Plug 'vim-airline/vim-airline-themes'
 " Some themes
 Plug 'theniceboy/nvim-deus'
 
-" --- Important Plugins
+" --- Effective
 " Complete, Bullets(live fresh), Explation, Foramte
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dkarter/bullets.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'vim-autoformat/vim-autoformat'
-
-" Git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 
 " Snippets
 Plug 'theniceboy/vim-snippets'
@@ -298,7 +261,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'dhruvasagar/vim-table-mode'
 
-" --- vim_application
+" --- Application
 " Rnvimr
 Plug 'kevinhwang91/rnvimr'
 
@@ -308,14 +271,11 @@ Plug 'lambdalisue/suda.vim'
 " Translate
 Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSearch', '<Plug>DictRSearch', '<Plug>DictRVSearch']}
 
-
 call plug#end()
 
 " ==============================
-"          Dress neovim
-" ==============================
-"             Deus
-" ==============================
+"          Display
+" === Deus
 set termguicolors              
 silent! color deus
 
@@ -324,18 +284,16 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 hi NonText ctermfg=gray guifg=grey10
 
-" ==============================
-"           xtabline
-" ==============================
+
+" === xtabline
 let g:xtabline_settings = {}
 let g:xtabline_settings.enable_mappings = 0
 let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
 let g:xtabline_settings.enable_persistance = 0
 let g:xtabline_settings.last_open_first = 1
 
-" ==============================
-"            Airline
-" ==============================
+
+" === Airline
 set t_Co=256
 set laststatus=2
 
@@ -349,33 +307,11 @@ let g:magit_git_cmd="git"
 
 
 " ==============================
-"      Important plugins
-" ==============================
-"      Auto-format.vim
-" ==============================
+"      Effective
+" ===     Auto-format.vim
 noremap <LEADER>f :Autoformat<CR>
 
-" ==============================
-"         GitGutter
-" ==============================
-" let g:gitgutter_signs = 0
-let g:gitgutter_sign_allow_clobber = 0
-let g:gitgutter_map_keys = 0
-let g:gitgutter_override_sign_column_highlight = 0
-let g:gitgutter_preview_win_floating = 1
-let g:gitgutter_sign_added = '▎'
-let g:gitgutter_sign_modified = '░'
-let g:gitgutter_sign_removed = '▏'
-let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_modified_removed = '▒'
-nnoremap <LEADER>gf :GitGutterFold<CR>
-nnoremap <LEADER>gh :GitGutterPreviewHunk<CR>
-nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
-nnoremap <LEADER>g= :GitGutterNextHunk<CR>
-
-" ==============================
-"             fzf
-" ==============================
+" === fzf
 nnoremap <silent> zf :Files<CR>
 nnoremap <silent> zb :Buffers<CR>
 nnoremap <silent> zh :History<CR>
@@ -395,9 +331,7 @@ function! s:delete_buffers(lines)
     execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
 
-" ==============================
-"    Coc.nvim (auto-complete)
-" ==============================
+" === Coc.nvim (auto-complete)
 let g:coc_global_extensions = [
             \ 'coc-css',
             \ 'coc-diagnostic',
@@ -479,9 +413,7 @@ nmap <silent> gr <Plug>(coc-references)
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
-" ==============================
-"   NerdCommenter (Explation)
-" ==============================
+" === NerdCommenter (Explation)
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
@@ -498,9 +430,7 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
-" ==============================
-"    Bullets.vim(live fresh)
-" ==============================
+" === Bullets.vim(live fresh)
 " let g:bullets_set_mappings = 0
 let g:bullets_enabled_file_types = [
             \ 'markdown',
@@ -510,16 +440,72 @@ let g:bullets_enabled_file_types = [
             \]
 
 " ==============================
-"           Nvim-apps
+"           Language
+" === Markdown.Vim
+" Prohibit folding
+" let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_folding_disabled = 1
+" Set folding level
+let g:vim_markdown_folding_level = 6
+" Open Syntax concealing
+set conceallevel=2
+" Prohibit code block
+let g:vim_markdown_conceal_code_blocks = 0
+" Math
+let g:vim_markdown_math = 1
+let g:vim_markdown_strikethrough = 1
+" Fenced code block languages
+let g:vim_markdown_fenced_languages = ['csharp=cs', 'nvim=vim', 'bash=sh', 'c++=cpp']
+
+" === Markdown-preview.vim
+" Start automatically (the default is 0 to 1 to open automatically start)
+let g:mkdp_auto_start = 0
+" Refresh automatically (the default is 0 to 1 to open automatically refresh)
+let g:mkdp_refresh_slow = 1
+" Preview browser
+let g:mkdp_browser = 'google-chrome-stable'
+
+" === vim-markdown-toc
+noremap <silent> <LEADER>tg :GenTocGFM<CR>
+noremap <silent> <LEADER>tk :GenTocMarked<CR>
+
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
+
+" === vim-table-mode
+"Start the form template
+noremap <silent> <M-m> :TableModeToggle<CR>
+" Form template for again
+noremap <silent> <M-r> :TableModeRealign<CR>
+
+function! s:isAtStartOfLine(mapping)
+    let text_before_cursor = getline('.')[0 : col('.')-1]
+    let mapping_pattern = '\V' . escape(a:mapping, '\')
+    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+            \ <SID>isAtStartOfLine('\|\|') ?
+            \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+            \ <SID>isAtStartOfLine('__') ?
+            \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+" === Markdown-default.config
+" --- Snippets
+autocmd FileType md source $HOME/.config/nvim/plugin/md-snippets.vim
+" --- Confilct
+source $HOME/.config/nvim/plugin/conflict.vim
+
 " ==============================
-"          suda.vim
-" ==============================
+"           Application
+" === suda.vim
 cnoreabbrev sudowrite w suda://%
 cnoreabbrev sw w suda://%
 
-" ==============================
-"            rnvimr
-" ==============================
+" === rnvimr
 nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
 
 let g:rnvimr_ex_enable = 1
@@ -557,9 +543,7 @@ let g:terminal_color_12 = '#CAA9FA'
 let g:terminal_color_13 = '#FF92D0'
 let g:terminal_color_14 = '#9AEDFE'
 
-" ==============================
-"            dict
-" ==============================
+" === dict
 " Translate the word under the cursor and the dict window display
 nmap <silent> <LEADER>t <Plug>DictWSearch
 vmap <silent> <LEADER>t <Plug>DictWVSearch
@@ -569,72 +553,3 @@ vmap <silent> <LEADER>r <Plug>DictRVSearch
 " Enter the words need to be translated
 noremap <M-d> :DictW
 
-" ==============================
-"           Language
-" ==============================
-"         Markdown.Vim
-" ==============================
-" Prohibit folding
-" let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_folding_disabled = 1
-" Set folding level
-let g:vim_markdown_folding_level = 6
-" Open Syntax concealing
-set conceallevel=2
-" Prohibit code block
-let g:vim_markdown_conceal_code_blocks = 0
-" Math
-let g:vim_markdown_math = 1
-let g:vim_markdown_strikethrough = 1
-" Fenced code block languages
-let g:vim_markdown_fenced_languages = ['csharp=cs', 'nvim=vim', 'bash=sh', 'c++=cpp']
-
-" ==============================
-"      Markdown-preview.vim
-" ==============================
-" Start automatically (the default is 0 to 1 to open automatically start)
-let g:mkdp_auto_start = 0
-" Refresh automatically (the default is 0 to 1 to open automatically refresh)
-let g:mkdp_refresh_slow = 1
-" Preview browser
-let g:mkdp_browser = 'google-chrome-stable'
-
-" ==============================
-"       vim-markdown-toc
-" ==============================
-noremap <silent> <LEADER>tg :GenTocGFM<CR>
-noremap <silent> <LEADER>tk :GenTocMarked<CR>
-
-let g:vmt_cycle_list_item_markers = 1
-let g:vmt_fence_text = 'TOC'
-let g:vmt_fence_closing_text = '/TOC'
-
-" ==============================
-"        vim-table-mode
-" ==============================
-"Start the form template
-noremap <silent> <M-m> :TableModeToggle<CR>
-" Form template for again
-noremap <silent> <M-r> :TableModeRealign<CR>
-
-function! s:isAtStartOfLine(mapping)
-    let text_before_cursor = getline('.')[0 : col('.')-1]
-    let mapping_pattern = '\V' . escape(a:mapping, '\')
-    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
-endfunction
-
-inoreabbrev <expr> <bar><bar>
-            \ <SID>isAtStartOfLine('\|\|') ?
-            \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-inoreabbrev <expr> __
-            \ <SID>isAtStartOfLine('__') ?
-            \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-" ==============================
-"    Markdown-default.config
-" ==============================
-" --- Snippets
-autocmd FileType md source $HOME/.config/nvim/plugin/md-snippets.vim
-" --- Confilct
-source $HOME/.config/nvim/plugin/conflict.vim
