@@ -68,23 +68,21 @@
 	"importCost.debug": false,
 	"snippets.ultisnips.directories": [
 		"$HOME/.config/nvim/Ultisnips/",
-		"$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/"
+		"$HOME/.config/nvim/pluggin/vim-snippets/UltiSnips/"
 	],
 	"coc.preferences.formatOnSaveFiletypes": [
 		"javascript",
 		"typescript",
-		"html",
 		"css",
 		"json",
 		"java",
 		"python",
 		"vue",
 		"svelte",
-		"c",
 		"cs",
 		"prisma"
 	],
-	"yaml.format.enable": true,
+	"yaml.format.enable": false,
 	"signature.target": "float",
 	"yank.enableCompletion": false,
 	"typescript.suggestionActions.enabled": true,

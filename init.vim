@@ -5,6 +5,49 @@
 "  |_| |_|\___|\___/ \_/ |_|_| |_| |_|
 
 " ===
+" ===== Vim-Pluggins
+" ===
+call plug#begin('~/.config/nvim/pluggin')
+
+" === Display
+Plug 'ryanoasis/vim-devicons'                           " System devicons
+Plug 'mg979/vim-xtabline'                               " Show tabs on tabline
+Plug 'bling/vim-bufferline'                             " Show buffers on command bar.
+" Statusline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" Themes
+Plug 'theniceboy/nvim-deus'
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'sainnhe/vim-color-forest-night'
+Plug 'sainnhe/sonokai'
+
+" === Effective
+Plug 'neoclide/coc.nvim', {'branch': 'release'}         " AutoComplete
+Plug 'theniceboy/vim-snippets'                          " Snippets
+Plug 'preservim/nerdcommenter'                          " Explation
+Plug 'vim-autoformat/vim-autoformat'                    " Auto foramte
+Plug 'lambdalisue/suda.vim'                             " Sudo
+Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSearch', '<Plug>DictRSearch', '<Plug>DictRVSearch']}                                 " Translate
+" Fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Git
+Plug 'jreybert/vimagit'
+Plug 'airblade/vim-gitgutter'
+
+" === Language
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'dkarter/bullets.vim'              " liver flash
+Plug 'preservim/vim-markdown'           " markdown syntax
+Plug 'mzlogin/vim-markdown-toc'         " markdown toc
+Plug 'dhruvasagar/vim-table-mode'       " markdown table mode
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }     " markdown preview
+
+call plug#end()
+
+" ===
 " ===== Editor behavior
 " ===
 " === Set LEADER to Space
@@ -172,12 +215,6 @@ nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
 " Auto chnge directory to current dir
 autocmd BufEnter * silent! lcd %:p:h
-" If not have vim.plug, it will auto download
-" if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
-"     silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
-"                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-" endif
 
 " === Compile function
 noremap r :call CompileRunGcc()<CR>
@@ -237,240 +274,68 @@ func! CompileRunGcc()
     endif
 endfunc
 
-" ===
-" ===== Vim-Pluggins
-" ===
-call plug#begin('~/.config/nvim/pluggin')
-
-" === Display
-" Add devicons
-Plug 'ryanoasis/vim-devicons'
-" Show tabs on tabline
-Plug 'mg979/vim-xtabline'
-" Show buffers on command bar.
-Plug 'bling/vim-bufferline'
-" Statusline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" Themes
-Plug 'theniceboy/nvim-deus'
-Plug 'ghifarit53/tokyonight-vim'
-Plug 'sainnhe/vim-color-forest-night'
-Plug 'sainnhe/sonokai'
-
-" === Effective
-" AutoComplete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Fzf
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-" Git
-Plug 'jreybert/vimagit'
-Plug 'airblade/vim-gitgutter'
-" Snippets
-Plug 'theniceboy/vim-snippets'
-" Explation
-Plug 'preservim/nerdcommenter'
-" Foramte
-Plug 'vim-autoformat/vim-autoformat'
-" sudo
-Plug 'lambdalisue/suda.vim'
-" Translate
-Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSearch', '<Plug>DictRSearch', '<Plug>DictRVSearch']}
-
-" === Language
-" Markdown
-Plug 'godlygeek/tabular'
-Plug 'dkarter/bullets.vim'
-Plug 'preservim/vim-markdown'
-Plug 'mzlogin/vim-markdown-toc'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-
-call plug#end()
-
-" ===
-" ===== Display
-" ===
-" === Themes
-" ===
-set termguicolors
-
-" === everforest
-" " For dark version.
-" set background=dark
-" " For better performance
-" let g:everforest_better_performance = 1
-" " 设置 1为斜体 0为注释斜体
-" let g:everforest_enable_italic = 0
-" let g:everforest_disable_italic_comment = 0
-"
-" " Available values: 'hard', 'medium'(default), 'soft'
-" let g:everforest_background = 'medium'
-"
-" colorscheme everforest
-" let g:airline_theme='everforest'
-
-" === sonokai
-" 设置 1为斜体 0为注释斜体
-let g:sonokai_enable_italic = 0
-let g:sonokai_disable_italic_comment =0
-
-" Available values: default, atlantis, andromeda, shusia, maia, espresso
-let g:sonokai_style = 'atlantis'
-
-colorscheme sonokai
-let g:airline_theme='sonokai'
-
-" === deus
-" let g:deus_termcolors=256
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"
-" hi NonText ctermfg=gray guifg=grey10
-"
-" colorscheme deus
-"
-"  To enable airline support
-" let g:airline_theme='deus'
-
-" === tokyonight
-" let g:tokyonight_style = 'night'        " available: night, storm
-" let g:tokyonight_enable_italic = 1
-" " 设置 1背景透明
-" let g:tokyonight_transparent_background = 0     " available: 0, 1
-" " 控制背景颜色
-" let g:tokyonight_menu_selection_background = 'green'    " available: green, red, blue
-" " 设置 1禁用斜体 comment
-" let g:tokyonight_disable_italic_comment = 0
-
-" colorscheme tokyonight
-
-" " To enable airline support
-" let g:airline_theme = "tokyonight"
-
-" ===
-" === Airline
-" ===
-set t_Co=256
-" Support powerline fonts
-let g:airline_powerline_fonts = 1
-let g:magit_git_cmd="git"
-" Default Add
-let g:airline#extensions#tabline#enabled = 1
-" Display Path
-let g:airline#extensions#tabline#formatter = 'jsformatter'
-" 分隔符可以为标签线单独配置，所以这里是你如定义“直”标签
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-" ===
-" === xtabline
-" ===
-let g:xtabline_settings = {}
-let g:xtabline_settings.enable_mappings = 0
-let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
-let g:xtabline_settings.enable_persistance = 0
-let g:xtabline_settings.last_open_first = 0
-let g:xtabline_settings.buffer_format = 2
-let g:xtabline_settings.indicators = {
-            \ 'modified': '[+]',
-            \ 'pinned': '[📌]',
-            \}
-let g:xtabline_settings.icons = {
-            \'pin': '📌',
-            \'star': '★',
-            \'book': '📖',
-            \'lock': '🔒',
-            \'hammer': '🔨',
-            \'tick': '✔',
-            \'cross': '✖',
-            \'warning': '⚠',
-            \'menu': '☰',
-            \'apple': '🍎',
-            \'linux': '🐧',
-            \'windows': '⌘',
-            \'git': '',
-            \'palette': '🎨',
-            \'lens': '🔍',
-            \'flag': '🏁',
-            \}
-
-
+" :------------------------- Pluggins -------------------------:
 " ===
 " ===== Effective
 " ===
-" === suda.vim
+" ===== coc.nvim
 " ===
-cnoreabbrev sudowrite w suda://%
-cnoreabbrev sw w suda://%
+noremap <LEADER>e :CocCommand explorer<CR>
 
-" ===
-" === dict
-" ===
-" Enter the words need to be translated
-noremap <M-d> :DictW
-" Translate word under the cursor and the dict window display
-nmap <silent> <LEADER>t <Plug>DictWSearch
-vmap <silent> <LEADER>t <Plug>DictWVSearch
-" Translate word under the cursor and replace the result
-nmap <silent> <LEADER>r <Plug>DictRSearch
-vmap <silent> <LEADER>r <Plug>DictRVSearch
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
-" ===
-" === Formate
-" ===
-noremap <LEADER>fo :Autoformat<CR>
+" find wrong code
+nmap <silent> - <Plug>(coc-diagnostic-prev)
+nmap <silent> = <Plug>(coc-diagnostic-next)
 
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-" ===
-" === nerdcommenter 
-" ===
-" Create default mappings
-let g:NERDCreateDefaultMappings = 1
+" Start use document_help
+function! Show_documentation()
+    call CocActionAsync('highlight')
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+nnoremap <silent> <LEADER>p :call <SID>show_documentation()<CR>
 
-" ===
-" ===== GitGutter
-" ===
-" let g:gitgutter_signs = 0
-let g:gitgutter_sign_allow_clobber = 0
-let g:gitgutter_map_keys = 0
-let g:gitgutter_override_sign_column_highlight = 0
-let g:gitgutter_preview_win_floating = 1
-let g:gitgutter_sign_added = '▎'
-let g:gitgutter_sign_modified = '░'
-let g:gitgutter_sign_removed = '▏'
-let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_modified_removed = '▒'
-nnoremap <LEADER>gf :GitGutterFold<CR>
-nnoremap <LEADER>gh :GitGutterPreviewHunk<CR>
-nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
-nnoremap <LEADER>g= :GitGutterNextHunk<CR>
+" Enable TAB support
+inoremap <silent><expr> <TAB>
+            \ coc#pum#visible() ? coc#pum#next(1):
+            \ CheckBackspace() ? "\<Tab>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+hi CocSearch ctermfg=12 guifg=#18A3FF
+hi CocMenuSel ctermbg=109 guibg=#13354A
 
-" ===
-" === fzf
-" ===
-nnoremap <silent> <leader>ff :Files<CR>
-nnoremap <silent> <leader>fu :Buffers<CR>
-nnoremap <silent> <leader>fh :History<CR>
-
-let g:fzf_layout = { 'down': '40%' }
-let g:fzf_preview_window = 'right:40%'
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-function! s:list_buffers()
-    redir => list
-    silent ls
-    redir END
-    return split(list, "\n")
+" Enable Enter support
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-function! s:delete_buffers(lines)
-    execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+" Remap for do codeAction of selected region
+function! s:cocActionsOpenFromSelected(type) abort
+    execute 'CocCommand actions.open ' . a:type
 endfunction
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" ===
-" ===== Coc.nvim
-" ===
+" coc.nvim
+set updatetime=100
+set shortmess+=c
+" CheckHealth needed
+let g:loaded_ruby_provider = 0
+let g:loaed_perl_provider = 0
+" coc-extensions
 let g:coc_global_extensions = [
             \ 'coc-css',
             \ 'coc-diagnostic',
@@ -500,64 +365,94 @@ let g:coc_global_extensions = [
             \ 'coc-yaml',
             \ 'coc-yank']
 
-" CheckHealth needed
-let g:loaded_ruby_provider = 0
-let g:loaed_perl_provider = 0
-" coc.nvim
-set updatetime=100
-set shortmess+=c
+" ===
+" === fzf
+" ===
+nnoremap <silent> <leader>ff :Files<CR>
+nnoremap <silent> <leader>fu :Buffers<CR>
+nnoremap <silent> <leader>fh :History<CR>
 
-" noremap <LEADER>e :CocCommand explorer<CR>
+let g:fzf_layout = { 'down': '40%' }
+let g:fzf_preview_window = 'right:40%'
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
-" Start use TAB
-inoremap <silent><expr> <TAB>
-            \ coc#pum#visible() ? coc#pum#next(1):
-            \ CheckBackspace() ? "\<Tab>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-hi CocSearch ctermfg=12 guifg=#18A3FF
-hi CocMenuSel ctermbg=109 guibg=#13354A
-
-" Start Enter
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-function! CheckBackspace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+function! s:list_buffers()
+    redir => list
+    silent ls
+    redir END
+    return split(list, "\n")
 endfunction
 
-" Start use document_help
-function! Show_documentation()
-    call CocActionAsync('highlight')
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
-nnoremap <silent> <LEADER>h :call <SID>show_documentation()<CR>
-
-" Remap for do codeAction of selected region
-function! s:cocActionsOpenFromSelected(type) abort
-    execute 'CocCommand actions.open ' . a:type
+function! s:delete_buffers(lines)
+    execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" ===
+" === GitGutter
+" ===
+" let g:gitgutter_signs = 0
+let g:gitgutter_sign_allow_clobber = 0
+let g:gitgutter_map_keys = 0
+let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_preview_win_floating = 1
+let g:gitgutter_sign_added = '▎'
+let g:gitgutter_sign_modified = '░'
+let g:gitgutter_sign_removed = '▏'
+let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_modified_removed = '▒'
+nnoremap <LEADER>gf :GitGutterFold<CR>
+nnoremap <LEADER>gh :GitGutterPreviewHunk<CR>
+nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
+nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 
-" find wrong code
-nmap <silent> - <Plug>(coc-diagnostic-prev)
-nmap <silent> = <Plug>(coc-diagnostic-next)
+" ===
+" === Formate
+" ===
+noremap <LEADER>fo :Autoformat<CR>
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" ===
+" === suda.vim
+" ===
+cnoreabbrev sudowrite w suda://%
+cnoreabbrev sw w suda://%
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+" ===
+" === dict
+" ===
+" Enter the words need to be translated
+noremap <M-d> :DictW
+" Translate word under the cursor and the dict window display
+nmap <silent> <LEADER>t <Plug>DictWSearch
+vmap <silent> <LEADER>t <Plug>DictWVSearch
+" Translate word under the cursor and replace the result
+nmap <silent> <LEADER>r <Plug>DictRSearch
+vmap <silent> <LEADER>r <Plug>DictRVSearch
+
+" ===
+" === nerdcommenter (comment)
+" ===
+" Commented in a visual mode selection on or text.
+" <leader>cc
+" Uncomment the selected rows.
+" <leader>cu
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+" let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
 
 " ===
 " ===== NerdCommenter (Explation)
@@ -659,3 +554,108 @@ inoreabbrev <expr> __
 source $HOME/.config/nvim/plugged/md-snippets.vim
 " Confilct
 source $HOME/.config/nvim/plugged/conflict.vim
+
+" ===
+" ===== Display
+" ===
+" === Airline
+" ===
+set t_Co=256
+" Support powerline fonts
+let g:airline_powerline_fonts = 1
+let g:magit_git_cmd="git"
+" Default Add
+let g:airline#extensions#tabline#enabled = 1
+" Display Path
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+" 分隔符可以为标签线单独配置，所以这里是你如定义“直”标签
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+" ===
+" === xtabline
+" ===
+let g:xtabline_settings = {}
+let g:xtabline_settings.enable_mappings = 0
+let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
+let g:xtabline_settings.enable_persistance = 0
+let g:xtabline_settings.last_open_first = 0
+let g:xtabline_settings.buffer_format = 2
+let g:xtabline_settings.indicators = {
+            \ 'modified': '[+]',
+            \ 'pinned': '[📌]',
+            \}
+let g:xtabline_settings.icons = {
+            \'pin': '📌',
+            \'star': '★',
+            \'book': '📖',
+            \'lock': '🔒',
+            \'hammer': '🔨',
+            \'tick': '✔',
+            \'cross': '✖',
+            \'warning': '⚠',
+            \'menu': '☰',
+            \'apple': '🍎',
+            \'linux': '🐧',
+            \'windows': '⌘',
+            \'git': '',
+            \'palette': '🎨',
+            \'lens': '🔍',
+            \'flag': '🏁',
+            \}
+" ===
+" === Themes
+" ===
+set termguicolors
+
+" === everforest
+" " For dark version.
+" set background=dark
+" " For better performance
+" let g:everforest_better_performance = 1
+" " 设置 1为斜体 0为注释斜体
+" let g:everforest_enable_italic = 0
+" let g:everforest_disable_italic_comment = 0
+"
+" " Available values: 'hard', 'medium'(default), 'soft'
+" let g:everforest_background = 'medium'
+"
+" colorscheme everforest
+" let g:airline_theme='everforest'
+
+" === sonokai
+" 设置 1为斜体 0为注释斜体
+let g:sonokai_enable_italic = 0
+let g:sonokai_disable_italic_comment =0
+
+" Available values: default, atlantis, andromeda, shusia, maia, espresso
+let g:sonokai_style = 'atlantis'
+
+colorscheme sonokai
+let g:airline_theme='sonokai'
+
+" === deus
+" let g:deus_termcolors=256
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"
+" hi NonText ctermfg=gray guifg=grey10
+"
+" colorscheme deus
+"
+"  To enable airline support
+" let g:airline_theme='deus'
+
+" === tokyonight
+" let g:tokyonight_style = 'night'        " available: night, storm
+" let g:tokyonight_enable_italic = 1
+" " 设置 1背景透明
+" let g:tokyonight_transparent_background = 0     " available: 0, 1
+" " 控制背景颜色
+" let g:tokyonight_menu_selection_background = 'green'    " available: green, red, blue
+" " 设置 1禁用斜体 comment
+" let g:tokyonight_disable_italic_comment = 0
+
+" colorscheme tokyonight
+
+" " To enable airline support
+" let g:airline_theme = "tokyonight"
