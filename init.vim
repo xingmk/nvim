@@ -7,53 +7,69 @@
 " ===
 " ===== Editor behavior
 " ===
-let &t_ut=''
+" === Set LEADER to Space
 let mapleader =" "
-" Scanf kinds of files
+" === Scanf kinds of files
+" Avoid incompatibilities
+set nocompatible
+" Test file types, and load the file type plug-in, for a particular file type load related indentation
 filetype on
-filetype indent on
 filetype plugin on
+filetype indent on
 filetype plugin indent on
-" For coding
-syntax on
-syntax enable
-set wrap                           " Prevent auto line split
-set autochdir                      " change the current working directory
-set showcmd                        " watch the command
-set wildmenu                       " give more chances for commands
-set nocompatible                   " make the plugs smooth running
-set encoding=utf-8
-set clipboard+=unnamed
-set foldmethod=indent
-set foldlevel=99
-set laststatus=2                   " to set the status line
-set clipboard=unnamedplus          " share the yank with system
-" Set nobackup
-set writebackup                    " The backup file is immediately deleted after a successful write
-set hidden                         " Save in buffers
-set autowrite
-" Better Search
-set number                         " set line number
-set relativenumber                 " set relative number
-set hlsearch
+" === For coding
+syntax on                           " Enable vim syntax colors option
+syntax enable                       " Turn on syntax highlighting
+set wrap                            " Prevent auto line split (自动换行)
+set noeb                            " Remove the prompt sound when the input is wrong
+" set autochdir                       " Auto change the current working directory
+set showcmd                         " Shows command that has not been entered (lower right corner)
+set wildmenu                        " Supply more chances for commands
+set laststatus=2                    " Always show status line
+set encoding=utf-8                  " Support Chinese character
+" === Better Fold
+set foldlevel=99                    " Default to unfolded when open a file
+set foldmethod=indent               " Automatic fold based on the indentation
+" === Better clipboard
+" Share the clipboard with system
+set clipboard=unnamed
+set clipboard=unnamedplus
+" === Better nobackup
+set hidden                          " Hide buffers instead of closing them
+set autowrite                       " save the changes done in the files automatically while closing the files
+set writebackup                     " The backup file is immediately deleted after a successful write
+" === Better Search
+set number                          " Line number
+set relativenumber                  " Relative number
+set hlsearch                        " Highlight all searched content
 exec "nohlsearch"
-set incsearch                      " one inseart,and one search with high light
-set ignorecase                     " ignore capital case
-set smartcase                      " smart capital case
-" Better Course
-set cursorline
-set cursorcolumn
-" Better Backspace
-set backspace=indent,eol,start
-" Better Tab
+set incsearch                       " The cursor immediately jumps to the searched content
+set ignorecase                      " Ignore capital case
+set smartcase                       " Smart capital case
+" === Better Backspace
+set backspace=indent,eol,start      " The first backspace returns to the previous line
+" === Better Tab
+" set listchars=tab:▸ ,trail:▫        " Rendering Tab and Space
+" Converting tabs to spaces
+let &t_ut=''
+set smarttab
 set expandtab
+" When auto-indenting, the indentation length is 4
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set scrolloff=5
-set smarttab
-set tw=0
-set indentexpr=
+" === Better Course
+set tw=0                            " Avoid automatic line break
+set mouse+=a                        " Enable mouse support
+set cursorline                      " Horizontal cursor
+set cursorcolumn                    " Vertical cursor
+set scrolloff=5                     " Keep 5-lines in screen
+" === Make the Cursor like windows by inserting
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" Restore Cursor Position
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " ===
 " === Course behavior
@@ -64,11 +80,11 @@ noremap <silent> i k
 noremap <silent> h i
 noremap <silent> H I
 " Quit && Save
-nnoremap Q :q!<CR>
-nnoremap W :w!<CR>
-nnoremap <LEADER>q :q<CR>
-nnoremap <LEADER>w :w<CR>
-nnoremap <LEADER>wq :wq<CR>
+noremap Q :q!<CR>
+noremap W :w!<CR>
+noremap <LEADER>q :q<CR>
+noremap <LEADER>w :w<CR>
+noremap <LEADER>wq :wq<CR>
 " Inserting behavior
 inoremap <silent> <C-c> <esc>
 inoremap <silent> <C-j> <left>
@@ -140,47 +156,30 @@ map <LEADER>tl :+tabmove<CR>
 vnoremap Y "+y
 vnoremap P "+p
 vnoremap D "+d
-" set wrap
-noremap <LEADER>sw :set wrap<CR>
+" Change themes
+noremap <leader>m :Colors<CR>
+" Rolaod file
+noremap <leader>so :source %<CR>
 " Cancle high light
 noremap <leader><CR> :nohlsearch<CR>
-" Reload init.vim
-nnoremap <LEADER>so :source ~/.config/nvim/init.vim<CR>
-" Open a new instance of st with the cwd
-nnoremap /t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
-" Opening a terminal window
-noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
-" find and replace
-noremap /s :%s//g<left><left>
 " Spelling Check with <space>sc
 map <LEADER>sc :set spell!<CR>
-" CheckHealth needed
-let g:loaded_ruby_provider = 0
-let g:loaed_perl_provider = 0
+" find and replace
+noremap \s :%s//g<left><left>
+" Open a new instance of st with the cwd
+nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
+" Opening a terminal window
+noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +5<CR>:term<CR>
 " Auto chnge directory to current dir
 autocmd BufEnter * silent! lcd %:p:h
-" Restore Cursor Position
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-" Make the Cursor like windows by inserting
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " If not have vim.plug, it will auto download
-if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
-    silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-" Make backupdir
-silent !mkdir -p $HOME/.config/nvim/cache/backup
-silent !mkdir -p $HOME/.config/nvim/cache/undo
-set backupdir=$HOME/.config/nvim/cache/backup,.
-set directory=$HOME/.config/nvim/cache/backup,.
-if has('persistent_undo')
-    set undofile
-    set undodir=$HOME/.config/nvim/cache/undo,.
-endif
-" Compile function
+" if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
+"     silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
+"                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
+
+" === Compile function
 noremap r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w"
@@ -239,211 +238,174 @@ func! CompileRunGcc()
 endfunc
 
 " ===
-" ===== Vim-Plugins
+" ===== Vim-Pluggins
 " ===
 call plug#begin('~/.config/nvim/pluggin')
-" --- Display
+
+" === Display
+" Add devicons
+Plug 'ryanoasis/vim-devicons'
 " Show tabs on tabline
 Plug 'mg979/vim-xtabline'
-" Show the list of buffers in the command bar.
+" Show buffers on command bar.
 Plug 'bling/vim-bufferline'
 " Statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Themes
 Plug 'theniceboy/nvim-deus'
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'sainnhe/vim-color-forest-night'
+Plug 'sainnhe/sonokai'
 
-" --- Language
-" Markdown
-Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-Plug 'mzlogin/vim-markdown-toc'
-Plug 'dhruvasagar/vim-table-mode'
-" Plug 'vimwiki/vimwiki'
-" Html
-Plug 'elzr/vim-json'
-Plug 'othree/html5.vim'
-Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Flutter
-Plug 'dart-lang/dart-vim-plugin'
-
-" --- Effective
+" === Effective
+" AutoComplete
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 " Git
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
-" AutoComplete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" LiveFresh
-Plug 'dkarter/bullets.vim'
+" Snippets
+Plug 'theniceboy/vim-snippets'
 " Explation
 Plug 'preservim/nerdcommenter'
 " Foramte
 Plug 'vim-autoformat/vim-autoformat'
-" Snippets
-Plug 'theniceboy/vim-snippets'
-" Rnvimr
-Plug 'kevinhwang91/rnvimr'
 " sudo
 Plug 'lambdalisue/suda.vim'
 " Translate
 Plug 'iamcco/dict.vim', { 'on': ['DictW', '<Plug>DictWSearch', '<Plug>DictWVSearch', '<Plug>DictRSearch', '<Plug>DictRVSearch']}
+
+" === Language
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'dkarter/bullets.vim'
+Plug 'preservim/vim-markdown'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 call plug#end()
 
 " ===
 " ===== Display
 " ===
-" ===== Deus
+" === Themes
 " ===
 set termguicolors
-silent! color deus
 
-let g:airline_theme='deus'
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" === everforest
+" " For dark version.
+" set background=dark
+" " For better performance
+" let g:everforest_better_performance = 1
+" " 设置 1为斜体 0为注释斜体
+" let g:everforest_enable_italic = 0
+" let g:everforest_disable_italic_comment = 0
+"
+" " Available values: 'hard', 'medium'(default), 'soft'
+" let g:everforest_background = 'medium'
+"
+" colorscheme everforest
+" let g:airline_theme='everforest'
 
-hi NonText ctermfg=gray guifg=grey10
+" === sonokai
+" 设置 1为斜体 0为注释斜体
+let g:sonokai_enable_italic = 0
+let g:sonokai_disable_italic_comment =0
+
+" Available values: default, atlantis, andromeda, shusia, maia, espresso
+let g:sonokai_style = 'atlantis'
+
+colorscheme sonokai
+let g:airline_theme='sonokai'
+
+" === deus
+" let g:deus_termcolors=256
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"
+" hi NonText ctermfg=gray guifg=grey10
+"
+" colorscheme deus
+"
+"  To enable airline support
+" let g:airline_theme='deus'
+
+" === tokyonight
+" let g:tokyonight_style = 'night'        " available: night, storm
+" let g:tokyonight_enable_italic = 1
+" " 设置 1背景透明
+" let g:tokyonight_transparent_background = 0     " available: 0, 1
+" " 控制背景颜色
+" let g:tokyonight_menu_selection_background = 'green'    " available: green, red, blue
+" " 设置 1禁用斜体 comment
+" let g:tokyonight_disable_italic_comment = 0
+
+" colorscheme tokyonight
+
+" " To enable airline support
+" let g:airline_theme = "tokyonight"
 
 " ===
-" ===== xtabline
+" === Airline
+" ===
+set t_Co=256
+" Support powerline fonts
+let g:airline_powerline_fonts = 1
+let g:magit_git_cmd="git"
+" Default Add
+let g:airline#extensions#tabline#enabled = 1
+" Display Path
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+" 分隔符可以为标签线单独配置，所以这里是你如定义“直”标签
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+" ===
+" === xtabline
 " ===
 let g:xtabline_settings = {}
 let g:xtabline_settings.enable_mappings = 0
 let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
 let g:xtabline_settings.enable_persistance = 0
-let g:xtabline_settings.last_open_first = 1
+let g:xtabline_settings.last_open_first = 0
+let g:xtabline_settings.buffer_format = 2
+let g:xtabline_settings.indicators = {
+            \ 'modified': '[+]',
+            \ 'pinned': '[📌]',
+            \}
+let g:xtabline_settings.icons = {
+            \'pin': '📌',
+            \'star': '★',
+            \'book': '📖',
+            \'lock': '🔒',
+            \'hammer': '🔨',
+            \'tick': '✔',
+            \'cross': '✖',
+            \'warning': '⚠',
+            \'menu': '☰',
+            \'apple': '🍎',
+            \'linux': '🐧',
+            \'windows': '⌘',
+            \'git': '',
+            \'palette': '🎨',
+            \'lens': '🔍',
+            \'flag': '🏁',
+            \}
+
 
 " ===
-" ===== Airline
+" ===== Effective
 " ===
-set t_Co=256
-set laststatus=2
-" Default Add
-let g:airline#extensions#tabline#enabled = 1
-" 分隔符可以为标签线单独配置，所以这里是你如定义“直”标签
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-" Display Path
-" let g:airline#extensions#tabline#formatter = 'default'
-let g:airline#extensions#tabline#formatter = 'jsformatter'
-" Support powerline fonts
-let g:airline_powerline_fonts = 1
-let g:magit_git_cmd="git"
-
-" ===
-" ===== Language
-" ===
-" ===== Markdown.Vim
-" ===
-" Prohibit folding
-" let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_folding_disabled = 1
-" Set folding level
-let g:vim_markdown_folding_level = 6
-" Open Syntax concealing
-set conceallevel=2
-" Prohibit code block
-let g:vim_markdown_conceal_code_blocks = 0
-" Math
-let g:vim_markdown_math = 1
-let g:vim_markdown_strikethrough = 1
-" Fenced code block languages
-let g:vim_markdown_fenced_languages = ['csharp=cs', 'nvim=vim', 'bash=sh', 'c++=cpp']
-
-" ===
-" ===== Markdown-preview.vim
-" ===
-" Start automatically (the default is 0 to 1 to open automatically start)
-let g:mkdp_auto_start = 0
-" Refresh automatically (the default is 0 to 1 to open automatically refresh)
-let g:mkdp_refresh_slow = 1
-" Preview browser
-let g:mkdp_browser = 'google-chrome-stable'
-
-" ===
-" ===== vim-markdown-toc
-" ===
-noremap <silent> <LEADER>tg :GenTocGFM<CR>
-noremap <silent> <LEADER>tk :GenTocMarked<CR>
-
-let g:vmt_cycle_list_item_markers = 1
-let g:vmt_fence_text = 'TOC'
-let g:vmt_fence_closing_text = '/TOC'
-
-" ===
-" ===== vim-table-mode
-" ===
-"Start the form template
-noremap <silent> <M-m> :TableModeToggle<CR>
-" Form template for again
-noremap <silent> <M-r> :TableModeRealign<CR>
-
-function! s:isAtStartOfLine(mapping)
-    let text_before_cursor = getline('.')[0 : col('.')-1]
-    let mapping_pattern = '\V' . escape(a:mapping, '\')
-    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
-endfunction
-
-inoreabbrev <expr> <bar><bar>
-            \ <SID>isAtStartOfLine('\|\|') ?
-            \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-inoreabbrev <expr> __
-            \ <SID>isAtStartOfLine('__') ?
-            \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-" ===
-" ===== Application
-" ===
-" ===== suda.vim
+" === suda.vim
 " ===
 cnoreabbrev sudowrite w suda://%
 cnoreabbrev sw w suda://%
 
 " ===
-" ===== rnvimr
-" ===
-nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
-
-let g:rnvimr_ex_enable = 1
-let g:rnvimr_pick_enable = 1
-let g:rnvimr_draw_border = 0
-highlight link RnvimrNormal CursorLine
-let g:rnvimr_action = {
-            \ '<C-t>': 'NvimEdit tabedit',
-            \ '<C-g>': 'NvimEdit split',
-            \ '<C-v>': 'NvimEdit vsplit',
-            \ 'gw': 'JumpNvimCwd',
-            \ 'yw': 'EmitRangerCwd'
-            \ }
-let g:rnvimr_layout = { 'relative': 'editor',
-            \ 'width': &columns,
-            \ 'height': &lines,
-            \ 'col': 0,
-            \ 'row': 0,
-            \ 'style': 'minimal' }
-let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
-" --- colors
-let g:terminal_color_0  = '#000000'
-let g:terminal_color_1  = '#FF5555'
-let g:terminal_color_2  = '#50FA7B'
-let g:terminal_color_3  = '#F1FA8C'
-let g:terminal_color_4  = '#BD93F9'
-let g:terminal_color_5  = '#FF79C6'
-let g:terminal_color_6  = '#8BE9FD'
-let g:terminal_color_7  = '#BFBFBF'
-let g:terminal_color_8  = '#4D4D4D'
-let g:terminal_color_9  = '#FF6E67'
-let g:terminal_color_10 = '#5AF78E'
-let g:terminal_color_11 = '#F4F99D'
-let g:terminal_color_12 = '#CAA9FA'
-let g:terminal_color_13 = '#FF92D0'
-let g:terminal_color_14 = '#9AEDFE'
-
-" ===
-" ===== dict
+" === dict
 " ===
 " Enter the words need to be translated
 noremap <M-d> :DictW
@@ -455,19 +417,16 @@ nmap <silent> <LEADER>r <Plug>DictRSearch
 vmap <silent> <LEADER>r <Plug>DictRVSearch
 
 " ===
-" ===== Markdown-default.config
+" === Formate
 " ===
-" Snippets
-autocmd FileType md source $HOME/.config/nvim/plugged/md-snippets.vim
-" Confilct
-source $HOME/.config/nvim/plugged/conflict.vim
+noremap <LEADER>fo :Autoformat<CR>
+
 
 " ===
-" ===== Effective
+" === nerdcommenter 
 " ===
-" ===== Formate
-" ===
-noremap <LEADER>f :Autoformat<CR>
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
 
 " ===
 " ===== GitGutter
@@ -483,16 +442,16 @@ let g:gitgutter_sign_removed = '▏'
 let g:gitgutter_sign_removed_first_line = '▔'
 let g:gitgutter_sign_modified_removed = '▒'
 nnoremap <LEADER>gf :GitGutterFold<CR>
-nnoremap H :GitGutterPreviewHunk<CR>
+nnoremap <LEADER>gh :GitGutterPreviewHunk<CR>
 nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
 nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 
 " ===
 " === fzf
 " ===
-nnoremap <silent> zf :Files<CR>
-nnoremap <silent> zb :Buffers<CR>
-nnoremap <silent> zh :History<CR>
+nnoremap <silent> <leader>ff :Files<CR>
+nnoremap <silent> <leader>fu :Buffers<CR>
+nnoremap <silent> <leader>fh :History<CR>
 
 let g:fzf_layout = { 'down': '40%' }
 let g:fzf_preview_window = 'right:40%'
@@ -541,11 +500,14 @@ let g:coc_global_extensions = [
             \ 'coc-yaml',
             \ 'coc-yank']
 
+" CheckHealth needed
+let g:loaded_ruby_provider = 0
+let g:loaed_perl_provider = 0
 " coc.nvim
 set updatetime=100
 set shortmess+=c
 
-noremap <LEADER>e :CocCommand explorer<CR>
+" noremap <LEADER>e :CocCommand explorer<CR>
 
 " Start use TAB
 inoremap <silent><expr> <TAB>
@@ -616,12 +578,84 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
+
+" ===
+" ===== Language
+" ===
 " === Bullets.vim(live fresh)
+" ===
 " let g:bullets_set_mappings = 0
 let g:bullets_enabled_file_types = [
             \ 'markdown',
             \ 'text',
             \ 'gitcommit',
-            \ 'scratch'
+            \ 'scratch',
+            \ 'html'
             \]
+" ===
+" === Markdown.Vim
+" ===
+" Prohibit folding
+let g:vim_markdown_folding_disabled = 1
+" Set folding level
+let g:vim_markdown_folding_level = 6
+" Open Syntax concealing
+set conceallevel=2
+" Prohibit code block
+let g:vim_markdown_conceal_code_blocks = 0
+" Math
+let g:vim_markdown_math = 1
+let g:vim_markdown_strikethrough = 1
+" Fenced code block languages
+let g:vim_markdown_fenced_languages = ['csharp=cs', 'nvim=vim', 'bash=sh', 'c++=cpp']
+" Adjust new list item indent
+let g:vim_markdown_new_list_item_indent = 4
 
+" ===
+" === Markdown-preview.vim
+" ===
+" Start automatically (the default is 0 to 1 to open automatically start)
+let g:mkdp_auto_start = 0
+" Refresh automatically (the default is 0 to 1 to open automatically refresh)
+let g:mkdp_refresh_slow = 1
+" Preview browser
+let g:mkdp_browser = 'google-chrome-stable'
+
+" ===
+" === vim-markdown-toc
+" ===
+noremap <silent> <LEADER>tg :GenTocGFM<CR>
+noremap <silent> <LEADER>tk :GenTocMarked<CR>
+
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
+
+" ===
+" === vim-table-mode
+" ===
+"Start the form template
+noremap <silent> <leader>tm :TableModeToggle<CR>
+noremap <silent> <leader>tr :TableModeRealign<CR>
+
+function! s:isAtStartOfLine(mapping)
+    let text_before_cursor = getline('.')[0 : col('.')-1]
+    let mapping_pattern = '\V' . escape(a:mapping, '\')
+    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+            \ <SID>isAtStartOfLine('\|\|') ?
+            \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+            \ <SID>isAtStartOfLine('__') ?
+            \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+" ===
+" === Markdown-default.config
+" ===
+" Snippets
+source $HOME/.config/nvim/plugged/md-snippets.vim
+" Confilct
+source $HOME/.config/nvim/plugged/conflict.vim
