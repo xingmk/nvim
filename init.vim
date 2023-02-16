@@ -186,8 +186,8 @@ map <C-t> :tabe<CR>
 " Close the tab
 map <C-w> :tabc<CR>
 " Move around tabs
-map <C-u> :-tabnext<CR>
-map <C-n> :+tabnext<CR>
+map <C-s> :-tabnext<CR>
+map <C-d> :+tabnext<CR>
 " Move the tabs
 map <LEADER>tj :-tabmove<CR>
 map <LEADER>tl :+tabmove<CR>
@@ -280,7 +280,11 @@ endfunc
 " ===
 " ===== coc.nvim
 " ===
+" To start the explorer
 noremap <LEADER>e :CocCommand explorer<CR>
+
+" To start the completion
+inoremap <silent><expr> <c-o> coc#refresh()
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -295,16 +299,37 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Applying code actions to the selected code block
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" === snippet
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-j> <Plug>(coc-snippets-select)
+
+let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
 " Start use document_help
-function! Show_documentation()
-    call CocActionAsync('highlight')
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
+nnoremap <silent> M :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+    if CocAction('hasProvider', 'hover')
+        call CocActionAsync('doHover')
     else
-        call CocAction('doHover')
+        call feedkeys('K', 'in')
     endif
 endfunction
-nnoremap <silent> <LEADER>p :call <SID>show_documentation()<CR>
+
+" To get correct comment highlighting
+autocmd FileType json syntax match Comment +\/\/.\+$+
+" Code syntax highlight
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Enable TAB support
 inoremap <silent><expr> <TAB>
@@ -327,7 +352,6 @@ endfunction
 function! s:cocActionsOpenFromSelected(type) abort
     execute 'CocCommand actions.open ' . a:type
 endfunction
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " coc.nvim
 set updatetime=100
@@ -337,33 +361,31 @@ let g:loaded_ruby_provider = 0
 let g:loaed_perl_provider = 0
 " coc-extensions
 let g:coc_global_extensions = [
-            \ 'coc-css',
+            \ 'coc-json', 'coc-vimlsp',
+            \ 'coc-tsserver',
+            \ 'coc-marketplace',
             \ 'coc-diagnostic',
             \ 'coc-eslint',
             \ 'coc-explorer',
             \ 'coc-flutter-tools',
             \ 'coc-gitignore',
-            \ 'coc-html',
             \ 'coc-import-cost',
-            \ 'coc-java',
             \ 'coc-jest',
-            \ 'coc-json',
             \ 'coc-lists',
             \ 'coc-omnisharp',
             \ 'coc-prettier',
             \ 'coc-prisma',
-            \ 'coc-pyright',
-            \ 'coc-snippets',
             \ 'coc-sourcekit',
             \ 'coc-stylelint',
             \ 'coc-syntax',
             \ 'coc-tasks',
-            \ 'coc-translator',
-            \ 'coc-tsserver',
+            \ 'coc-yank',
             \ 'coc-vetur',
-            \ 'coc-vimlsp',
             \ 'coc-yaml',
-            \ 'coc-yank']
+            \ 'coc-html', 'coc-css',
+            \ 'coc-java',
+            \ 'coc-pyright',
+            \ 'coc-snippets']
 
 " ===
 " === fzf
