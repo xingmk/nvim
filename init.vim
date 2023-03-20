@@ -572,10 +572,10 @@ inoreabbrev <expr> __
 " ===
 " === Markdown-default.config
 " ===
-" Snippets
-source $HOME/.config/nvim/plugged/md-snippets.vim
-" Confilct
-source $HOME/.config/nvim/plugged/conflict.vim
+" " Snippets
+" source $HOME/.config/nvim/plugged/md-snippets.vim
+" " Confilct
+" source $HOME/.config/nvim/plugged/conflict.vim
 
 " ===
 " ===== Display

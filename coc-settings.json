@@ -230,5 +230,6 @@
 				}
 			}
 		}
-	}
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }
